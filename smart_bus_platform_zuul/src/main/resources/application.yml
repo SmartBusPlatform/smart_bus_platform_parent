@@ -1,0 +1,18 @@
+server:
+  port: 8999
+spring:
+  application:
+    name: service-zuul
+eureka:
+  client:
+    register-with-eureka: true #是否从eureka服务器获取各个为服务地址
+    fetch-registry: true #是否注册到eureka服务器
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#配置路由
+zuul:
+  routes:
+    user: /user/**
+    admin: /admin/**
+    city_line: /city_line/**
+
