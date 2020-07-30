@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin;
+package com.cykj.admin;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

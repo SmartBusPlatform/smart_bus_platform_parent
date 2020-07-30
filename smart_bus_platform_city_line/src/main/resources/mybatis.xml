@@ -6,10 +6,10 @@
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
-    <plugins>
+<!--    <plugins>-->
 
-        <plugin interceptor="com.github.pagehelper.PageInterceptor">
-        </plugin>
-    </plugins>
+<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+<!--        </plugin>-->
+<!--    </plugins>-->
 
 </configuration>

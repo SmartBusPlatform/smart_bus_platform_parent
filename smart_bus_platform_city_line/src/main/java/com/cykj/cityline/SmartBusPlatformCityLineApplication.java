@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_city_line;
+package com.cykj.cityline;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

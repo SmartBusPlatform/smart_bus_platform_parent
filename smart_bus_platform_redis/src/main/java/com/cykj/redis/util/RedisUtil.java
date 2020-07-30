@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_redis.util;
+package com.cykj.redis.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

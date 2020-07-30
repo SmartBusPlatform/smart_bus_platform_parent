@@ -13,12 +13,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>smart_bus_platform_parent</name>
     <description>Demo project for Spring Boot</description>
-
+    <packaging>pom</packaging>
     <properties>
         <java.version>1.8</java.version>
         <druid.version>1.1.10</druid.version>
         <mybatis.starter.version>2.1.3</mybatis.starter.version>
-        <mysql.version>5.1.40</mysql.version>
+        <mysql.version>8.0.19</mysql.version>
         <druid.starter.version>1.1.10</druid.starter.version>
         <pageHelper.starter.version>1.2.3</pageHelper.starter.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
@@ -26,7 +26,9 @@
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
         <fastjson.version>1.2.31</fastjson.version>
         <feign.version>2.2.3.RELEASE</feign.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
+        <pageHelper.autoconfigure.version>1.2.3</pageHelper.autoconfigure.version>
+        <pageHelper.version>5.1.10</pageHelper.version>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +52,16 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pageHelper.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
+                <version>${pageHelper.autoconfigure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pageHelper.version}</version>
             </dependency>
             <!--springboot整合druid-->
             <dependency>
@@ -112,30 +124,30 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.junit.vintage</groupId>-->
+<!--                    <artifactId>junit-vintage-engine</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!--没有该配置，devtools不生效-->
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash;没有该配置，devtools不生效&ndash;&gt;-->
+<!--                    <fork>true</fork>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 </project>

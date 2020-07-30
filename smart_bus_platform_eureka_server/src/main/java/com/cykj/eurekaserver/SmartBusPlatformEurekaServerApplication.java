@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_eureka_server;
+package com.cykj.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

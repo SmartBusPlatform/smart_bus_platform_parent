@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin;
+package com.cykj.admin;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @MapperScan(basePackages = {"com.cykj.smart_bus_platform_admin.mapper"})
 public class SmartBusPlatformAdminApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SmartBusPlatformAdminApplication.class, args);
     }

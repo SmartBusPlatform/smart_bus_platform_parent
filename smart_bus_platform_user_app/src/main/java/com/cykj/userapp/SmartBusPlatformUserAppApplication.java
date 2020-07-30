@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_user_app;
+package com.cykj.userapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
