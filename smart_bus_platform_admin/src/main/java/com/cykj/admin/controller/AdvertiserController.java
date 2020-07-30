@@ -1,5 +1,6 @@
-package com.cykj.smart_bus_platform_admin.controller;
+package com.cykj.admin.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.cykj.pojo.Advertiser;
 import com.cykj.smart_bus_platform_admin.service.AdvertiserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AdvertiserController{
                 return "error";
             }
         }else{
-            return "error";
+            return JSON.toJSONString("error");
         }
     }
 }
