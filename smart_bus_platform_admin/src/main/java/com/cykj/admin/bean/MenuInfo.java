@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin.bean;
+package com.cykj.admin.bean;
 
 import com.cykj.pojo.Menu;
 
