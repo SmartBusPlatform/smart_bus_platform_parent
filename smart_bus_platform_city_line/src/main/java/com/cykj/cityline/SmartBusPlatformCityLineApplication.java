@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.cykj.smart_bus_platform_city_line.mapper"})
+@MapperScan(basePackages = {"com.cykj.cityline.mapper"})
 @EnableEurekaClient
 public class SmartBusPlatformCityLineApplication {
 

@@ -36,4 +36,4 @@ mybatis:
   config-location: classpath:mybatis.xml
 feign:
   hystrix:
-    enabled: true #开启feign熔断，默认为false
+    enabled: false #开启feign熔断，默认为false

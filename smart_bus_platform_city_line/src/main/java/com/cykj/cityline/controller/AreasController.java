@@ -2,7 +2,9 @@ package com.cykj.cityline.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.cityline.service.AreasService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cykj.pojo.AreasChild;
@@ -10,11 +12,12 @@ import com.cykj.pojo.AreasChild;
 import java.util.HashMap;
 
 @RestController
+@RequestMapping("areas")
 public class AreasController {
     @Autowired
     private AreasService areasService;
     @RequestMapping("getAreasByPage")
-    public String getAreasByPage(AreasChild areasChild, String startSize, String pageSize){
+    public String getAreasByPage(@RequestBody AreasChild areasChild, String startSize, String pageSize){
         int startNum;
         if(startSize!=null&&startSize.matches("[0,9]*")){
             startNum = Integer.parseInt(startSize);
@@ -36,6 +39,6 @@ public class AreasController {
             condition.put("provinceName",areasChild.getProvinceName());
         }
         System.out.println(areasService.findAreasByPage(condition,startNum,pageNum));
-        return JSONObject.toJSONString(areasService.findAreasByPage(condition,startNum,pageNum));
+        return new Gson().toJson(areasService.findAreasByPage(condition,startNum,pageNum));
     }
 }

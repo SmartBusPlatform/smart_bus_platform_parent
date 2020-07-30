@@ -19,7 +19,7 @@ spring:
       test-on-return: false
       keep-alive: true
   application:
-    name: city_line
+    name: city-line
 eureka:
   client:
     register-with-eureka: true #是否从eureka服务器获取各个为服务地址
