@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.smart_bus_platform_admin.mapper.AdvertiserMapper">
+
+    <!-- 查询广告 -->
+    <select id="queryAdvertiser" resultType="com.cykj.pojo.Advertiser" parameterType="java.lang.String">
+        select * from tb_advertiser
+        <where>
+            <if test="id !=null and id !='' ">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--  新增广告-->
+    <insert id="insertAdvertiser" parameterType="com.cykj.pojo.Advertiser" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_advertiser (partner,title,is_carousel,release_time,ad_schedule,state_id,img_url,advertiser_x ,advertiser_y)
+        values(#{partner},#{title},#{isCarousel},#{releaseTime},#{adSchedule},1,#{imgUrl},1,#{advertiserX},#{advertiserY})
+    </insert>
+
+<!--    <update id="changeUserIntegral" parameterType="java.lang.Object">-->
+<!--        update t_user set integral = integral-#{integral} where id = #{id}-->
+<!--    </update>-->
+</mapper>
