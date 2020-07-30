@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.smart_bus_platform_admin.mapper.AdvertiserMapper">
+<mapper namespace="com.cykj.admin.mapper.AdvertiserMapper">
 
     <!-- 查询广告 -->
     <select id="queryAdvertiser" resultType="com.cykj.pojo.Advertiser" parameterType="java.lang.String">

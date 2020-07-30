@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin.service;
+package com.cykj.admin.service;
 
 import com.cykj.pojo.Advertiser;
 

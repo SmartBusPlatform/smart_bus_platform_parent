@@ -1,12 +1,13 @@
-package com.cykj.smart_bus_platform_admin.service;
+package com.cykj.admin.service.impl;
 
+import com.cykj.admin.mapper.AdvertiserMapper;
+import com.cykj.admin.service.AdvertiserService;
 import com.cykj.pojo.Advertiser;
-import com.cykj.smart_bus_platform_admin.mapper.AdvertiserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdvertiserServiceImpl implements AdvertiserService{
+public class AdvertiserServiceImpl implements AdvertiserService {
     @Autowired
     AdvertiserMapper advertiserMapper;
 

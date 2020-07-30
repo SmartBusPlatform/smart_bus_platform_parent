@@ -1,8 +1,8 @@
 package com.cykj.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.admin.service.AdvertiserService;
 import com.cykj.pojo.Advertiser;
-import com.cykj.smart_bus_platform_admin.service.AdvertiserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ public class AdvertiserController{
 
     @RequestMapping(value = "queryAdvertiser")
     //查询广告，id为空就查全部
-    public Object queryAdvertiser(@RequestParam("id")String id){
+    public Object queryAdvertiser(String id){
         if(id==null){
             id = "";
         }

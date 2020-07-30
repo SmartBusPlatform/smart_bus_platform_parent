@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin;
+package com.cykj.admin;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-@MapperScan(basePackages = {"com.cykj.smart_bus_platform_admin.mapper"})
+@MapperScan(basePackages = {"com.cykj.admin.mapper"})
 public class SmartBusPlatformAdminApplication {
 
     public static void main(String[] args) {

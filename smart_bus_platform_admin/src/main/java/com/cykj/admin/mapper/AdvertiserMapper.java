@@ -1,4 +1,4 @@
-package com.cykj.smart_bus_platform_admin.mapper;
+package com.cykj.admin.mapper;
 
 import com.cykj.pojo.Advertiser;
 import org.apache.ibatis.annotations.Param;
