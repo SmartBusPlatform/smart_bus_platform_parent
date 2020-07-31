@@ -3,41 +3,59 @@
 
 <mapper namespace="com.cykj.cityline.mapper.AreasMapper">
     <select id="findAreasByPage" resultType="areasChild" parameterType="map">
-      SELECT
-	a1.id cityId,
-	a1. NAME cityName,
-	a2.id provinceId,
-	a2. NAME provinceName,
-	(
-		SELECT
-			count(*)
+			SELECT
+			a1.id cityId,
+			a1. NAME cityName,
+			a2.id provinceId,
+			a2. NAME provinceName,
+			(
+				SELECT
+					count(*)
+				FROM
+					tb_city_site
+				WHERE
+					city_id = a1.id
+			) siteNum,
+			(
+				SELECT
+					count(*)
+				FROM
+					tb_line
+				WHERE
+					city_id = a1.id
+			) lineNum
 		FROM
-			tb_city_site
-		WHERE
-			city_id = a1.id
-	) siteNum,
-	(
-		SELECT
-			count(*)
-		FROM
-			tb_line
-		WHERE
-			city_id = a1.id
-	) lineNum
-FROM
-	tb_areas a1
-INNER JOIN tb_areas a2 ON a1.parent_id = a2.id
-AND a2.type = #{type}
+			tb_areas a1
+		INNER JOIN tb_areas a2 ON a1.parent_id = a2.id
+		AND a2.type = #{type}
 		<where>
 			<if test="cityName!=null and cityName!=''">
 				AND a1. NAME like concat('%',#{cityName},'%')
 			</if>
 			<if test="provinceName!=null and provinceName!=''">
-				AND a2. NAME like concat('%',#{provinceName},'%')
+				AND a2. NAME = #{provinceName}
 			</if>
 
 		</where>
 
 
     </select>
+	<select id="findAreasByType" resultType="areasChild">
+		SELECT
+		id id,
+		NAME name
+		FROM
+			tb_areas
+		WHERE
+			type = #{type}
+		</select>
+	<insert id="insArea" parameterType="areasChild">
+		insert into tb_areas(parent_id,name,type) values(#{provinceId},#{cityName},#{type})
+	</insert>
+	<update id="updAreaById" parameterType="areasChild">
+		update tb_areas set name=#{cityName},parent_id =#{provinceId} where id=#{cityId}
+	</update>
+	<select id="findAreaByCityName" resultType="areasChild" parameterType="areasChild">
+		select id id ,name name from tb_areas where  name=#{cityName}
+	</select>
 </mapper>

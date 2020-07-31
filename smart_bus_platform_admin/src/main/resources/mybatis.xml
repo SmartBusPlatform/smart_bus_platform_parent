@@ -8,10 +8,10 @@
         <!--        设置了驼峰规则-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <plugins>
+<!--    <plugins>-->
 
-        <plugin interceptor="com.github.pagehelper.PageInterceptor">
-        </plugin>
-    </plugins>
+<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+<!--        </plugin>-->
+<!--    </plugins>-->
 
 </configuration>

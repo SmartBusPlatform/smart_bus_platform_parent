@@ -35,4 +35,68 @@ public class AreasServiceImpl implements AreasService {
             result.setData(pageBean);
         return result;
     }
+
+    @Override
+    public Result findAreasByType(int type) {
+        List<AreasChild> areasChildList = areasMapper.findAreasByType(type);
+        Result result = new Result();
+        if(areasChildList==null){
+            result.setStatus(201);
+            result.setMsg("查无此类型");
+            return result;
+        }
+        result.setStatus(200);
+        result.setData(areasChildList);
+        return result;
+    }
+
+    @Override
+    public Result insArea(AreasChild areasChild) {
+        AreasChild areas = areasMapper.findAreaByCityName(areasChild);
+        Result result = new Result();
+        if(areas==null){
+            int num = areasMapper.insArea(areasChild);
+
+            if(num==1){
+                result.setStatus(200);
+                result.setMsg("新增城市成功");
+                return result;
+            }
+            result.setStatus(201);
+            result.setMsg("新增城市失败");
+        }else{
+            result.setStatus(201);
+            result.setMsg("当前城市已存在，请重新输入");
+        }
+
+        return result;
+    }
+
+    @Override
+    public Result updAreaById(AreasChild areasChild) {
+        AreasChild areas = areasMapper.findAreaByCityName(areasChild);
+        Result result = new Result();
+        if(areas==null){
+            int num = areasMapper.updAreaById(areasChild);
+
+            if(num==1){
+                result.setStatus(200);
+                result.setMsg("更新城市成功");
+                return result;
+            }
+            result.setStatus(201);
+            result.setMsg("更新城市失败");
+        }else{
+            result.setStatus(201);
+            result.setMsg("当前城市已存在，请重新输入");
+        }
+
+        return result;
+    }
+
+    @Override
+    public AreasChild findAreaByCityName(AreasChild areasChild) {
+
+        return areasMapper.findAreaByCityName(areasChild);
+    }
 }

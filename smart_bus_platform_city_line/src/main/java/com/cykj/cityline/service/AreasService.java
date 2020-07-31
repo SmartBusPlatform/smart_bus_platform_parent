@@ -1,8 +1,10 @@
 package com.cykj.cityline.service;
 
+import com.cykj.pojo.AreasChild;
 import com.cykj.util.Result;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface AreasService {
     /**
@@ -11,4 +13,28 @@ public interface AreasService {
      * @return
      */
     public Result findAreasByPage(HashMap<String, Object> map, int startSize, int pageSize);
+
+    /**
+     * 根据城市类型查询所有城市
+     * @param type
+     * @return
+     */
+    public Result findAreasByType(int type);
+    /**
+     * 新增城市
+     */
+    public Result insArea(AreasChild areasChild);
+    /**
+     * 修改城市信息
+     * @param areasChild
+     * @return
+     */
+    public Result updAreaById(AreasChild areasChild);
+
+    /**
+     * 根据城市名查找城市，确保没有冗余的城市名
+     * @param areasChild
+     * @return
+     */
+    public AreasChild findAreaByCityName (AreasChild areasChild);
 }

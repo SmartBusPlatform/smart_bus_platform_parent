@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "CITY-LINE")
+@FeignClient(value = "CITY-LINE",fallback = AreasFallBack.class)
 @Component
 public interface AreasFeign {
     @RequestMapping("areas/getAreasByPage")
-    public String getAreasByPage(@RequestBody AreasChild areasChild, @RequestParam("startSize")String startSize, @RequestParam("pageSize")String pageSize);
+    public String getAreasByPage(@RequestBody AreasChild areasChild, @RequestParam("curPage") String startSize, @RequestParam("pageSize") String pageSize);
+
+    @RequestMapping("areas/getAreasByType")
+    public String getAreasByType(@RequestBody AreasChild areasChild);
+    @RequestMapping("areas/addAreas")
+    public String addAreas(@RequestBody AreasChild areasChild);
+    @RequestMapping("areas/updAreaById")
+    public String updAreaById(@RequestBody AreasChild areasChild);
 }

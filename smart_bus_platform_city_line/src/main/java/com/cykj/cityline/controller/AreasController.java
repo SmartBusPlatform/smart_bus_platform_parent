@@ -1,7 +1,9 @@
 package com.cykj.cityline.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.cityline.service.AreasService;
+import com.cykj.util.Result;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,15 +19,15 @@ public class AreasController {
     @Autowired
     private AreasService areasService;
     @RequestMapping("getAreasByPage")
-    public String getAreasByPage(@RequestBody AreasChild areasChild, String startSize, String pageSize){
+    public String getAreasByPage(@RequestBody AreasChild areasChild, String curPage, String pageSize){
         int startNum;
-        if(startSize!=null&&startSize.matches("[0,9]*")){
-            startNum = Integer.parseInt(startSize);
+        if(curPage!=null&&curPage.matches("^\\d+$")){
+            startNum = Integer.parseInt(curPage);
         }else{
             startNum = 1;
         }
         int pageNum;
-        if(pageSize!=null&&pageSize.matches("[0,9]*")){
+        if(pageSize!=null&&pageSize.matches("^\\d+$")){
             pageNum = Integer.parseInt(pageSize);
         }else{
             pageNum = 5;
@@ -38,7 +40,20 @@ public class AreasController {
         if(areasChild.getProvinceName()!=null&&!"".equals(areasChild.getProvinceName())){
             condition.put("provinceName",areasChild.getProvinceName());
         }
-        System.out.println(areasService.findAreasByPage(condition,startNum,pageNum));
-        return new Gson().toJson(areasService.findAreasByPage(condition,startNum,pageNum));
+        return JSON.toJSONString(areasService.findAreasByPage(condition,startNum,pageNum));
+    }
+    @RequestMapping("getAreasByType")
+    public String getAreasByType(@RequestBody AreasChild areasChild){
+        return JSON.toJSONString(areasService.findAreasByType(areasChild.getType()));
+    }
+
+    @RequestMapping("addAreas")
+    public String  insArea(@RequestBody AreasChild areasChild) {
+        return JSON.toJSONString(areasService.insArea(areasChild));
+    }
+
+    @RequestMapping("updAreaById")
+    public String  updAreaById(@RequestBody AreasChild areasChild) {
+        return JSON.toJSONString(areasService.updAreaById(areasChild));
     }
 }
