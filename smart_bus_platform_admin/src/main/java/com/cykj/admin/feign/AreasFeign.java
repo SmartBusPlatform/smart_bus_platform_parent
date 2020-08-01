@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "CITY-LINE",fallback = AreasFallBack.class)
+@FeignClient(value = "CITY-LINE",fallback = AreasFallBack.class,contextId = "areasFeign")
 @Component
 public interface AreasFeign {
     @RequestMapping("areas/getAreasByPage")
@@ -19,4 +19,6 @@ public interface AreasFeign {
     public String addAreas(@RequestBody AreasChild areasChild);
     @RequestMapping("areas/updAreaById")
     public String updAreaById(@RequestBody AreasChild areasChild);
+    @RequestMapping("areas/getAreaTree")
+    public  String getAreaTree();
 }

@@ -56,4 +56,8 @@ public class AreasController {
     public String  updAreaById(@RequestBody AreasChild areasChild) {
         return JSON.toJSONString(areasService.updAreaById(areasChild));
     }
+    @RequestMapping("getAreaTree")
+    public String findAreaTree() {
+        return JSON.toJSONString(areasService.findAreaTree());
+    }
 }

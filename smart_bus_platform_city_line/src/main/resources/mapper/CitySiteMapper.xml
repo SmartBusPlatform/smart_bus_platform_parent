@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cykj.cityline.mapper.CitySiteMapper">
+
+    <select id="findCitySiteByCityId" resultType="citySiteChild">
+            SELECT
+            cs.id id,
+            cs. NAME NAME,
+            cs.x_position xPosition,
+            y_position yPositio,
+            GROUP_CONCAT(l. NAME) throughLine
+        FROM
+            tb_areas a
+        INNER JOIN tb_city_site cs ON a.id = cs.city_id
+        INNER JOIN tb_line l ON a.id = l.city_id
+        INNER JOIN tb_line_site ls ON ls.line_id = l.id
+        <where>
+            <if test="cityId!=null">
+               and a.id = #{cityId}
+            </if>
+            <if test="name!=null and name!=''">
+                and cs.name = #{name}
+            </if>
+        </where>
+        GROUP BY
+            a.id
+            </select>
+
+    <insert id="insCitySite" parameterType="citySite">
+		insert into tb_city_site(name,name,type) values(#{name},#{cityName},#{type})
+	</insert>
+</mapper>

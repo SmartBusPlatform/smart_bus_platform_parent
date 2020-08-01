@@ -37,4 +37,9 @@ public interface AreasService {
      * @return
      */
     public AreasChild findAreaByCityName (AreasChild areasChild);
+    /**
+     * 查询省份和省份下的城市
+     * @return
+     */
+    public Result findAreaTree();
 }
