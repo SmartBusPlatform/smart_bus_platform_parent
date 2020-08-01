@@ -86,16 +86,14 @@
 </script>
 
 
-<div class="site-text" style="margin: 12%; display: none" id="addForm"  >
-    <form class="layui-form"  method="post" lay-filter="example">
+<div class="site-text layui-row" hidden id="addForm"  >
+    <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">
         <div class="layui-form-item">
             <label class="layui-form-label">城市名称:</label>
             <div class="layui-input-block">
                 <input type="text" id="add_cityName" name="cityName" lay-verify="cityName" autocomplete="off" placeholder="请输入会员名称" class="layui-input">
 
             </div>
-
-
         </div>
         <div class="layui-form-item">
 
@@ -105,10 +103,7 @@
                     <option value="">请选择</option>
                 </select>
             </div>
-
-
         </div>
-
     </form>
 </div>
 
@@ -117,7 +112,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">城市名称:</label>
             <div class="layui-input-block">
-                <input type="text" id="upd_cityName" name="upd_cityName" lay-verify="cityName" autocomplete="off" placeholder="请输入会员名称" class="layui-input">
+                <input type="text" id="upd_cityName" name="upd_cityName" lay-verify="cityName" autocomplete="off" placeholder="请输入城市名称" class="layui-input">
 
             </div>
 
@@ -261,7 +256,31 @@
                     });
 
                 }else if("delete"===event) {
-
+                    var item = obj.data;
+                    layer.confirm('确认是否删除改城市信息?', function(index) {
+                        $.ajax({
+                            url:"${pageContext.request.contextPath}/areas/updAreaById",
+                            method:"post",
+                            dataType:"json",
+                            traditional:true,
+                            data:{"cityId":item.cityId,"stateId":2},
+                            success:function (data) {
+                                if(data.status==200){
+                                    layer.msg(data.msg,{
+                                        time: 1000
+                                    },function () {
+                                        window.location.reload();
+                                    });
+                                }else{
+                                    layer.msg(data.msg);
+                                }
+                            },
+                            error:function () {
+                                layer.msg("网络繁忙，请稍候重试");
+                            }
+                        });
+                        layer.close(index)
+                    });
                 }
             });
 

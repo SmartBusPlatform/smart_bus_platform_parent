@@ -16,8 +16,20 @@
 
     <!--  新增广告-->
     <insert id="insertAdvertiser" parameterType="com.cykj.pojo.Advertiser" keyProperty="id" useGeneratedKeys="true">
-        insert into tb_advertiser (partner,title,is_carousel,release_time,ad_schedule,state_id,img_url,advertiser_x ,advertiser_y)
-        values(#{partner},#{title},#{isCarousel},#{releaseTime},#{adSchedule},1,#{imgUrl},1,#{advertiserX},#{advertiserY})
+       INSERT INTO tb_advertiser (
+            partner,
+            title,
+            is_carousel,
+            release_time,
+            ad_schedule,
+            state_id,
+            img_url,
+            advertiser_x,
+            advertiser_y
+        )
+        VALUES
+        (
+		#{partner},#{title},#{isCarousel},#{releaseTime},#{adSchedule},1,#{imgUrl},1,#{advertiserX},#{advertiserY})
     </insert>
 
 <!--    <update id="changeUserIntegral" parameterType="java.lang.Object">-->
