@@ -17,13 +17,18 @@ public class RoleMenuController {
     @Autowired
     private RoleMenuService roleMenuService;
 
+
+    /**
+     * 获取菜单，跳转到住页面
+     */
     @RequestMapping("selectRoleMenus")
     public String selectRoleMenus(HttpServletRequest request, Admin admin) {
 
         List<MenuInfo> menuInfos = roleMenuService.selectRoleMenus(admin);
-        request.setAttribute("menus",menuInfos);
+        request.setAttribute("menus", menuInfos);
 
         return "adminMain";
     }
+
 
 }
