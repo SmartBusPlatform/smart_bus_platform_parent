@@ -5,22 +5,62 @@
 <mapper namespace="com.cykj.admin.mapper.AdvertiserMapper">
 
     <!-- 查询广告 -->
-    <select id="queryAdvertiser" resultType="com.cykj.pojo.Advertiser" parameterType="java.lang.String">
-        select * from tb_advertiser
+    <select id="queryAdvertiser" resultType="com.cykj.pojo.AdvertiserInfo" parameterType="java.util.Map">
+        select a.*, pt.partner partnerName, p.name stateName,p2.name carouselName,concat('(',a.advertiser_x,',',a.advertiser_y,')') coordinate
+            from tb_advertiser a
+                left join tb_partner pt on a.partner_id = pt.id
+                left join tb_param p on a.state_id = p.value and p.type_english = 'advertiserState'
+                left join tb_param p2 on a.is_carousel = p2.value and p2.type_english = 'advertiserCarousel'
         <where>
             <if test="id !=null and id !='' ">
-                and id = #{id}
+                and a.id = #{id}
+            </if>
+            <if test="partner !=null and partner !='' ">
+                and pt.partner like concat('%',#{partner},'%')
+            </if>
+            <if test="isCarousel !=null and isCarousel !='' ">
+                and a.is_carousel = #{isCarousel}
+            </if>
+            <if test="stateId !=null and stateId !='' ">
+                and a.state_id = #{stateId}
             </if>
         </where>
+        order by release_time desc
     </select>
 
     <!--  新增广告-->
     <insert id="insertAdvertiser" parameterType="com.cykj.pojo.Advertiser" keyProperty="id" useGeneratedKeys="true">
-        insert into tb_advertiser (partner,title,is_carousel,release_time,ad_schedule,state_id,img_url,advertiser_x ,advertiser_y)
-        values(#{partner},#{title},#{isCarousel},#{releaseTime},#{adSchedule},1,#{imgUrl},1,#{advertiserX},#{advertiserY})
+        insert into tb_advertiser (partner_id,title,is_carousel,release_time,end_time,state_id,img_url,advertiser_x,advertiser_y)
+        values(#{partnerId},#{title},#{isCarousel},#{releaseTime},#{endTime},1,#{imgUrl},#{advertiserX},#{advertiserY})
     </insert>
 
-<!--    <update id="changeUserIntegral" parameterType="java.lang.Object">-->
-<!--        update t_user set integral = integral-#{integral} where id = #{id}-->
-<!--    </update>-->
+    <!--  修改广告，模拟删除-->
+    <update id="changeAdvertiser" parameterType="com.cykj.pojo.Advertiser">
+        update tb_advertiser
+        <set>
+            <if test=" title!=null and title!=''">
+                title = #{title},
+            </if>
+            <if test=" isCarousel!=null and isCarousel!=''">
+                is_carousel = #{isCarousel},
+            </if>
+            <if test=" endTime!=null and endTime!=''">
+                end_time = #{endTime},
+            </if>
+            <if test=" stateId!=null and stateId!=''">
+                state_id = #{stateId},
+            </if>
+            <if test=" imgUrl!=null and imgUrl!=''">
+                img_url = #{imgUrl},
+            </if>
+            <if test=" advertiserX!=null and advertiserX!=''">
+                advertiser_x = #{advertiserX},
+            </if>
+            <if test=" advertiserY!=null and advertiserY!=''">
+                advertiser_y = #{advertiserY},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>

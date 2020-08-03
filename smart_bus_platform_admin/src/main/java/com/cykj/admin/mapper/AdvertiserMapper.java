@@ -1,12 +1,19 @@
 package com.cykj.admin.mapper;
 
 import com.cykj.pojo.Advertiser;
+import com.cykj.pojo.AdvertiserInfo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface AdvertiserMapper {
 
     //查询广告
-    Advertiser queryAdvertiser(@Param("id") String id);
+    List<AdvertiserInfo> queryAdvertiser(HashMap<String, Object> map);
+
     //新增广告
     int insertAdvertiser(Advertiser advertiser);
+    //修改广告
+    int changeAdvertiser(Advertiser advertiser);
 }
