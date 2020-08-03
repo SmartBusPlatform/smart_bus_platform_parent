@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="smart_bus_platform" uuid="69735978-e94e-487a-be7b-42bd0befbe81">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://rm-wz9gr12fyy61l72c00o.mysql.rds.aliyuncs.com:3306/smart_bus_platform</jdbc-url>
+    </data-source>
+  </component>
+</project>
