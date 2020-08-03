@@ -99,4 +99,19 @@ public class AreasServiceImpl implements AreasService {
 
         return areasMapper.findAreaByCityName(areasChild);
     }
+
+    @Override
+    public Result findAreaTree() {
+        Result result = new Result();
+        List<AreasChild> list = areasMapper.findAreaTree();
+        if(list==null){
+            result.setStatus(201);
+            result.setMsg("查无数据");
+
+            return result;
+        }
+        result.setStatus(200);
+        result.setData(list);
+        return result;
+    }
 }

@@ -248,7 +248,9 @@
                         , btnAlign: 'c'
                         , shade: 0
                         , yes: function (index) {
+                            //获得弹出框的值
                             var roleName = $("#updateRoleName").val();
+
                             if (roleName == "") {
                                 layer.msg('角色名不能为空', {time: 1000});
                             } else if (roleName == data.name) {
@@ -261,7 +263,7 @@
                                         type: 'post',
                                         data: {
                                             'id': data.id,
-                                            'name': name
+                                            'name': roleName
                                         }, //1、将数据转为json格式
                                         // contentType: 'application/json;charset=utf-8', //2、设置请求头信息。3、后台用模型接参数
                                         success: function (msg) {
@@ -325,14 +327,18 @@
         });
 </script>
 <script type="text/html" id="barDemo">
+    {{#  if(d.id != '1'){ }}
+
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
     <%--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
+
 
     <!-- 这里同样支持 laytpl 语法，如： -->
-    <%--    {{#  if(d.fileState == '2'){ }}--%>
-    <%--    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>--%>
-    <%--    {{#  } }}--%>
+<%--        {{#  if(d.fileState == '2'){ }}--%>
+<%--        <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>--%>
+<%--        {{#  } }}--%>
 </script>
 <%--<script>--%>
 <%--    layui.use('form', function () {--%>

@@ -39,4 +39,9 @@ public class AreasController {
     public String updAreaById(AreasChild areasChild){
         return areasFeign.updAreaById(areasChild);
     }
+    @RequestMapping("getAreaTree")
+    @ResponseBody
+    public String getAreaTree(AreasChild areasChild){
+        return areasFeign.getAreaTree();
+    }
 }

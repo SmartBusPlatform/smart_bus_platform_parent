@@ -8,11 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="smart_bus_platform_user_app" />
         <module name="smart_bus_platform_pojo" />
+        <module name="smart_bus_platform_city_line" />
+        <module name="smart_bus_platform_admin" />
+        <module name="smart_bus_platform_eureka_server" />
         <module name="smart_bus_platform_user" />
         <module name="smart_bus_platform_zuul" />
-        <module name="smart_bus_platform_city_line" />
-        <module name="smart_bus_platform_eureka_server" />
-        <module name="smart_bus_platform_admin" />
         <module name="smart_bus_platform_common" />
         <module name="smart_bus_platform_redis" />
       </profile>
@@ -36,6 +36,7 @@
       <module name="smart_bus_platform_city_line" options="-parameters" />
       <module name="smart_bus_platform_common" options="-parameters" />
       <module name="smart_bus_platform_eureka_server" options="-parameters" />
+      <module name="smart_bus_platform_parent" options="-parameters" />
       <module name="smart_bus_platform_pojo" options="-parameters" />
       <module name="smart_bus_platform_redis" options="-parameters" />
       <module name="smart_bus_platform_user" options="-parameters" />

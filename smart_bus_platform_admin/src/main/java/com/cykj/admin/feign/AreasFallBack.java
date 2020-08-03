@@ -36,4 +36,12 @@ public class AreasFallBack implements AreasFeign {
         result.setStatus(202);
         return JSON.toJSONString(result);
     }
+
+    @Override
+    public String getAreaTree() {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
 }

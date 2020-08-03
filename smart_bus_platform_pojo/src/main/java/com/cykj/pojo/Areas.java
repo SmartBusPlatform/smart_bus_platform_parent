@@ -6,7 +6,7 @@ public class Areas {
     private int parentId;
     private String name;
     private int type;
-
+    private int stateId;
     public Areas() {
     }
 
@@ -42,6 +42,14 @@ public class Areas {
         this.type = type;
     }
 
+    public int getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
+    }
+
     @Override
     public String toString() {
         return "Areas{" +
@@ -49,6 +57,7 @@ public class Areas {
                 ", parentId=" + parentId +
                 ", name='" + name + '\'' +
                 ", type=" + type +
+                ", stateId=" + stateId +
                 '}';
     }
 }

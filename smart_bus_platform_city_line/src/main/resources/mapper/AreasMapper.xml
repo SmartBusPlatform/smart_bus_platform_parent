@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.cykj.cityline.mapper.AreasMapper">
+	<!--    查询省份和城市-->
+	<resultMap id="AreasMap" type="com.cykj.pojo.LayUITree">
+		<result property="title" column="provinceName"/>
+		<result property="id" column="provinceId"/>
+		<collection property="children" ofType="com.cykj.pojo.LayUITree" javaType="java.util.List">
+			<result property="title" column="cityName"/>
+			<result property="id" column="cityId"/>
+		</collection>
+	</resultMap>
+
     <select id="findAreasByPage" resultType="areasChild" parameterType="map">
 			SELECT
 			a1.id cityId,
@@ -27,7 +37,8 @@
 		FROM
 			tb_areas a1
 		INNER JOIN tb_areas a2 ON a1.parent_id = a2.id
-		AND a2.type = #{type}
+		AND a2.type = #{type} AND a1.state_id=1
+
 		<where>
 			<if test="cityName!=null and cityName!=''">
 				AND a1. NAME like concat('%',#{cityName},'%')
@@ -53,9 +64,34 @@
 		insert into tb_areas(parent_id,name,type) values(#{provinceId},#{cityName},#{type})
 	</insert>
 	<update id="updAreaById" parameterType="areasChild">
-		update tb_areas set name=#{cityName},parent_id =#{provinceId} where id=#{cityId}
+		update tb_areas
+		<set>
+			<if test="cityName != null and cityName != ''">
+				name=#{cityName},
+			</if>
+			<if test="provinceId != null and provinceId != ''">
+				parent_id =#{provinceId},
+			</if>
+			<if test="stateId != null and stateId != ''">
+				state_id =#{stateId},
+			</if>
+		</set>
+		 where id=#{cityId}
 	</update>
 	<select id="findAreaByCityName" resultType="areasChild" parameterType="areasChild">
 		select id id ,name name from tb_areas where  name=#{cityName}
+	</select>
+	<select id="findAreaTree" resultMap="AreasMap">
+		SELECT
+			a2. NAME provinceName,
+			a2.id provinceId,
+			a1. NAME cityName,
+			a1.id cityId
+		FROM
+			tb_areas a1
+		INNER JOIN tb_areas a2 ON a1.parent_id = a2.id
+		WHERE
+			a1.type = 2
+		OR a2.type = 1
 	</select>
 </mapper>
