@@ -54,6 +54,9 @@ public class BusController {
         if(request.getParameter("stateId")!=null&&!"".equals(request.getParameter("stateId"))){
             condition.put("stateId",request.getParameter("stateId"));
         }
+        if(request.getParameter("cityId")!=null&&!"".equals(request.getParameter("cityId"))){
+            condition.put("cityId",request.getParameter("cityId"));
+        }
 
         return JSON.toJSONString(busService.queryBusByPage(condition,startNum,pageNum));
     }

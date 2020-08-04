@@ -8,6 +8,7 @@ public class BusInfo extends Bus{
     private String lineName;
     private String userTimeRatioStr;
     private int provinceId;
+    private String maintainTime;
 
     public String getStateName() {
         return stateName;
@@ -63,5 +64,13 @@ public class BusInfo extends Bus{
 
     public void setProvinceId(int provinceId) {
         this.provinceId = provinceId;
+    }
+
+    public String getMaintainTime() {
+        return maintainTime;
+    }
+
+    public void setMaintainTime(String maintainTime) {
+        this.maintainTime = maintainTime;
     }
 }

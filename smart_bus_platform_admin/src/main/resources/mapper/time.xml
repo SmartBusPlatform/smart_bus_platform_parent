@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.TimeMapper">
+
+    <!--  查询所有发车时刻 -->
+    <select id="queryTime" resultType="com.cykj.pojo.TimesInfo" parameterType="java.lang.Integer">
+        select t.id,t.time,b.number,l.start_time+l.return_time+p.value requiredTime,l.name lineName
+        from tb_time t
+            left join tb_bus_work bw on t.id = bw.time_id and bw.start_begin_or_return = #{beginOrReturn}
+            left join tb_bus b on bw.bus_id = b.id
+            left join tb_line l on bw.line_id = l.id
+            left join tb_param p on p.type_english = 'arriveSiteRest'
+        order by id
+    </select>
+
+<!--    &lt;!&ndash;  查询单个巴士  &ndash;&gt;-->
+<!--    <select id="queryOneBus" resultType="com.cykj.pojo.Bus" parameterType="java.lang.String">-->
+<!--        select *-->
+<!--            from tb_bus-->
+<!--                where number = #{number}-->
+<!--                <if test=" id != 0 and id !=null">-->
+<!--                    and id != #{id}-->
+<!--                </if>-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;  修改巴士,模拟删除  &ndash;&gt;-->
+<!--    <update id="changeBus" parameterType="com.cykj.pojo.Bus">-->
+<!--        update tb_bus-->
+<!--        <set>-->
+<!--            <if test=" number!=null and number!=''">-->
+<!--                number = #{number},-->
+<!--            </if>-->
+<!--            <if test=" isFixedLine!=null and isFixedLine!=''">-->
+<!--                is_fixed_line = #{isFixedLine},-->
+<!--            </if>-->
+<!--            <if test=" stateId!=null and stateId!=''">-->
+<!--                state_id = #{stateId},-->
+<!--            </if>-->
+<!--            <if test=" repairmanId!=null and repairmanId!=''">-->
+<!--                repairman_id = #{repairmanId},-->
+<!--            </if>-->
+<!--            <if test=" userTimeRatio!=null and userTimeRatio!=''">-->
+<!--                user_time_ratio = #{userTimeRatio},-->
+<!--            </if>-->
+<!--            <if test=" cityId!=null and cityId!=''">-->
+<!--                city_id = #{cityId},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash;  新增巴士&ndash;&gt;-->
+<!--    <insert id="insertBus" parameterType="com.cykj.pojo.Bus" keyProperty="id" useGeneratedKeys="true">-->
+<!--        insert into tb_bus-->
+<!--            (number,-->
+<!--             state_id,-->
+<!--             end_time,-->
+<!--             city_id,-->
+<!--             is_fixed_line,-->
+<!--             repairman_id,-->
+<!--             production_time)-->
+<!--        values-->
+<!--               (#{number},-->
+<!--               1,-->
+<!--               #{endTime},-->
+<!--               #{cityId},-->
+<!--               '是',-->
+<!--               #{repairmanId},-->
+<!--               #{productionTime})-->
+<!--    </insert>-->
+
+</mapper>

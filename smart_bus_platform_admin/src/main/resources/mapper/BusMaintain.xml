@@ -2,37 +2,22 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cykj.admin.mapper.BusMapper">
+<mapper namespace="com.cykj.admin.mapper.BusMaintainMapper">
 
-    <!--  查询巴士  -->
-    <select id="queryBus" resultType="com.cykj.pojo.BusInfo" parameterType="java.util.Map">
-        select b.*, p.name stateName, a.name cityName, ad.name repairmanName,bl.line_id lineId,l.name lineName,a2.id provinceId,bm.time maintainTime
-        from tb_bus b
-            left join tb_param p on b.state_id = p.value and p.type_english = 'busState'
-            left join tb_areas a on b.city_id = a.id
-            left join tb_areas a2 on a2.id = a.parent_id
-            left join tb_admin ad on b.repairman_id = ad.id
-            left join tb_bus_line bl on b.id = bl.bus_id
-            left join tb_line l on bl.line_id = l.id
-            left join tb_bus_maintain bm on b.id = bm.bus_id and bm.state_id = 1
+    <!--  查询巴士维修记录 -->
+    <select id="queryBusMainTain" resultType="com.cykj.pojo.BusMaintainInfo" parameterType="java.util.Map">
+        select bm.id,bm.bus_id,bm.time,bm.state_id,b.number,p.name stateName,a.name repairmanName
+        from tb_bus_maintain bm
+            left join tb_param p on bm.state_id = p.value and p.type_english = 'busMainTainState'
+            left join tb_bus b on bm.bus_id = b.id
+            left join tb_admin a on b.repairman_id = a.id
         <where>
+            b.city_id = #{cityId}
             <if test="id !=null and id !='' ">
-                and b.id = #{id}
-            </if>
-            <if test="isFixedLine !=null and isFixedLine !='' ">
-                and b.is_fixed_line = #{isFixedLine}
-            </if>
-            <if test="lineName !=null and lineName !='' ">
-                and l.name like concat('%',#{lineName},'%')
-            </if>
-            <if test="repairmanName !=null and repairmanName !='' ">
-                and ad.name = #{repairmanName}
+                and bm.id = #{id}
             </if>
             <if test="number !=null and number !='' ">
-                and b.number = #{number}
-            </if>
-            <if test="stateId !=null and stateId !='' ">
-                and b.state_Id = #{stateId}
+                and b.id like concat('%',#{number},'%')
             </if>
             <if test="cityId !=null and cityId !='' ">
                 and b.city_id = #{cityId}
@@ -95,7 +80,5 @@
                #{repairmanId},
                #{productionTime})
     </insert>
-
-
 
 </mapper>

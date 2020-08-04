@@ -6,7 +6,8 @@ public class Line {
     private String name;
     private int cityId;
     private double oneMoney;
-    private String oneTime;
+    private int startTime;
+    private int returnTime;
     private double travelMoney;
 
     public Line() {
@@ -44,12 +45,20 @@ public class Line {
         this.oneMoney = oneMoney;
     }
 
-    public String getOneTime() {
-        return oneTime;
+    public int getStartTime() {
+        return startTime;
     }
 
-    public void setOneTime(String oneTime) {
-        this.oneTime = oneTime;
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(int returnTime) {
+        this.returnTime = returnTime;
     }
 
     public double getTravelMoney() {
@@ -67,7 +76,8 @@ public class Line {
                 ", name='" + name + '\'' +
                 ", cityId=" + cityId +
                 ", oneMoney=" + oneMoney +
-                ", oneTime='" + oneTime + '\'' +
+                ", startTime=" + startTime +
+                ", returnTime=" + returnTime +
                 ", travelMoney=" + travelMoney +
                 '}';
     }

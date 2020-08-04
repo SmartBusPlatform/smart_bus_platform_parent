@@ -239,7 +239,8 @@
         {{# } }}
     {{# } }}
 </script>
-<script>layui.use(['table','layer','form','upload'], function() {
+<script>
+    layui.use(['table','layer','form','upload'], function() {
         var table = layui.table;
         var form = layui.form;
         var upload = layui.upload;
