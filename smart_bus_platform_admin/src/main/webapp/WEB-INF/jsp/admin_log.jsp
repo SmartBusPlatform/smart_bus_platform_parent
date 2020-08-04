@@ -45,10 +45,29 @@
     $(function  () {
         layui.use('form', function(){
             var form = layui.form;
+            var layer = layui.layer;
             //监听提交
             form.on('submit(login)', function(data){
+                console.log(data);
                 // alert(888)
-                    location.href='${pageContext.request.contextPath}/adminController/selectRoleMenus';
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/adminControl/login',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        "account": data.field.account,
+                        "password": data.field.password
+                    },
+                    success:function (msg) {
+                        if (msg.code == '00') {
+                            location.href = '${pageContext.request.contextPath}/adminController/selectRoleMenus';
+                        } else {
+                            layer.msg(msg.message);
+                        }
+                    }
+
+                })
+                    <%--location.href='${pageContext.request.contextPath}/adminController/selectRoleMenus';--%>
                 return false;
             });
         });

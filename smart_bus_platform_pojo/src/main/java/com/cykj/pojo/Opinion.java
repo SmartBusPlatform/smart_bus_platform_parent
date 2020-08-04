@@ -8,6 +8,9 @@ public class Opinion {
     private int adminId;
     private String result;
     private String replay;
+    private String opinionTime;
+    private String replayTime;
+    private int stateId;
 
     public Opinion() {
     }
@@ -60,6 +63,30 @@ public class Opinion {
         this.replay = replay;
     }
 
+    public String getOpinionTime() {
+        return opinionTime;
+    }
+
+    public void setOpinionTime(String opinionTime) {
+        this.opinionTime = opinionTime;
+    }
+
+    public String getReplayTime() {
+        return replayTime;
+    }
+
+    public void setReplayTime(String replayTime) {
+        this.replayTime = replayTime;
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
+    }
+
     @Override
     public String toString() {
         return "Opinion{" +
@@ -69,6 +96,9 @@ public class Opinion {
                 ", adminId=" + adminId +
                 ", result='" + result + '\'' +
                 ", replay='" + replay + '\'' +
+                ", opinionTime='" + opinionTime + '\'' +
+                ", replayTime='" + replayTime + '\'' +
+                ", stateId=" + stateId +
                 '}';
     }
 }
