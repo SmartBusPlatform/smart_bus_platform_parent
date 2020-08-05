@@ -25,7 +25,8 @@ public class TimeServiceImpl implements TimeService {
             for (int i=0; i<list.size(); i++){
                 if(list.get(i).getRequiredTime()!=0){
                     try {
-                        if(belongCalendar(list.get(i).getTime(),endTime(list.get(i).getTime(),list.get(i).getRequiredTime()))){
+                        String strNowTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+                        if(belongCalendar(strNowTime,list.get(i).getTime(),endTime(list.get(i).getTime(),list.get(i).getRequiredTime()))){
                             list.get(i).setIsRun(1);
                         }else{
                             list.get(i).setIsRun(2);
@@ -42,15 +43,13 @@ public class TimeServiceImpl implements TimeService {
         return list;
     }
 
-    //判断当前时间是否在运行时间内
-    public static boolean belongCalendar(String strStartTime, String strEndTime) throws ParseException {
-        String strNowTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
-
+    //判断时间是否在运行时间内
+    public static boolean belongCalendar(String strNowTime,String strStartTime, String strEndTime) throws ParseException {
         Date nowTime = new SimpleDateFormat("HH:mm:ss").parse(strNowTime);
         Date endTime = new SimpleDateFormat("HH:mm:ss").parse(strEndTime);
         Date startTime = new SimpleDateFormat("HH:mm:ss").parse(strStartTime+":00");
 
-        return nowTime.getTime() >= startTime.getTime() && nowTime.getTime() <= endTime.getTime();
+        return nowTime.getTime() > startTime.getTime() && nowTime.getTime() < endTime.getTime();
     }
 
     public static String endTime(String strStartTime, int strRequiredTime){
@@ -69,7 +68,9 @@ public class TimeServiceImpl implements TimeService {
         }else{
             arr[1] = branch+"";
         }
+
         String strEndTime = arr[0]+":"+arr[1]+":00";
+
         return strEndTime;
     }
 }

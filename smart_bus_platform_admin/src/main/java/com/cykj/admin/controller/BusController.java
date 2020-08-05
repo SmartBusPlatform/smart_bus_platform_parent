@@ -2,7 +2,6 @@ package com.cykj.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.admin.service.BusService;
-import com.cykj.pojo.Advertiser;
 import com.cykj.pojo.Bus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,13 +21,13 @@ public class BusController {
     //分页查询巴士，id为空就查全部
     public Object queryBusByPage(HttpServletRequest request){
         int startNum;
-        if(request.getParameter("page")!=null&&request.getParameter("page").matches("[0,9]*")){
+        if(request.getParameter("page")!=null&&request.getParameter("page").matches("^\\d+$")){
             startNum = Integer.parseInt(request.getParameter("page"));
         }else{
             startNum = 1;
         }
         int pageNum;
-        if(request.getParameter("limit")!=null&&request.getParameter("limit").matches("[0,9]*")){
+        if(request.getParameter("limit")!=null&&request.getParameter("limit").matches("^\\d+$")){
             pageNum = Integer.parseInt(request.getParameter("limit"));
         }else{
             pageNum = 5;

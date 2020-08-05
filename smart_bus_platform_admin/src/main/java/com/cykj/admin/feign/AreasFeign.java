@@ -21,4 +21,6 @@ public interface AreasFeign {
     public String updAreaById(@RequestBody AreasChild areasChild);
     @RequestMapping("areas/getAreaTree")
     public  String getAreaTree();
+    @RequestMapping("areas/getCityByProvince")
+    public  String getCityByProvince(@RequestBody AreasChild areasChild);
 }

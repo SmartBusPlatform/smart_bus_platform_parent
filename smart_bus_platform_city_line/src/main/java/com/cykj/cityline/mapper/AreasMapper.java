@@ -43,4 +43,11 @@ public interface AreasMapper {
      * @return
      */
     public List<AreasChild> findAreaTree();
+
+    /**
+     * 根据类型和父类id查找城市或者省份
+     * @param areasChild
+     * @return
+     */
+    public List<AreasChild> findAreasByTypeParentId(AreasChild areasChild);
 }
