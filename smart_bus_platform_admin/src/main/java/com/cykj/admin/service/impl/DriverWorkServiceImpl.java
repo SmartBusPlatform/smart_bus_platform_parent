@@ -7,6 +7,9 @@ import com.cykj.pojo.LayuiData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class DriverWorkServiceImpl implements DriverWorkService {
 
@@ -14,11 +17,28 @@ public class DriverWorkServiceImpl implements DriverWorkService {
     private DriverWorkMapper mapper;
 
     @Override
-    public LayuiData selectDriverList(AdminInfo adminInfo) {
+    public LayuiData selectDriverList(HashMap<String, Object> map) {
 
-        mapper.selectDriverList(adminInfo);
+        List<AdminInfo> driverList = mapper.selectDriverList(map);
+        int i = mapper.selectDriverListCount(map);
 
-
-        return null;
+        LayuiData layuiData = new LayuiData();
+        if (i != 0) {
+            layuiData.setCode(0);
+            layuiData.setCount(i);
+            layuiData.setData(driverList);
+        }
+        return layuiData;
     }
+
+    @Override
+    public String updateDriver(AdminInfo adminInfo) {
+
+        int i = mapper.updateDriver(adminInfo);
+        if (i == 1) {
+            return "success";
+        }
+        return "error";
+    }
+
 }

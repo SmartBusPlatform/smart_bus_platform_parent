@@ -11,6 +11,7 @@ public class AdminZJH {
     private double money;
     private String areasId;
     private String phone;
+    private int workSiteId;
 
     public AdminZJH() {
     }
@@ -87,6 +88,14 @@ public class AdminZJH {
         this.phone = phone;
     }
 
+    public int getWorkSiteId() {
+        return workSiteId;
+    }
+
+    public void setWorkSiteId(int workSiteId) {
+        this.workSiteId = workSiteId;
+    }
+
     @Override
     public String toString() {
         return "AdminZJH{" +
@@ -99,6 +108,7 @@ public class AdminZJH {
                 ", money=" + money +
                 ", areasId='" + areasId + '\'' +
                 ", phone='" + phone + '\'' +
+                ", workSiteId=" + workSiteId +
                 '}';
     }
 }

@@ -88,7 +88,7 @@
                     <div class="layui-col-md12">
                         <div class="layui-card">
                             <div class="layui-card-body ">
-                                <table class="layui-table" id="table" lay-filter="citySite-filter">
+                                <table class="layui-table" id="table" lay-filter="test">
                                 </table>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
 </script>
 <%--表格bar--%>
 <script type="text/html" id="tableBar">
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="update">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="find">工作量查看</a>
 </script>
 <script>
@@ -162,6 +162,7 @@
     layui.use(['table','tree'], function(){
         var tree = layui.tree;
         var table = layui.table;
+        var layer = layui.layer;
         var citeId = '';
         //查询省份和省份下的城市
         $.ajax({
@@ -175,7 +176,7 @@
                     ,data: data.data
                     // ,showCheckbox: true
                     ,click:function (obj) {
-                        citeId = bj.data.id;
+                        citeId = obj.data.id;
                         //点击的城市如果没有子节点说明选中了地区，执行查询数据操作
                         if(obj.data.children==undefined){
                             city=obj.data.title;
@@ -187,31 +188,30 @@
                                     "cityId":obj.data.id
                                 },
                                 cols: [[
-                                    {type:'checkbox'},
+                                    // {type:'checkbox'},
                                     {title:'序号',templet: '#index'}
                                     ,{field: 'name', title: '姓名' }
                                     ,{field: 'phone', title: '电话' }
-                                    ,{field: 'workSite',title:'上班站点' }
-                                    // ,{field: 'throughLine',title:'经过线路'}
-                                    ,{field: '',title:'操作' ,templet:'#tableBar'}
+                                    ,{field: 'workSiteName',title:'上班站点' }
+                                    ,{field: '',title:'操作', width: 200,templet:'#tableBar'}
                                 ]],
                                 page:true,
-                                limit:5,
-                                limits:[5,10,15,20,25],
+                                // limit:5,
+                                // limits:[5,10,15,20,25],
                                 method:'post',
                                 request:{
-                                    pageName:'curPage',
-                                    limitName:'pageSize',
+                                    pageName:'page',
+                                    limitName:'limit',
                                 },
-                                response:{
-                                    statusName:'status',
-                                    statusCode:200,
-                                },
+                                // response:{
+                                //     statusName:'code',
+                                //     statusCode:200,
+                                // },
                                 parseData: function(res){ //res 即为原始返回的数据
                                     return {
-                                        "status":res.status,
-                                        "count": res.data.totalRecord, //解析数据长度
-                                        "data": res.data.list,
+                                        "code":res.code,
+                                        "count": res.count, //解析数据长度
+                                        "data": res.data,
                                     };
                                 }
                             });
@@ -273,7 +273,60 @@
                     }
                 })
             }
+        })
 
+        //监听修改和工作量查看
+        table.on('tool(test)',function (obj) {
+            var data = obj.data;
+            var layEven = obj.event;
+            console.log(data)
+            console.log(layEven)
+            console.log(obj.tr)
+            if (layEven == 'update') {
+                layer.open({
+                    type:1
+                    ,title:false
+                    ,resize: false
+                    ,content: '<div style="padding:15px 100px;font-size: 20px">信息修改</div>' +
+                        '<div style="padding: 15px;font-size: 15px">司机姓名：<input id="updateName" value="' +data.name+ '"></div>' +
+                        '<div style="padding: 15px;font-size: 15px">司机电话：<input id="updatePhone" value="' +data.phone+ '"></div>'
+                    ,btn:['保存','取消']
+                    ,btnAlign: 'c'
+                    ,yes:function (index) {
+                        var name = $("#updateName").val();
+                        var phone = $("#updatePhone").val();
+
+                        if (phone == '' || name == '') {
+                            layer.msg("修改信息不能为空");
+                        } else if (phone == data.phone && name == data.name) {
+                            layer.msg("您还未做出修改");
+                        } else {
+                            layer.confirm('确认提交？',{icon:3,title:'提示'},function () {
+                                $.ajax({
+                                    url:'${pageContext.request.contextPath}/driverWorkController/updateDriver'
+                                    ,type: 'post'
+                                    ,data :{
+                                        'name': name,
+                                        'phone': phone,
+                                        'id': data.id
+                                    },
+                                    success:function (msg) {
+                                        debugger
+                                        if (msg == 'success') {
+                                            layer.close(index);
+                                            layer.msg('保存成功', {time: 1500}, function () {
+                                                location.reload();
+                                            });
+                                        } else {
+                                            layer.msg('出错啦，请联系管理员');
+                                        }
+                                    }
+                                })
+                            })
+                        }
+                    }
+                })
+            }
         })
 
     });
