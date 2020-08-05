@@ -28,11 +28,11 @@ public class AreasServiceImpl implements AreasService {
             result.setMsg("查询失败");
             return result;
         }
-            PageInfo<AreasChild> pageInfo = new PageInfo<AreasChild>(areasList);
-            PageBean<AreasChild> pageBean = new PageBean<>(startSize,pageInfo.getPageSize(),pageInfo.getTotal());
-            pageBean.setList(areasList);
-            result.setStatus(200);
-            result.setData(pageBean);
+        PageInfo<AreasChild> pageInfo = new PageInfo<AreasChild>(areasList);
+        PageBean<AreasChild> pageBean = new PageBean<>(startSize,pageInfo.getPageSize(),pageInfo.getTotal());
+        pageBean.setList(areasList);
+        result.setStatus(200);
+        result.setData(pageBean);
         return result;
     }
 
@@ -113,5 +113,10 @@ public class AreasServiceImpl implements AreasService {
         result.setStatus(200);
         result.setData(list);
         return result;
+    }
+
+    @Override
+    public List<AreasChild> findAreasByTypeParentId(AreasChild areasChild) {
+        return areasMapper.findAreasByTypeParentId(areasChild);
     }
 }

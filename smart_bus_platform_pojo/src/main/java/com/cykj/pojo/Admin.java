@@ -6,14 +6,49 @@ public class Admin {
     private String account;
     private String name;
     private String password;
+
     private int roleId;
+    private String roleName;
+
     private int stateId;
+    private String paramName;
     private double money;
+
     private String cityId;
+    private String cityName;
+
     private String phone;
+
+
+
 
     public Admin() {
     }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getParamName() {
+        return paramName;
+    }
+
+    public void setParamName(String paramName) {
+        this.paramName = paramName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public int getId() {
         return id;
     }

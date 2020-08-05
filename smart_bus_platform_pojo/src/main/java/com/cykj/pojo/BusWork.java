@@ -7,6 +7,8 @@ public class BusWork {
     private int lineId;
     private int timeId;
     private int isFixLine;
+    private String isAddup;
+    private int startBeginOrReturn;
 
     public BusWork() {
     }
@@ -51,14 +53,21 @@ public class BusWork {
         this.isFixLine = isFixLine;
     }
 
-    @Override
-    public String toString() {
-        return "BusWork{" +
-                "id=" + id +
-                ", busId=" + busId +
-                ", lineId=" + lineId +
-                ", timeId=" + timeId +
-                ", isFixLine=" + isFixLine +
-                '}';
+    public String getIsAddup() {
+        return isAddup;
     }
+
+    public void setIsAddup(String isAddup) {
+        this.isAddup = isAddup;
+    }
+
+    public int getStartBeginOrReturn() {
+        return startBeginOrReturn;
+    }
+
+    public void setStartBeginOrReturn(int startBeginOrReturn) {
+        this.startBeginOrReturn = startBeginOrReturn;
+    }
+
+
 }

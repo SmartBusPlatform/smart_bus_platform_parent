@@ -60,4 +60,9 @@ public class AreasController {
     public String findAreaTree() {
         return JSON.toJSONString(areasService.findAreaTree());
     }
+
+    @RequestMapping("getCityByProvince")
+    public String getCityByProvince(@RequestBody AreasChild areasChild) {
+        return JSON.toJSONString(areasService.findAreasByTypeParentId(areasChild));
+    }
 }

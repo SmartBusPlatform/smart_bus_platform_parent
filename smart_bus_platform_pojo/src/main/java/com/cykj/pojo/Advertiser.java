@@ -3,11 +3,11 @@ package com.cykj.pojo;
 public class Advertiser {
 
     private int id;
-    private String partner;
+    private int partnerId;
     private String title;
     private int isCarousel;
     private String releaseTime;
-    private String adSchedule;
+    private String endTime;
     private int stateId;
     private String imgUrl;
     private double advertiserX;
@@ -16,20 +16,20 @@ public class Advertiser {
     public Advertiser() {
     }
 
+    public int getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(int partnerId) {
+        this.partnerId = partnerId;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getPartner() {
-        return partner;
-    }
-
-    public void setPartner(String partner) {
-        this.partner = partner;
     }
 
     public String getTitle() {
@@ -56,12 +56,12 @@ public class Advertiser {
         this.releaseTime = releaseTime;
     }
 
-    public String getAdSchedule() {
-        return adSchedule;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setAdSchedule(String adSchedule) {
-        this.adSchedule = adSchedule;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public int getStateId() {
@@ -96,15 +96,16 @@ public class Advertiser {
         this.advertiserY = advertiserY;
     }
 
+
     @Override
     public String toString() {
         return "Advertiser{" +
                 "id=" + id +
-                ", partner='" + partner + '\'' +
+                ", partnerId=" + partnerId +
                 ", title='" + title + '\'' +
                 ", isCarousel=" + isCarousel +
                 ", releaseTime='" + releaseTime + '\'' +
-                ", adSchedule='" + adSchedule + '\'' +
+                ", endTime='" + endTime + '\'' +
                 ", stateId=" + stateId +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", advertiserX=" + advertiserX +

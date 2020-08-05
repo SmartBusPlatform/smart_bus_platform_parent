@@ -5,9 +5,12 @@ public class Bus {
     private int id;
     private String number;
     private int stateId;
-    private int busLife;
+    private String endTime;
+    private String productionTime;
     private int cityId;
     private double userTimeRatio;
+    private String isFixedLine;
+    private int repairmanId;
 
     public Bus() {
     }
@@ -36,12 +39,20 @@ public class Bus {
         this.stateId = stateId;
     }
 
-    public int getBusLife() {
-        return busLife;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setBusLife(int busLife) {
-        this.busLife = busLife;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getProductionTime() {
+        return productionTime;
+    }
+
+    public void setProductionTime(String productionTime) {
+        this.productionTime = productionTime;
     }
 
     public int getCityId() {
@@ -60,15 +71,34 @@ public class Bus {
         this.userTimeRatio = userTimeRatio;
     }
 
+    public String getIsFixedLine() {
+        return isFixedLine;
+    }
+
+    public void setIsFixedLine(String isFixedLine) {
+        this.isFixedLine = isFixedLine;
+    }
+
+    public int getRepairmanId() {
+        return repairmanId;
+    }
+
+    public void setRepairmanId(int repairmanId) {
+        this.repairmanId = repairmanId;
+    }
+
     @Override
     public String toString() {
         return "Bus{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", stateId=" + stateId +
-                ", busLife=" + busLife +
+                ", endTime='" + endTime + '\'' +
+                ", productionTime='" + productionTime + '\'' +
                 ", cityId=" + cityId +
                 ", userTimeRatio=" + userTimeRatio +
+                ", isFixedLine='" + isFixedLine + '\'' +
+                ", repairmanId=" + repairmanId +
                 '}';
     }
 }
