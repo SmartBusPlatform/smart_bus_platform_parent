@@ -33,4 +33,33 @@
                )
     </insert>
 
+    <!--  修改巴士排班-->
+    <update id="changeBusWork" parameterType="com.cykj.pojo.BusWorkInfo">
+        update tb_bus_work
+        <set>
+            <if test=" title!=null and title!=''">
+                title = #{title},
+            </if>
+            <if test=" isCarousel!=null and isCarousel!=''">
+                is_carousel = #{isCarousel},
+            </if>
+            <if test=" endTime!=null and endTime!=''">
+                end_time = #{endTime},
+            </if>
+            <if test=" stateId!=null and stateId!=''">
+                state_id = #{stateId},
+            </if>
+            <if test=" imgUrl!=null and imgUrl!=''">
+                img_url = #{imgUrl},
+            </if>
+            <if test=" advertiserX!=null and advertiserX!=''">
+                advertiser_x = #{advertiserX},
+            </if>
+            <if test=" advertiserY!=null and advertiserY!=''">
+                advertiser_y = #{advertiserY},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 </mapper>

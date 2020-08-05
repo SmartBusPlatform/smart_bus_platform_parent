@@ -239,38 +239,7 @@
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
             if(layEvent == '排班'){ //排班
-                layer.confirm('是否排班？',{icon: 3, title:'提示'},function (index) {
-                    var busId = $("#busId").val();
-                    // var lineId = $("#lineId").val();
-                    var lineId = 1;
-                    var timeId = data.id;
-                    var startTime = data.time;
-                    var requiredTime = data.requiredTime;
-                    $.ajax({
-                        url: "/busWork/insertBusWork",
-                        method:'post',
-                        dataType:'json',
-                        contentType : 'application/json;charset=utf-8',
-                        data:JSON.stringify({"busId":busId,"lineId":lineId,"timeId":timeId,"startBeginOrReturn":1,"startTime":startTime,"isAddup":"否","allTime":60}),
-                        success:function(msg){
-                            if(msg=="success"){
-                                layer.msg('排班成功');
-                                // layer.closeAll('page');
-                                // table.reload('busTable');
-                            }else if(msg=="upDataError"){
-                                layer.msg('数据出错');
-                            }else if(msg=="busIsRunning"){
-                                layer.msg('该时间段车辆正在行驶或准备发车，无法排班');
-                            }else{
-                                layer.msg('新增失败');
-                            }
-                        },
-                        error:function (msg) {
-                            layer.msg('网络出错');
-                        }
-                    });
-                    layer.close(index);
-                });
+                insertBusWork(data,true);
             } else if(layEvent == '排班替换'){ //排班替换
 
             } else{ //加开
@@ -292,6 +261,46 @@
 
             }
         });
+
+        //排班
+        function insertBusWork(data,isStart) {
+            layer.confirm('是否排班？',{icon: 3, title:'提示'},function (index) {
+                var busId = $("#busId").val();
+                // var lineId = $("#lineId").val();
+                var lineId = 1;
+                var timeId = data.id;
+                var startTime = data.time;
+                var requiredTime = data.requiredTime;
+                var startBeginOrReturn = 0;
+                if(isStart){
+                    startBeginOrReturn = 1;
+                }else{
+                    startBeginOrReturn = 2
+                }
+                $.ajax({
+                    url: "/busWork/insertBusWork",
+                    method:'post',
+                    dataType:'json',
+                    contentType : 'application/json;charset=utf-8',
+                    data:JSON.stringify({"busId":busId,"lineId":lineId,"timeId":timeId,"startBeginOrReturn":startBeginOrReturn,"startTime":startTime,"isAddup":"否","allTime":60}),
+                    success:function(msg){
+                        if(msg=="success"){
+                            layer.msg('排班成功');
+                        }else if(msg=="upDataError"){
+                            layer.msg('数据出错');
+                        }else if(msg=="busIsRunning"){
+                            layer.msg('该时间段车辆正在行驶或准备发车，无法排班');
+                        }else{
+                            layer.msg('新增失败');
+                        }
+                    },
+                    error:function (msg) {
+                        layer.msg('网络出错');
+                    }
+                });
+                layer.close(index);
+            });
+        }
     })
 </script>
 <%--  自增序号  --%>
