@@ -15,60 +15,22 @@
         where b.id = #{id}
     </select>
 
-<!--    &lt;!&ndash;  查询单个巴士  &ndash;&gt;-->
-<!--    <select id="queryOneBus" resultType="com.cykj.pojo.Bus" parameterType="java.lang.String">-->
-<!--        select *-->
-<!--            from tb_bus-->
-<!--                where number = #{number}-->
-<!--                <if test=" id != 0 and id !=null">-->
-<!--                    and id != #{id}-->
-<!--                </if>-->
-<!--    </select>-->
-
-<!--    &lt;!&ndash;  修改巴士,模拟删除  &ndash;&gt;-->
-<!--    <update id="changeBus" parameterType="com.cykj.pojo.Bus">-->
-<!--        update tb_bus-->
-<!--        <set>-->
-<!--            <if test=" number!=null and number!=''">-->
-<!--                number = #{number},-->
-<!--            </if>-->
-<!--            <if test=" isFixedLine!=null and isFixedLine!=''">-->
-<!--                is_fixed_line = #{isFixedLine},-->
-<!--            </if>-->
-<!--            <if test=" stateId!=null and stateId!=''">-->
-<!--                state_id = #{stateId},-->
-<!--            </if>-->
-<!--            <if test=" repairmanId!=null and repairmanId!=''">-->
-<!--                repairman_id = #{repairmanId},-->
-<!--            </if>-->
-<!--            <if test=" userTimeRatio!=null and userTimeRatio!=''">-->
-<!--                user_time_ratio = #{userTimeRatio},-->
-<!--            </if>-->
-<!--            <if test=" cityId!=null and cityId!=''">-->
-<!--                city_id = #{cityId},-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id = #{id}-->
-<!--    </update>-->
-
-<!--    &lt;!&ndash;  新增巴士&ndash;&gt;-->
-<!--    <insert id="insertBus" parameterType="com.cykj.pojo.Bus" keyProperty="id" useGeneratedKeys="true">-->
-<!--        insert into tb_bus-->
-<!--            (number,-->
-<!--             state_id,-->
-<!--             end_time,-->
-<!--             city_id,-->
-<!--             is_fixed_line,-->
-<!--             repairman_id,-->
-<!--             production_time)-->
-<!--        values-->
-<!--               (#{number},-->
-<!--               1,-->
-<!--               #{endTime},-->
-<!--               #{cityId},-->
-<!--               '是',-->
-<!--               #{repairmanId},-->
-<!--               #{productionTime})-->
-<!--    </insert>-->
+    <!--  新增巴士排班-->
+    <insert id="insertBusWork" parameterType="com.cykj.pojo.BusWorkInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_bus_work
+            (bus_id,
+             line_id,
+             time_id,
+             start_begin_or_return,
+             is_addup
+             )
+        values
+               (#{busId},
+                #{lineId},
+                #{timeId},
+                #{startBeginOrReturn},
+                #{isAddup}
+               )
+    </insert>
 
 </mapper>

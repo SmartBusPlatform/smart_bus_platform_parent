@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface AdvertiserMapper {
-
     //查询广告
     List<AdvertiserInfo> queryAdvertiser(HashMap<String, Object> map);
 

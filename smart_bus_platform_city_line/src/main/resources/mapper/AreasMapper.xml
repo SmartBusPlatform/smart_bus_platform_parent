@@ -94,4 +94,14 @@
 			a1.type = 2
 		OR a2.type = 1
 	</select>
+
+	<select id="findAreasByTypeParentId" resultType="areasChild">
+		SELECT
+		id id,
+		NAME name
+		FROM
+			tb_areas
+		WHERE
+			type = #{type} and parent_id = #{parentId}
+		</select>
 </mapper>

@@ -8,7 +8,6 @@ public class BusWorkInfo extends BusWork{
     private String arrivalTime;    //到站时间
     private String returnDepartureTime;     //返回发车时间
     private String returnArrivalTime;   //返回到站时间
-    private String isAddupName;     //是否加开
     private String lineName;    //线路名
     private String number;  //车牌号
     private int allTime; //总消耗时间
@@ -59,14 +58,6 @@ public class BusWorkInfo extends BusWork{
 
     public void setReturnArrivalTime(String returnArrivalTime) {
         this.returnArrivalTime = returnArrivalTime;
-    }
-
-    public String getIsAddupName() {
-        return isAddupName;
-    }
-
-    public void setIsAddupName(String isAddupName) {
-        this.isAddupName = isAddupName;
     }
 
     public String getLineName() {

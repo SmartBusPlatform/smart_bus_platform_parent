@@ -118,7 +118,7 @@
         <div class="layui-form-item">
             <label for="insertProvince" class="layui-form-label">省份：</label>
             <div class="layui-input-inline">
-                <select id="insertProvince" lay-verify="required">
+                <select id="insertProvince" lay-verify="required" lay-filter="insertProvince">
                     <option value="">请选择城市</option>
                     <option value="4">福建</option>
                 </select>
@@ -129,8 +129,6 @@
             <div class="layui-input-inline">
                 <select name="cityId" id="insertCity" lay-verify="required">
                     <option value="">请先选择省份</option>
-                    <option value="60">厦门</option>
-                    <option value="61">漳州</option>
                 </select>
             </div>
         </div>
@@ -166,9 +164,8 @@
         <div class="layui-form-item">
             <label for="changeProvince" class="layui-form-label">省份：</label>
             <div class="layui-input-inline">
-                <select name="provinceId" id="changeProvince" lay-verify="required">
-                    <option value="">请选择城市</option>
-                    <option value="4">福建</option>
+                <select name="provinceId" id="changeProvince" lay-verify="required" lay-filter="changeProvince">
+                    <option value="">请选择省份</option>
                 </select>
             </div>
         </div>
@@ -177,8 +174,6 @@
             <div class="layui-input-inline">
                 <select name="cityId" id="changeCity" lay-verify="required">
                     <option value="">请先选择省份</option>
-                    <option value="60">厦门</option>
-                    <option value="61">漳州</option>
                 </select>
             </div>
         </div>
@@ -225,7 +220,9 @@
 <script type="text/html" id="btn">
     {{#  if(d.stateId != '5'){  }}
         {{#  if(d.stateId != '4'){  }}
+            {{#  if(d.stateId == '1'){  }}
             <a class="layui-btn layui-btn-xs" lay-event="排班">排班</a>
+            {{# } }}
             <a class="layui-btn layui-btn-xs" lay-event="修改">修改</a>
             <a class="layui-btn layui-btn-xs" lay-event="报废停用">报废停用</a>
         {{# } }}
@@ -246,6 +243,7 @@
             ,limits: [5,10,15,20]
             ,cols: [[ //表头
                 {field: 'id', hide:"true"}
+                ,{field: 'cityId', hide:"true"}
                 ,{field: 'repairmanId', hide:"true"}
                 ,{field: 'lineId', hide:"true"}
                 ,{field: 'provinceId', hide:"true"}
@@ -270,24 +268,6 @@
             ,loading:true
         });
 
-        // //广告商类型
-        // $.ajax({
-        //     url: "/partner/queryPartnerType",
-        //     method:'post',
-        //     dataType:'json',
-        //     success:function(msg){
-        //         $("#typeId").empty();
-        //         $("#typeId").append("<option value=''>请选择广告商类型</option>");
-        //         $("#insertType").empty();
-        //         $("#insertType").append("<option value=''>请选择广告商类型</option>");
-        //         $.each(msg,function (index,item) {
-        //             $("#typeId").append("<option value='"+item.value+"'>"+item.name+"</option>");
-        //             $("#insertType").append("<option value='"+item.value+"'>"+item.name+"</option>");
-        //         });
-        //         form.render('select');
-        //     },
-        // });
-
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('busTable', {
@@ -307,6 +287,7 @@
 
         //新增车辆弹窗
         $("#insert").on('click',function () {
+            getProvince(null,true);
             layer.open({
                 type: 1,
                 title: '新增车辆',
@@ -366,28 +347,34 @@
 
             //查看
             if(layEvent == '排班'){
-                $("#lookImage").removeAttr('src')
-                $("#lookImage").attr('src', "/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime());
                 layer.open({
-                    type: 1,
-                    title: '查看广告',
-                    content: $('#lookAdvertiser'),
-                    offset: '150px',
-                    area: ['500px', '300px'],
+                    type: 2,
+                    content: ['/manager/time_line'],
+                    maxmin:true,
+                    area:['800px','700px'],
+                    success:function (layero, index) {
+                        let body = layer.getChildFrame('body', index);
+                        body.find(".transmitData").eq(0).val(data.number);
+                        body.find(".transmitData").eq(1).val(data.cityId);
+                        body.find(".transmitData").eq(2).val(data.id);
+                        body.find(".marginBottom").eq(0).text(data.number);
+                        var iframe = window['layui-layer-iframe' + index];
+                        iframe.queryBusWork();
+                    }
                 });
-            //修改巴士数据
+                //修改巴士数据
             }else if (layEvent == '修改'){
+                getProvince(data.provinceId,false);
+                getCity(data.provinceId,data.cityId,false);
                 layer.open({
                     type: 1,
-                    title: '修改广告',
+                    title: '修改巴士',
                     content: $('#changeBus'),
                     offset: '150px',
                     area: ['450px', '450px'],
                     success : function(layero, index){
                         form.val('change', {
-                            "provinceId": data.provinceId
-                            ,"cityId": data.cityId
-                            ,"number": data.number
+                            "number": data.number
                             ,"repairmanId": data.repairmanId
                             ,"isFixedLine": data.isFixedLine
                             ,"id": data.id
@@ -473,6 +460,93 @@
                 }
             },
         });
+
+        //新增巴士省份选择框监听，选择了发送请求去获取对应城市
+        form.on('select(insertProvince)', function(data){
+            getCity(data.value,null,true);
+        });
+
+        //修改巴士省份选择框监听，选择了发送请求去获取对应城市
+        form.on('select(changeProvince)', function(data){
+            getCity(data.value,null,false);
+        });
+
+        function getCity(parentId,cityId,isInsert){
+            $.ajax({
+                url:'/areas/getCityByProvince',
+                method:'post',
+                dataType:'json',
+                data:{"parentId":parentId,"type":2},
+                success:function(data){
+                    if(data.length>0){
+                        if(isInsert){
+                            $("#insertCity").empty();
+                            $("#insertCity").append("<option  value=''>请选择城市</option>");
+
+                            for(var i =0;i<data.length;i++){
+                                $("#insertCity").append("<option  value=\""+data[i].id+"\">"+data[i].name+"</option>");
+                            }
+                            form.render("select")
+                        }else{
+                            $("#changeCity").empty();
+                            $("#changeCity").append("<option  value=''>请选择城市</option>");
+
+                            for(var i =0;i<data.length;i++){
+                                $("#changeCity").append("<option  value=\""+data[i].id+"\">"+data[i].name+"</option>");
+                            }
+                            //重新渲染
+                            if(cityId!=null){
+                                form.val('change', {
+                                    "cityId": cityId
+                                });
+                            }
+                            form.render("select")
+                        }
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        }
+
+        function getProvince(parentId,isInsert) {
+            //获取省份
+            $.ajax({
+                url:'/areas/getProvinceNameAll',
+                method:'post',
+                dataType:'json',
+                data:{"type":1},
+                success:function(data){
+                    if(data.status==200){
+                        if(isInsert){
+                            $("#insertProvince").empty();
+                            $("#insertProvince").append("<option  value=''>请选择省份</option>");
+                            for(var i =0;i<data.data.length;i++){
+                                $("#insertProvince").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
+                            }
+                            form.val('insert', {
+                                "provinceId": ""
+                            });
+                        }else{
+                            $("#changeProvince").empty();
+                            $("#changeProvince").append("<option  value=''>请选择省份</option>");
+                            for(var i =0;i<data.data.length;i++){
+                                $("#changeProvince").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
+                            }
+                            //重新渲染
+                            if(parentId!=null){
+                                form.val('change', {
+                                    "provinceId": parentId
+                                });
+                            }
+                        }
+                        form.render("select");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        }
     });
 </script>
 

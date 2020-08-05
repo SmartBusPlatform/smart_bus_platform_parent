@@ -114,4 +114,9 @@ public class AreasServiceImpl implements AreasService {
         result.setData(list);
         return result;
     }
+
+    @Override
+    public List<AreasChild> findAreasByTypeParentId(AreasChild areasChild) {
+        return areasMapper.findAreasByTypeParentId(areasChild);
+    }
 }

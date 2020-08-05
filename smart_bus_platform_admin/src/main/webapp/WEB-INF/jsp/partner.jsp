@@ -68,7 +68,7 @@
 </div>
 <%--    新增、修改窗口    --%>
 <div class="layui-form-item layui-row" id="insertPartner" hidden style="margin-top: 20px">
-    <from class="layui-form layui-col-lg10 layui-col-lg-offset1">
+    <from class="layui-form layui-col-lg10 layui-col-lg-offset1" lay-filter="from">
         <div class="layui-form-item">
             <label for="insertName" class="layui-form-label">名称：</label>
             <div class="layui-input-inline">
@@ -80,7 +80,6 @@
             <div class="layui-input-inline">
                 <select name="cityId" id="insertCity" lay-verify="required">
                     <option value="">请选择城市</option>
-                    <option value="20">xxx</option>
                 </select>
             </div>
         </div>
@@ -115,6 +114,30 @@
         var table = layui.table;
         var form = layui.form;
 
+        //获取城市下拉框
+        $.ajax({
+            url:'/areas/getProvinceNameAll',
+            method:'post',
+            dataType:'json',
+            data:{"type":2},
+            success:function(data){
+                $("#cityId").empty();
+                $("#cityId").append("<option  value=''>请选择城市</option>");
+                $("#insertCity").empty();
+                $("#insertCity").append("<option  value=''>请选择城市</option>");
+                if(data.status==200){
+                    for(var i =0;i<data.data.length;i++){
+                        $("#cityId").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
+                        $("#insertCity").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
+                    }
+                    //重新渲染
+                    form.render("select");
+                }else{
+                    layer.msg(data.msg);
+                }
+            }
+        });
+
         //初始表格
         table.render({
             elem: '#advertiserTable'
@@ -124,6 +147,7 @@
             ,limits: [5,10,15,20]
             ,cols: [[ //表头
                 {field: 'id', title : 'ID' , hide:"true"}
+                ,{field: 'cityId', align: 'center', title:'地区ID'}
                 ,{field: 'partner', align: 'center', title : '合作商'}
                 ,{field: 'typeName', align: 'center', title : '合作商类型'}
                 ,{field: 'cityName', align: 'center', title:'合作商地区'}
@@ -275,12 +299,16 @@
                     offset: '150px',
                     area: ['450px', '430px'],
                     success : function(layero, index){
-                        $(layero).find("input").eq(0).val(data.partner);
-                        $(layero).find("input").eq(3).val(data.id);
-                        $(layero).find("select").eq(0).siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + data.cityId + ']').click();;
-                        $(layero).find("select").eq(1).siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + data.typeId + ']').click();;
+                        form.val("from", {
+                            "partner": data.partner
+                            ,"id": data.id
+                            ,"cityId": data.cityId
+                            ,"typeId": data.typeId
+                        });
                         $(layero).find("button").text("修改");
                         $(layero).find("button").attr("lay-filter","change");
+                        //重新渲染
+                        form.render("select");
                     }
                 });
             }

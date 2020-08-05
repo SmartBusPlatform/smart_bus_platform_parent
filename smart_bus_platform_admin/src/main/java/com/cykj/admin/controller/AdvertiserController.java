@@ -29,13 +29,13 @@ public class AdvertiserController{
     //分页查询广告，id为空就查全部
     public Object queryAdvertiserByPage(HttpServletRequest request){
         int startNum;
-        if(request.getParameter("page")!=null&&request.getParameter("page").matches("[0,9]*")){
+        if(request.getParameter("page")!=null&&request.getParameter("page").matches("^\\d+$")){
             startNum = Integer.parseInt(request.getParameter("page"));
         }else{
             startNum = 1;
         }
         int pageNum;
-        if(request.getParameter("limit")!=null&&request.getParameter("limit").matches("[0,9]*")){
+        if(request.getParameter("limit")!=null&&request.getParameter("limit").matches("^\\d+$")){
             pageNum = Integer.parseInt(request.getParameter("limit"));
         }else{
             pageNum = 5;

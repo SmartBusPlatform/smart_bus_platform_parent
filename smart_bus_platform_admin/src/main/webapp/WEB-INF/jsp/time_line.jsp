@@ -16,8 +16,8 @@
         .time_line{
             margin-top: 20px;
             height: 100px;
-            max-width: 90%;
-            margin-left: 5%;
+            max-width: 60%;
+            margin-left: 20%;
             overflow-x: auto;
         }
         .time_line_box{
@@ -36,13 +36,13 @@
         .marginBottom{
             margin-top: 50px;
             margin-bottom: 50px;
-            margin-left: 10%;
+            margin-left: 20%;
         }
         .selectLine{
-            margin-left: 10%;
+            margin-left: 20%;
         }
         .btnGroup{
-            max-width: 30%;
+            max-width: 50%;
         }
         .btnWidth{
             border: 1.5px solid #393D49;
@@ -51,21 +51,28 @@
         .time_line_info{
             margin-top: 20px;
         }
+        .tableDiv{
+            max-width: 60%;
+            margin-left: 20%;
+        }
         .tableBtn{
             width: 100px;
         }
+        .titleColor{
+            color: #FF5722;
+        }
     </style>
 </head>
-<body style="background-color: #F0F0F0">
+<body style="background-color: #F0F0F0;height: 800px">
     <div>
-        <h1 class="marginBottom">全天在用时间轴</h1>
+        <h1 class="marginBottom layui-inline titleColor"></h1><h1 class="layui-inline">&nbsp;&nbsp;全天在用时间轴</h1>
         <div class="time_line">
             <nobr id="time_line">
             </nobr>
         </div>
     </div>
 
-    <div id="selectLine" hidden>
+    <div id="selectLine" >
         <h1 class="marginBottom">可选班次</h1>
         <div class="selectLine">
             <div class="layui-btn-group btnGroup">
@@ -82,18 +89,27 @@
         </div>
     </div>
 
-    <div class="layui-row">
-        <div class="time_line_info layui-col-lg4 layui-col-lg-offset1">
+    <div class="layui-row tableDiv">
+        <div class="time_line_info layui-col-lg5">
             <h1>始程</h1>
-            <table class="layui-table" id="startTimeTable" lay-filter="test">
+            <table class="layui-table" id="startTimeTable" lay-filter="startTable">
             </table>
         </div>
-        <div class="time_line_info layui-col-lg4 layui-col-lg-offset2">
+        <div class="time_line_info layui-col-lg5 layui-col-lg-offset1">
             <h1>返程</h1>
-            <table class="layui-table" id="returnTimeTable" lay-filter="test">
+            <table class="layui-table" id="returnTimeTable" lay-filter="returnTable">
             </table>
         </div>
     </div>
+
+    <%-- 获取父界面的参数--%>
+    <input type="hidden" class="transmitData" value="" id="number">
+    <input type="hidden" class="transmitData" value="" id="cityId">
+    <input type="hidden" class="transmitData" value="" id="busId">
+
+    <input type="hidden" class="transmitData" value="" id="lineId">
+
+<%--    工具栏 --%>
 <script type="text/html" id="btn">
     {{#  if(d.isRun ==1){  }}
         <text>已在{{d.lineName}}运行</text>
@@ -107,10 +123,11 @@
 </script>
 <%--  时间轴  --%>
 <script>
-    $(function () {
+    function queryBusWork() {
+        var busId = $("#busId").val();
         $.ajax({
             url: '/busWork/queryBusWork',
-            data: "id=1",
+            data: "id="+busId,
             method:'post',
             dataType:'json',
             success:function(msg){
@@ -149,11 +166,24 @@
                 }
             },
         })
-    })
+    };
+
+    function queryLine() {
+        var cityId = $("#cityId").val();
+        $.ajax({
+            url: '/line/getLineByPage',
+            data: "id="+cityId,
+            method:'post',
+            dataType:'json',
+            success:function(msg){
+
+            },
+        })
+    }
 </script>
 <%--  表格  --%>
 <script>
-    layui.use(['table','layer','form'], function() {
+    layui.use('table', function() {
         var table = layui.table;
 
         //初始始程表格
@@ -163,6 +193,8 @@
             ,height:300
             ,cols: [[ //表头
                 {field: 'id', title : 'ID' , hide:"true"}
+                ,{field: 'busId', title : 'ID' , hide:"true"}
+                ,{field: 'requiredTime', title : 'ID' , hide:"true"}
                 ,{templet:'#zizeng', align: 'center', title : '序号'}
                 ,{field: 'time', align: 'center', title : '时间'}
                 ,{field: 'number', align: 'center', title : '发车'}
@@ -197,6 +229,67 @@
                     "count": 0, //解析数据长度
                     "data": res,
                 };
+            }
+        });
+
+        //监听工具条
+        table.on('tool(startTable)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent == '排班'){ //排班
+                layer.confirm('是否排班？',{icon: 3, title:'提示'},function (index) {
+                    var busId = $("#busId").val();
+                    // var lineId = $("#lineId").val();
+                    var lineId = 1;
+                    var timeId = data.id;
+                    var startTime = data.time;
+                    var requiredTime = data.requiredTime;
+                    $.ajax({
+                        url: "/busWork/insertBusWork",
+                        method:'post',
+                        dataType:'json',
+                        contentType : 'application/json;charset=utf-8',
+                        data:JSON.stringify({"busId":busId,"lineId":lineId,"timeId":timeId,"startBeginOrReturn":1,"startTime":startTime,"isAddup":"否","allTime":60}),
+                        success:function(msg){
+                            if(msg=="success"){
+                                layer.msg('排班成功');
+                                // layer.closeAll('page');
+                                // table.reload('busTable');
+                            }else if(msg=="upDataError"){
+                                layer.msg('数据出错');
+                            }else if(msg=="busIsRunning"){
+                                layer.msg('该时间段车辆正在行驶或准备发车，无法排班');
+                            }else{
+                                layer.msg('新增失败');
+                            }
+                        },
+                        error:function (msg) {
+                            layer.msg('网络出错');
+                        }
+                    });
+                    layer.close(index);
+                });
+            } else if(layEvent == '排班替换'){ //排班替换
+
+            } else{ //加开
+
+            }
+        });
+
+        //监听工具条
+        table.on('tool(returnTable)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+            if(layEvent == '排班'){ //排班
+                console.log(data)
+            } else if(layEvent == '排班替换'){ //排班替换
+
+            } else{ //加开
+
             }
         });
     })

@@ -354,7 +354,6 @@
                         for(var i =0;i<data.data.length;i++){
                             $("#provinceName").append("<option  value=\""+data.data[i].name+"\">"+data.data[i].name+"</option>");
                         }
-
                         //重新渲染
                         layui.form.render("select");
                     }else{
@@ -396,7 +395,6 @@
                         for(var i =0;i<data.data.length;i++){
                             $("#upd_provinceName").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
                         }
-
                         //重新渲染
                         layui.form.render("select");
                         console.log(provinceId)

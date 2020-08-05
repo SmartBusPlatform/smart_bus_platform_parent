@@ -44,4 +44,9 @@ public class AreasController {
     public String getAreaTree(AreasChild areasChild){
         return areasFeign.getAreaTree();
     }
+    @RequestMapping("getCityByProvince")
+    @ResponseBody
+    public String getCityByProvince(AreasChild areasChild){
+        return areasFeign.getCityByProvince(areasChild);
+    }
 }
