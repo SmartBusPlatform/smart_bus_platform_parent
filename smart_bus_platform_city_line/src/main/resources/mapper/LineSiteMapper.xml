@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cykj.cityline.mapper.LineSiteMapper">
+
+    <insert id="insLineSite" parameterType="lineChild" >
+		INSERT INTO tb_line_site (line_id,site_id,start_index,property_id,back_index)
+        VALUES(#{lineId},#{siteId},#{startIndex},#{propertyId},#{backIndex})
+    </insert>
+    <delete id="findLineSiteByLineId" parameterType="lineChild">
+        select * from tb_line_site where
+    </delete>
+<!--    <select id="findCitySiteByCityId" resultType="citySite" parameterType="citySite">-->
+<!--		SELECT-->
+<!--            id id,-->
+<!--            NAME NAME-->
+<!--        FROM-->
+<!--            tb_city_site-->
+<!--        WHERE-->
+<!--            city_id = #{cityId}-->
+<!--        AND-->
+<!--            name=#{name}-->
+<!--	</select>-->
+<!--    <update id="updCitySiteByCityId" parameterType="citySite">-->
+<!--        update tb_city_site-->
+<!--        <set>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                name=#{name},-->
+<!--            </if>-->
+<!--            <if test="xPosition != null and xPosition != ''">-->
+<!--                x_position =#{xPosition},-->
+<!--            </if>-->
+<!--            <if test="yPosition != null and yPosition != ''">-->
+<!--                y_position =#{yPosition},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id=#{id}-->
+<!--    </update>-->
+</mapper>

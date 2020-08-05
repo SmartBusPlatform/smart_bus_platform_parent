@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cykj.cityline.mapper.LineMapper">
+
+    <select id="findLinePage" resultType="lineChild">
+               SELECT
+            l.id id,
+            l.name name,
+        IF (
+            (
+                SELECT
+                    count(*)
+                FROM
+                    tb_line_site ls2
+                WHERE
+                    ls2.line_id = l.id
+                AND ls2.property_id = 1
+            ) >= (
+                SELECT
+                    count(*)
+                FROM
+                    tb_line_site ls2
+                WHERE
+                    ls2.line_id = l.id
+                AND ls2.property_id = 2
+            ),
+            (
+                SELECT
+                    count(*)
+                FROM
+                    tb_line_site ls2
+                WHERE
+                    ls2.line_id = l.id
+                AND ls2.property_id = 1
+            ),
+            (
+                SELECT
+                    count(*)
+                FROM
+                    tb_line_site ls2
+                WHERE
+                    ls2.line_id = l.id
+                AND ls2.property_id = 2
+            )
+        ) siteNum
+        FROM
+            tb_areas a
+        INNER JOIN tb_line l ON l.city_id = a.id
+        LEFT JOIN tb_city_site cs ON cs.city_id = l.city_id
+        LEFT JOIN tb_line_site ls ON ls.line_id = l.id
+        <where>
+            <if test="cityId!=null">
+                and a.id = #{cityId}
+            </if>
+            <if test="name!=null and name!=''">
+                and l.name like concat('%',#{name},'%')
+            </if>
+        </where>
+        GROUP BY
+            l.id
+    </select>
+
+    <insert id="insLine" parameterType="lineChild" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO tb_line(name,city_id,one_money,start_time,travel_money,return_time)
+        VALUES(#{name},#{cityId},#{oneMoney},#{startTime},#{travelMoney},#{returnTime})
+    </insert>
+    <delete id="delLine">
+        delete from tb_line where id=#{id}
+    </delete>
+<!--    <select id="findCitySiteByCityId" resultType="citySite" parameterType="citySite">-->
+<!--		SELECT-->
+<!--            id id,-->
+<!--            NAME NAME-->
+<!--        FROM-->
+<!--            tb_city_site-->
+<!--        WHERE-->
+<!--            city_id = #{cityId}-->
+<!--        AND-->
+<!--            name=#{name}-->
+<!--	</select>-->
+<!--    <update id="updCitySiteByCityId" parameterType="citySite">-->
+<!--        update tb_city_site-->
+<!--        <set>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                name=#{name},-->
+<!--            </if>-->
+<!--            <if test="xPosition != null and xPosition != ''">-->
+<!--                x_position =#{xPosition},-->
+<!--            </if>-->
+<!--            <if test="yPosition != null and yPosition != ''">-->
+<!--                y_position =#{yPosition},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id=#{id}-->
+<!--    </update>-->
+</mapper>

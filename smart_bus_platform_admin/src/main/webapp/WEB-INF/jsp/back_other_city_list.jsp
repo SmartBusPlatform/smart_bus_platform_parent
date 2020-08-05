@@ -172,6 +172,7 @@
             });
             //获取省份
             getProvinceName();
+
             //监听提交 lay-filter="search"
             form.on('submit(search)', function(data){
                 var formData = data.field;

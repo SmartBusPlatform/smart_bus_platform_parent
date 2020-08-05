@@ -7,7 +7,31 @@ import com.cykj.util.Result;
 
 public class CitySiteFallBack implements CitySiteFeign {
     @Override
-    public String getCitySiteByCityId(CitySite citySite, String curPage, String pageSize) {
+    public String getCitySiteByPage(CitySite citySite, String curPage, String pageSize) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String addCitySite(CitySite citySite) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String updCitySiteByCityId(CitySite citySite) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String getCitySiteAllByCityId(CitySite citySite) {
         Result result = new Result();
         result.setMsg("您的网络出现问题，请刷新");
         result.setStatus(202);

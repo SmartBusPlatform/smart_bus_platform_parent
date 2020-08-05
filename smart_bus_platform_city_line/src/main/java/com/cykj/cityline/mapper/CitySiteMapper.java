@@ -3,6 +3,7 @@ package com.cykj.cityline.mapper;
 import com.cykj.pojo.AreasChild;
 import com.cykj.pojo.CitySite;
 import com.cykj.pojo.CitySiteChild;
+import com.cykj.pojo.Line;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,5 +15,27 @@ public interface CitySiteMapper {
      * @param map
      * @return
      */
-    public List<CitySiteChild> findCitySiteByCityId(HashMap<String, Object> map);
+    public List<CitySiteChild> findCitySiteByPage(HashMap<String, Object> map);
+    /**
+     * 新增站点
+     */
+    public int insCitySite(CitySite citySite);
+
+    /**
+     * 根据城市id查找站点，确保没有冗余的站点名
+     * @param citySite
+     * @return
+     */
+    public List<CitySite> findCitySiteByCityId(CitySite citySite);
+
+    /**
+     * 修改站点信息
+     * @param citySite
+     * @return
+     */
+    public int updCitySiteByCityId(CitySite citySite);
+//    /**
+//     * 根据id查询该城市所有站点
+//     */
+//    public List<CitySite> findCitySiteAllByCityId(CitySite citySite);
 }
