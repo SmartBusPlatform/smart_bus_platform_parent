@@ -6,12 +6,15 @@ import com.cykj.cityline.service.CitySiteService;
 import com.cykj.pojo.AreasChild;
 import com.cykj.pojo.CitySite;
 import com.cykj.pojo.CitySiteChild;
+import com.cykj.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("citySite")
@@ -19,9 +22,8 @@ public class CitySiteController {
 
     @Autowired
     private CitySiteService citySiteService;
-    @RequestMapping("getCitySiteByCityId")
-    public String getCitySiteByCityId(@RequestBody CitySite citySite, String curPage, String pageSize){
-        System.out.println(citySite);
+    @RequestMapping("getCitySiteByPage")
+    public String getCitySiteByPage(@RequestBody CitySite citySite, String curPage, String pageSize){
         int startNum;
         if(curPage!=null&&curPage.matches("^\\d+$")){
             startNum = Integer.parseInt(curPage);
@@ -41,6 +43,19 @@ public class CitySiteController {
         if(citySite.getCityId()!=0){
             condition.put("cityId",citySite.getCityId());
         }
-        return JSON.toJSONString(citySiteService.findCitySiteByCityId(condition,startNum,pageNum));
+        return JSON.toJSONString(citySiteService.findCitySiteByPage(condition,startNum,pageNum));
+    }
+    @RequestMapping("addCitySite")
+    public String addCitySite(@RequestBody CitySite citySite){
+        return JSON.toJSONString(citySiteService.insCitySite(citySite));
+    }
+    @RequestMapping("updCitySiteByCityId")
+    public String  updCitySiteByCityId(@RequestBody CitySite citySite) {
+        return JSON.toJSONString(citySiteService.updCitySiteByCityId(citySite));
+    }
+    @RequestMapping("getCitySiteAllByCityId")
+    public String getCitySiteAllByCityId(@RequestBody CitySite citySite) {
+        System.out.println("getCitySiteAllByCityId:"+citySite);
+        return JSON.toJSONString(citySiteService.findCitySiteAllByCityId(citySite));
     }
 }

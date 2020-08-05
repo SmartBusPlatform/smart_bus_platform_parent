@@ -1,13 +1,13 @@
 package com.cykj.pojo;
 
-public class Param {
+public class Parameter {
     private int id;
     private String name;
     private String type;
     private String value;
     private String typeEnglish;
 
-    public Param() {
+    public Parameter() {
     }
 
     public int getId() {

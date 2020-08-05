@@ -89,9 +89,10 @@
 			a1.id cityId
 		FROM
 			tb_areas a1
-		INNER JOIN tb_areas a2 ON a1.parent_id = a2.id
+		INNER JOIN tb_areas a2 ON a1.parent_id = a2.id and a1.state_id=1 and a2.state_id=1
 		WHERE
 			a1.type = 2
 		OR a2.type = 1
+
 	</select>
 </mapper>
