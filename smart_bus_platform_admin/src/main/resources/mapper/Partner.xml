@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.PartnerMapper">
+
+    <!--  查询广告商类型  -->
+    <select id="queryPartnerType" resultType="com.cykj.pojo.Parameter">
+        select * from tb_param where type_english = 'partnerType'
+    </select>
+
+    <!--  查询广告商 -->
+    <select id="queryPartner" resultType="com.cykj.pojo.PartnerInfo" parameterType="java.util.Map">
+        select pt.*, p1.name typeName, p2.name stateName, a.name cityName
+            from tb_partner pt
+                left join tb_param p1 on pt.type_id = p1.value and p1.type_english = 'partnerType'
+                left join tb_param p2 on pt.state_id = p2.value and p2.type_english = 'partnerState'
+                left join tb_areas a on pt.city_id = a.id
+        <where>
+            <if test="id !=null and id !='' ">
+                and pt.id = #{id}
+            </if>
+            <if test="partner !=null and partner !='' ">
+                and pt.partner like concat('%',#{partner},'%')
+            </if>
+            <if test="cityId !=null and cityId !='' ">
+                and pt.city_id = #{cityId}
+            </if>
+            <if test="typeId !=null and typeId !='' ">
+                and pt.type_id = #{typeId}
+            </if>
+        </where>
+        order by pt.id asc
+    </select>
+
+    <!--  根据名字查询单个广告商 -->
+    <select id="queryOnePartner" resultType="com.cykj.pojo.Partner" parameterType="java.lang.String">
+        select * from tb_partner where partner = #{partner}
+        <if test=" id != 0 and id!= null ">
+            and id != #{id}
+        </if>
+    </select>
+
+    <!--  新增广告商 -->
+    <insert id="insertPartner" parameterType="com.cykj.pojo.Partner" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_partner (partner,type_id,city_id,state_id)
+        values(#{partner},#{typeId},#{cityId},1)
+    </insert>
+
+    <!--  修改广告商,模拟删除  -->
+    <update id="changePartner" parameterType="com.cykj.pojo.Partner">
+        update tb_partner
+        <set>
+            <if test=" partner!=null and partner!=''">
+                partner = #{partner},
+            </if>
+            <if test=" typeId!=null and typeId!=''">
+                type_id = #{typeId},
+            </if>
+            <if test=" stateId!=null and stateId!=''">
+                state_id = #{stateId},
+            </if>
+            <if test=" cityId!=null and cityId!=''">
+                city_id = #{cityId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

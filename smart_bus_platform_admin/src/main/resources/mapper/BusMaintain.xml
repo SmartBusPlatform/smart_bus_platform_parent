@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.BusMaintainMapper">
+
+    <!--  查询巴士维修记录 -->
+    <select id="queryBusMainTain" resultType="com.cykj.pojo.BusMaintainInfo" parameterType="java.util.Map">
+        select bm.id,bm.bus_id,bm.time,bm.state_id,b.number,p.name stateName,a.name repairmanName
+        from tb_bus_maintain bm
+            left join tb_param p on bm.state_id = p.value and p.type_english = 'busMainTainState'
+            left join tb_bus b on bm.bus_id = b.id
+            left join tb_admin a on b.repairman_id = a.id
+        <where>
+            b.city_id = #{cityId}
+            <if test="id !=null and id !='' ">
+                and bm.id = #{id}
+            </if>
+            <if test="number !=null and number !='' ">
+                and b.id like concat('%',#{number},'%')
+            </if>
+            <if test="cityId !=null and cityId !='' ">
+                and b.city_id = #{cityId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

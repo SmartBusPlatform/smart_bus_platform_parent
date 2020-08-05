@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.BusWorkMapper">
+
+    <!--  查询巴士排班 -->
+    <select id="queryBusWork" resultType="com.cykj.pojo.BusWorkInfo" parameterType="java.lang.Integer">
+        select bw.*,t.time departureTime,l.name lineName,l.start_time,l.return_time,b.number,l.start_time+l.return_time+p.value all_time
+        from tb_bus_work bw
+                 left join tb_time t on bw.time_id = t.id
+                 left join tb_line l on bw.line_id = l.id
+                 left join tb_bus b on bw.bus_id = b.id
+                 left join tb_param p on p.type_english = 'arriveSiteRest'
+        where b.id = #{id}
+    </select>
+
+    <!--  新增巴士排班-->
+    <insert id="insertBusWork" parameterType="com.cykj.pojo.BusWorkInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_bus_work
+            (bus_id,
+             line_id,
+             time_id,
+             start_begin_or_return,
+             is_addup
+             )
+        values
+               (#{busId},
+                #{lineId},
+                #{timeId},
+                #{startBeginOrReturn},
+                #{isAddup}
+               )
+    </insert>
+
+</mapper>

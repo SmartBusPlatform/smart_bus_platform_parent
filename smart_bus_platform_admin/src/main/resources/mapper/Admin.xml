@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace需要和Mapper接口对应-->
+<mapper namespace="com.cykj.admin.mapper.AdminMapper">
+    <!--    查询所有-->
+    <select id="login" parameterType="com.cykj.pojo.Admin" resultType="com.cykj.pojo.Admin">
+        select *
+        from tb_admin
+        where
+        account = #{account} and password=#{password}
+    </select>
+    <!--查询总数-->
+    <select id="selectListCount" parameterType="com.cykj.pojo.Admin" resultType="int">
+        <!--    sql语句拼接   -->
+        select count(id) from tb_admin
+        <where>
+            <if test="e.account!=null and e.account!=''">
+                and account like concat("%",#{e.account},"%")
+            </if>
+        </where>
+    </select>
+    <!--    查询管理员-->
+    <select id="selectAdminList" parameterType="com.cykj.pojo.Admin" resultType="com.cykj.pojo.Admin">
+        select a.id,account,a.name,password,r.name as roleName,p.name as paramName,money,ar.name as cityName,phone
+        from tb_admin a
+        LEFT JOIN tb_role r
+        on r.id=a.role_id
+        LEFT JOIN tb_param p
+        on p.id=a.state_id
+        LEFT JOIN tb_areas ar
+        on ar.id=a.areas_id
+        -- 动态SQL，追加条件
+        <where>
+            <if test="e.account!=null and e.account!=''">
+                and account like concat("%",#{e.account},"%")
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+    <!--  添加管理员-->
+    <insert id="add" parameterType="com.cykj.pojo.Admin" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_admin(account,name,password)values (#{account},#{name},#{password})
+    </insert>
+    <!--修改密码、状态-->
+    <update id="update" parameterType="com.cykj.pojo.Admin">
+        update tb_admin
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="password!=null and password!=''">password=#{password},</if>
+            <if test="stateId!=null and stateId!=''">state_id=#{stateId},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--    parameterType是基础类型-->
+    <delete id="delete" parameterType="java.lang.String">
+        delete from tb_admin where id in
+        <foreach collection="array" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
