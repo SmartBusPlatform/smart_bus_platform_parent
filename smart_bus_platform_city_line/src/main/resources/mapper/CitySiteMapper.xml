@@ -3,31 +3,70 @@
 
 <mapper namespace="com.cykj.cityline.mapper.CitySiteMapper">
 
-    <select id="findCitySiteByCityId" resultType="citySiteChild">
+    <select id="findCitySiteByPage" resultType="citySiteChild">
             SELECT
             cs.id id,
             cs. NAME NAME,
             cs.x_position xPosition,
-            y_position yPositio,
+            y_position yPosition,
             GROUP_CONCAT(l. NAME) throughLine
         FROM
             tb_areas a
-        INNER JOIN tb_city_site cs ON a.id = cs.city_id
-        INNER JOIN tb_line l ON a.id = l.city_id
-        INNER JOIN tb_line_site ls ON ls.line_id = l.id
+        INNER JOIN tb_city_site cs ON a.id = cs.city_id and a.state_id=1
+        LEFT JOIN tb_line l ON a.id = l.city_id
+        LEFT JOIN tb_line_site ls ON ls.line_id = l.id
         <where>
             <if test="cityId!=null">
                and a.id = #{cityId}
             </if>
             <if test="name!=null and name!=''">
-                and cs.name = #{name}
+                and cs.name like concat('%',#{name},'%')
             </if>
         </where>
         GROUP BY
-            a.id
+            cs.id
             </select>
 
     <insert id="insCitySite" parameterType="citySite">
-		insert into tb_city_site(name,name,type) values(#{name},#{cityName},#{type})
-	</insert>
+		INSERT INTO tb_city_site(name,city_id,x_position,y_position)
+        VALUES(#{name},#{cityId},#{xPosition},#{yPosition})
+    </insert>
+    <select id="findCitySiteByCityId" resultType="citySite" parameterType="citySite">
+		SELECT
+            id id,
+            NAME NAME,
+            x_position xPosition,
+            y_position yPosition
+        FROM
+            tb_city_site
+        <where>
+            <if test="cityId!=null">
+                and city_id = #{cityId}
+            </if>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+        </where>
+	</select>
+    <update id="updCitySiteByCityId" parameterType="citySite">
+        update tb_city_site
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+            <if test="xPosition != null and xPosition != ''">
+                x_position =#{xPosition},
+            </if>
+            <if test="yPosition != null and yPosition != ''">
+                y_position =#{yPosition},
+            </if>
+            <if test="stateId != null and stateId != ''">
+                state_id =#{stateId},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+<!--    <select id="findCitySiteAllByCityId" parameterType="citySite" resultType="citySite" >-->
+<!--        select id id,name name,x_position xPosition,y_position yPosition from tb_city_site where city_id=#{cityId}-->
+<!--    </select>-->
 </mapper>

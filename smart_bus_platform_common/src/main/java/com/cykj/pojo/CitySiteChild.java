@@ -1,6 +1,7 @@
 package com.cykj.pojo;
 
 public class CitySiteChild extends  CitySite {
+    //经过线路
     private String throughLine;
 
     public CitySiteChild() {

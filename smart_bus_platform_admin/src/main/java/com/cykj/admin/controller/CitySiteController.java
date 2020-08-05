@@ -16,9 +16,26 @@ public class CitySiteController {
     @Autowired
     private CitySiteFeign citySiteFeign;
 
-    @RequestMapping("getCitySiteByCityId")
+    @RequestMapping("getCitySiteByPage")
     @ResponseBody
-    public String getCitySiteByCityId(CitySite citySite, String curPage, String pageSize){
-        return citySiteFeign.getCitySiteByCityId(citySite,curPage,pageSize);
+    public String getCitySiteByPage(CitySite citySite, String curPage, String pageSize){
+        return citySiteFeign.getCitySiteByPage(citySite,curPage,pageSize);
+    }
+    @RequestMapping("addCitySite")
+    @ResponseBody
+    public String addCitySite(CitySite citySite){
+        System.out.println("city:"+citySite);
+        return citySiteFeign.addCitySite(citySite);
+    }
+    @RequestMapping("updCitySiteByCityId")
+    @ResponseBody
+    public String updCitySiteByCityId(CitySite citySite){
+        return citySiteFeign.updCitySiteByCityId(citySite);
+    }
+    @RequestMapping("getCitySiteAllByCityId")
+    @ResponseBody
+    public String getCitySiteAllByCityId(CitySite citySite){
+        System.out.println("sdfdsafsfsdafasdfasdfsad:"+citySite);
+        return citySiteFeign.getCitySiteAllByCityId(citySite);
     }
 }
