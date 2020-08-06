@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BusWorkServiceImpl implements BusWorkService {
@@ -84,5 +85,20 @@ public class BusWorkServiceImpl implements BusWorkService {
         }
 
         return isSuccess;
+    }
+
+    @Override
+    public Result findBusWorkByLineId(BusWork busWork) {
+        Map<String,Object> maps = new HashMap<>();
+        Result result = new Result();
+        if(busWork!=null){
+            List<BusWorkInfo> busWorkInfoList =busWorkMapper.findBusWorkByLineId(busWork);
+            result.setData(busWorkInfoList);
+            result.setStatus(200);
+            return result;
+        }
+        result.setMsg("数据格式有误");
+        result.setStatus(201);
+        return result;
     }
 }

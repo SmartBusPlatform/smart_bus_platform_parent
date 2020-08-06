@@ -6,6 +6,7 @@ import com.cykj.admin.service.BusWorkService;
 import com.cykj.pojo.Bus;
 import com.cykj.pojo.BusWork;
 import com.cykj.pojo.BusWorkInfo;
+import com.cykj.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +47,9 @@ public class BusWorkController {
         }else{
             return JSON.toJSONString("dataError");
         }
+    }
+    @RequestMapping("getBusWorkByLineId")
+     public String getBusWorkByLineId(BusWork busWork){
+        return JSON.toJSONString(busWorkService.findBusWorkByLineId(busWork));
     }
 }

@@ -37,3 +37,12 @@ mybatis:
 feign:
   hystrix:
     enabled: false #开启feign熔断，默认为false
+  client:
+    config:
+      default:
+        connect-timeout: 10000
+        read-timeout: 20000
+
+
+
+

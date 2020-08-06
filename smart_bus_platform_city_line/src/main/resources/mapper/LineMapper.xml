@@ -7,6 +7,10 @@
                SELECT
             l.id id,
             l.name name,
+            l.one_money oneMoney,
+            l.travel_money travelMoney,
+            l.start_time startTime,
+            l.return_time returnTime,
         IF (
             (
                 SELECT
@@ -43,7 +47,8 @@
                     ls2.line_id = l.id
                 AND ls2.property_id = 2
             )
-        ) siteNum
+        ) siteNum,
+        (select count(distinct bus_id) from tb_bus_work where line_id=l.id) useVehiclesNum
         FROM
             tb_areas a
         INNER JOIN tb_line l ON l.city_id = a.id
@@ -65,33 +70,39 @@
 		INSERT INTO tb_line(name,city_id,one_money,start_time,travel_money,return_time)
         VALUES(#{name},#{cityId},#{oneMoney},#{startTime},#{travelMoney},#{returnTime})
     </insert>
-    <delete id="delLine">
+    <delete id="delLineById">
         delete from tb_line where id=#{id}
     </delete>
-<!--    <select id="findCitySiteByCityId" resultType="citySite" parameterType="citySite">-->
-<!--		SELECT-->
-<!--            id id,-->
-<!--            NAME NAME-->
-<!--        FROM-->
-<!--            tb_city_site-->
-<!--        WHERE-->
-<!--            city_id = #{cityId}-->
-<!--        AND-->
-<!--            name=#{name}-->
-<!--	</select>-->
-<!--    <update id="updCitySiteByCityId" parameterType="citySite">-->
-<!--        update tb_city_site-->
-<!--        <set>-->
-<!--            <if test="name != null and name != ''">-->
-<!--                name=#{name},-->
-<!--            </if>-->
-<!--            <if test="xPosition != null and xPosition != ''">-->
-<!--                x_position =#{xPosition},-->
-<!--            </if>-->
-<!--            <if test="yPosition != null and yPosition != ''">-->
-<!--                y_position =#{yPosition},-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id=#{id}-->
-<!--    </update>-->
+    <select id="findLineByCityId" resultType="line" parameterType="line">
+		SELECT
+            id id,
+            NAME NAME
+        FROM
+            tb_line
+        WHERE
+            city_id = #{cityId}
+        AND
+            name=#{name}
+	</select>
+    <update id="updLineByLineId" parameterType="line">
+        update tb_line
+        <set>
+            <if test="name != null and name != ''">
+                name=#{name},
+            </if>
+            <if test="oneMoney != null and oneMoney != ''">
+                one_money =#{oneMoney},
+            </if>
+            <if test="travelMoney != null and travelMoney != ''">
+                travel_money =#{travelMoney},
+            </if>
+            <if test="startTime != null and startTime != ''">
+                start_time =#{startTime},
+            </if>
+            <if test="returnTime != null and returnTime != ''">
+                return_time =#{returnTime},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
