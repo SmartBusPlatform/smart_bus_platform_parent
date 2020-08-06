@@ -17,18 +17,22 @@ public interface LineMapper {
 //     * 新增线路
 //     */
     public int insLine(LineChild lineChild);
-//
-//    /**
-//     * 根据城市id查找站点，确保没有冗余的站点名
-//     * @param citySite
-//     * @return
-//     */
-//    public List<Line> findLineByCityId(CitySite citySite);
-//
-//    /**
-//     * 修改站点信息
-//     * @param citySite
-//     * @return
-//     */
-//    public int updCitySiteByCityId(CitySite citySite);
+    /**
+     * 删除线路
+     */
+    public int delLineById(LineChild lineChild);
+
+    /**
+     * 根据城市id查找线路，确保没有冗余的线路名
+     * @param line
+     * @return
+     */
+    public LineChild findLineByCityId(Line line);
+
+    /**
+     * 修改站点信息
+     * @param line
+     * @return
+     */
+    public int updLineByLineId(Line line);
 }

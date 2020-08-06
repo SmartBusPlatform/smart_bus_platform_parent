@@ -14,4 +14,19 @@ public interface LineSiteMapper {
 //     * 新增线路站点关系
 //     */
     public int insLineSite(LineSite lineSite);
+
+    /**
+     * 删除线路站点关系
+     */
+    public int delLineSiteByLineId(LineChild lineChild);
+
+    /**
+     * 查询线路站点关系,始程
+     */
+    public List<LineSite> findLineSiteStartByLineId(LineChild lineChild);
+    /**
+     * 查询线路站点关系,返程
+     */
+    public List<LineSite> findLineSiteBackByLineId(LineChild lineChild);
+
 }

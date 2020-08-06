@@ -38,6 +38,7 @@ public class AreasServiceImpl implements AreasService {
 
     @Override
     public Result findAreasByType(int type) {
+
         List<AreasChild> areasChildList = areasMapper.findAreasByType(type);
         Result result = new Result();
         if(areasChildList==null){

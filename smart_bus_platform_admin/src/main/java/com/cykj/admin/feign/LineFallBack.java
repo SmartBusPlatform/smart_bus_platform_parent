@@ -23,6 +23,23 @@ public class LineFallBack implements LineFeign {
         result.setStatus(202);
         return JSON.toJSONString(result);
     }
+
+    @Override
+    public String delLineById(LineChild lineChild) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
+    @Override
+    public String updLineByLineId(Line line) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
 //
 //    @Override
 //    public String updCitySiteByCityId(CitySite citySite) {

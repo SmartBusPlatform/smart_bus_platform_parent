@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface OpinionMapper {
-    //查询意见列表
+
+    //查询意见列表和数据总量
     List<OpinionInfo> selectOpinionList(HashMap<String, Object> map);
+
+    int selectOpinionCount(HashMap<String, Object> map);
 
     //插入管理员的意见回复
     int insertReplyContent(OpinionInfo opinionInfo);

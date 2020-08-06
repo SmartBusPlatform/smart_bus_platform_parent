@@ -62,4 +62,24 @@
         where id = #{id}
     </update>
 
+    <!--查询线路班次-->
+    <select id="findBusWorkByLineId" parameterType="busWork" resultType="busWorkInfo">
+       SELECT
+            t.time time,
+            b.number number,
+        IF (
+            STRCMP(bw.is_addup ,'否'),
+            '加开',
+          ''
+        ) remarks
+        FROM
+            tb_bus_work bw
+        INNER JOIN tb_time t ON bw.time_id = t.id
+        INNER JOIN tb_bus b ON b.id = bw.bus_id
+        INNER JOIN tb_param p ON p.type_english = 'busDirection'
+        AND p.VALUE= bw.start_begin_or_return
+        AND p.VALUE=#{startBeginOrReturn}
+        WHERE
+            bw.line_id = #{lineId} order by t.id
+    </select>
 </mapper>

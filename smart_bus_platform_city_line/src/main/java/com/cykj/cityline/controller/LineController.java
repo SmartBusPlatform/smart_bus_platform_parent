@@ -7,6 +7,7 @@ import com.cykj.pojo.CitySite;
 import com.cykj.pojo.Line;
 import com.cykj.pojo.LineChild;
 import com.cykj.util.Result;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,8 +49,27 @@ public class LineController {
     public String insLine(@RequestBody LineChild lineChild) {
         return JSON.toJSONString(lineService.insLine(lineChild));
     }
-//    @RequestMapping("updCitySiteByCityId")
-//    public String  updCitySiteByCityId(@RequestBody CitySite citySite) {
-//        return JSON.toJSONString(citySiteService.updCitySiteByCityId(citySite));
-//    }
+    @RequestMapping("delLineById")
+    public String delLineById(@RequestBody LineChild lineChild){
+        Result result = new Result();
+
+        try {
+            int num=lineService.delLineById(lineChild);
+            if(num>0){
+                result.setStatus(200);
+                result.setMsg("删除成功");
+            }else{
+                result.setStatus(201);
+                result.setMsg("删除失败");
+            }
+        } catch (Exception e) {
+            result.setStatus(201);
+            result.setMsg("删除失败");
+        }
+    return  JSON.toJSONString(result);
+    }
+    @RequestMapping("updLineByLineId")
+    public String updLineByLineId(@RequestBody Line line){
+        return JSON.toJSONString(lineService.updLineByLineId(line));
+}
 }

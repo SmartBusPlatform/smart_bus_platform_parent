@@ -29,12 +29,16 @@ public class LineController {
     @RequestMapping("addLine")
     @ResponseBody
     public String addCitySite(@RequestBody LineChild lineChild){
-        System.out.println("lineChild"+lineChild);
         return lineFeign.addLine(lineChild);
     }
-//    @RequestMapping("updCitySiteByCityId")
-//    @ResponseBody
-//    public String updCitySiteByCityId(CitySite citySite){
-//        return citySiteFeign.updCitySiteByCityId(citySite);
-//    }
+    @RequestMapping("delLineById")
+    @ResponseBody
+    public String delLineById(LineChild lineChild){
+        return lineFeign.delLineById(lineChild);
+    }
+    @RequestMapping("updLineByLineId")
+    @ResponseBody
+    public String updLineByLineId(Line line){
+        return lineFeign.updLineByLineId(line);
+    }
 }
