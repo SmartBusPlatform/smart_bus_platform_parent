@@ -66,7 +66,7 @@
                             <input type="text" id="adminAccount" placeholder="请输入查询管理员" class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-filter="sreach" id="search" type="button">
+                            <button class="layui-btn" lay-filter="search" id="search" type="button">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
@@ -86,7 +86,7 @@
                             <th lay-data="{field:'userOpinion'}">意见内容</th>
                             <th lay-data="{field:'opinionTime', sort: true}">时间</th>
                             <th lay-data="{field:'adminAccount', width:80}">处理人员</th>
-                            <th lay-data="{field:'replay', edit: 'text', minWidth: 100}">回复内容</th>
+                            <th lay-data="{field:'replay', minWidth: 100}">回复内容</th>
                             <th lay-data="{field:'replayTime', sort: true}">回复时间</th>
                             <th lay-data="{field:'result'}">处理结果</th>
                             <th lay-data="{fixed: 'right', width:160, align:'left', toolbar: '#barDemo'}"></th>

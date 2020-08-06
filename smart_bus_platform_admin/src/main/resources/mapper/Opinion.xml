@@ -28,6 +28,28 @@
          order by opinion_time desc limit #{startLimit},#{endLimit}
     </select>
 
+<!--    对应上面的查询总数据量-->
+    <select id="selectOpinionCount"  parameterType="java.util.HashMap">
+        select count(*)
+        from  tb_user u, tb_param p, tb_opinion o
+        left join tb_admin a on a.id=o.admin_id
+        <where>
+            o.user_id = u.id and o.state_id = p.value and p.type_english='opinionState'
+            <if test="userPhone!=null and userPhone!=''">
+                and u.phone like concat('%',#{userPhone},'%')
+            </if>
+            <if test="adminAccount!=null and adminAccount!=''">
+                and a.account like concat('%',#{adminAccount},'%')
+            </if>
+            <if test="state != null and state != ''">
+                and o.state_id = #{state}
+            </if>
+            <if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+                and o.opinion_time between #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+
 <!--    更新管理员的意见回复-->
     <update id="insertReplyContent" parameterType="opinionInfo">
         update tb_opinion set admin_id = #{adminId}, replay = #{replay}, replay_time = now(), state_id = 1

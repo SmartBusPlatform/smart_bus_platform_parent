@@ -54,19 +54,19 @@
                         <%--                            <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"></div>--%>
                         <%--                        <div class="layui-inline layui-show-xs-block">--%>
                         <%--                            <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>--%>
-                        <div class="layui-inline layui-show-xs-block">
-                            <input type="text" name="fileName" placeholder="请输入文件名" autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                        <div class="layui-input-block layui-inline layui-show-xs-block">
-                            <select id="chooseType" lay-search>
-                                <option value="">请选择文件类型</option>
-                            </select>
-                        </div>
-                        <div class="layui-inline layui-show-xs-block">
-                            <button class="layui-btn" lay-filter="sreach" id="sreach" type="button">
-                                <i class="layui-icon">&#xe615;</i></button>
-                        </div>
+<%--                        <div class="layui-inline layui-show-xs-block">--%>
+<%--                            <input type="text" name="fileName" placeholder="请输入文件名" autocomplete="off"--%>
+<%--                                   class="layui-input">--%>
+<%--                        </div>--%>
+<%--                        <div class="layui-input-block layui-inline layui-show-xs-block">--%>
+<%--                            <select id="chooseType" lay-search>--%>
+<%--                                <option value="">请选择文件类型</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
+<%--                        <div class="layui-inline layui-show-xs-block">--%>
+<%--                            <button class="layui-btn" lay-filter="sreach" id="sreach" type="button">--%>
+<%--                                <i class="layui-icon">&#xe615;</i></button>--%>
+<%--                        </div>--%>
                     </form>
                 </div>
                 <div class="layui-card-body ">

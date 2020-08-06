@@ -20,10 +20,11 @@ public class OpinionServiceImpl implements OpinionService {
     public LayuiData selectOpinionList(HashMap<String, Object> map) {
 
         List<OpinionInfo> opinionInfos = opinionMapper.selectOpinionList(map);
+        int i = opinionMapper.selectOpinionCount(map);
         LayuiData layuiData = new LayuiData();
         if (opinionInfos != null || opinionInfos.size() != 0) {
             layuiData.setData(opinionInfos);
-            layuiData.setCount(opinionInfos.size());
+            layuiData.setCount(i);
             layuiData.setCode(0);
         }
         return layuiData;
