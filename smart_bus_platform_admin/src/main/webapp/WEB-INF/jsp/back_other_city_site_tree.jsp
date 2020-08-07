@@ -181,10 +181,6 @@
     </div>
 
 </div>
-<%--<div class="site-text layui-row" hidden id="findMapSelection">--%>
-<%--    <div id="container2" style="margin-top: 0.2cm;width:100%;height: 100%;"></div>--%>
-<%--    <div id="tip" class='info' style='min-width:18rem;'></div>--%>
-<%--</div>--%>
 <%--自增--%>
 <script id="index" type="text/html">
 {{d.LAY_TABLE_INDEX+1}}
