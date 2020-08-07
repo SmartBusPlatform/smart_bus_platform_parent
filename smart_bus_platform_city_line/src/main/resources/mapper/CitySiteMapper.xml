@@ -9,7 +9,7 @@
             cs. NAME NAME,
             cs.x_position xPosition,
             y_position yPosition,
-            GROUP_CONCAT(l. NAME) throughLine
+            GROUP_CONCAT(DISTINCT l. NAME) throughLine
         FROM
             tb_areas a
         INNER JOIN tb_city_site cs ON a.id = cs.city_id and a.state_id=1

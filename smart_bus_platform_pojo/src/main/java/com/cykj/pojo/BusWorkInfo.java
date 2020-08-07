@@ -11,7 +11,8 @@ public class BusWorkInfo extends BusWork{
     private String lineName;    //线路名
     private String number;  //车牌号
     private int allTime; //总消耗时间
-
+    private String remarks;//备注
+    private String time;//时刻
     public String getStartTime() {
         return startTime;
     }
@@ -82,5 +83,21 @@ public class BusWorkInfo extends BusWork{
 
     public void setAllTime(int allTime) {
         this.allTime = allTime;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

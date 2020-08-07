@@ -55,7 +55,6 @@ public class CitySiteController {
     }
     @RequestMapping("getCitySiteAllByCityId")
     public String getCitySiteAllByCityId(@RequestBody CitySite citySite) {
-        System.out.println("getCitySiteAllByCityId:"+citySite);
         return JSON.toJSONString(citySiteService.findCitySiteAllByCityId(citySite));
     }
 }

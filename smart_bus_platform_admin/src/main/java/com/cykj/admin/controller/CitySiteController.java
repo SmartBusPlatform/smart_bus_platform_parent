@@ -24,7 +24,6 @@ public class CitySiteController {
     @RequestMapping("addCitySite")
     @ResponseBody
     public String addCitySite(CitySite citySite){
-        System.out.println("city:"+citySite);
         return citySiteFeign.addCitySite(citySite);
     }
     @RequestMapping("updCitySiteByCityId")
@@ -35,7 +34,6 @@ public class CitySiteController {
     @RequestMapping("getCitySiteAllByCityId")
     @ResponseBody
     public String getCitySiteAllByCityId(CitySite citySite){
-        System.out.println("sdfdsafsfsdafasdfasdfsad:"+citySite);
         return citySiteFeign.getCitySiteAllByCityId(citySite);
     }
 }

@@ -47,7 +47,6 @@ public class LineServiceImpl implements LineService {
         int num = lineMapper.insLine(lineChild);
         int line_id=num;
         Result result = new Result();
-        System.out.println("i:"+num);
         if(num!=0){
             for (int k=0;k<lineChild.getArrs().size();k++){
                 LineSite lineSite = new LineSite();
@@ -80,6 +79,44 @@ public class LineServiceImpl implements LineService {
             return result;
         }
     }
+    /**
+     * 删除线路
+     */
+    @Transactional
+    public int delLineById(LineChild lineChild) throws  Exception{
+        int num = lineSiteMapper.delLineSiteByLineId(lineChild);
+        if(num>0){
+           num+=lineMapper.delLineById(lineChild);
+        }
+        return num;
+    }
+
+    @Override
+    public LineChild findLineByCityId(Line line) {
+        return lineMapper.findLineByCityId(line);
+    }
+
+    public Result updLineByLineId(Line line) {
+                LineChild lineByCityId = lineMapper.findLineByCityId(line);
+        Result result = new Result();
+        if(lineByCityId==null){
+            int num = lineMapper.updLineByLineId(line);
+
+            if(num==1){
+                result.setStatus(200);
+                result.setMsg("更新线路信息成功");
+                return result;
+            }
+            result.setStatus(201);
+            result.setMsg("更新线路信失败");
+        }else{
+            result.setStatus(201);
+            result.setMsg("当前线路名已存在，请重新输入");
+        }
+
+        return result;
+    }
+
 //
 //    @Override
 //    public Result insCitySite(CitySite citySite) {

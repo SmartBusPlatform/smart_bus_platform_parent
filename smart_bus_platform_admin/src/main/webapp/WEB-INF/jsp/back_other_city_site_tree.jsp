@@ -45,73 +45,42 @@
         /*    height: 10px;*/
         /*}*/
 
-        .maginTop{
-            margin-top: 20px;
-            margin-left: 30px;
-        }
-        .tree{
-            float: left;
-            width: 15%;
-            height:680px;
-            overflow-y: auto;
-            background-color: white;
-            border: 0.5px solid #393D49;
-        }
-        .right{
-            float: left;
-            width: 80%;
-            margin-left: 2.5%;
-            background-color: white;
-            height: 680px;
-            overflow-y: auto;
-        }
-        .btnWidth{
-            margin-top: 1px;
-            width: 50px;
-        }
     </style>
 </head>
 
-<body style="background-color: #F0F0F0">
+<body class="">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
 <div class="x-body">
-    <div class="allBorder">
-        <%--省市树状--%>
-        <div class="tree" >
-            <ul id="citySite_tree" lay-filter="citySite_tree-filter" style=" "></ul>
-        </div>
-        <%--右侧列表--%>
-        <div class="right">
-            <div class="maginTop">
-                <h1>城市站点配置</h1>
-            </div>
-            <div class="layui-row maginTop">
-                <form class="layui-form layui-col-md12 x-so">
-                    <h3 class="layui-inline">站点名称：</h3>
-                    <div class="layui-input-inline">
-                        <input type="text" name="cityName"  placeholder="请输入站点名称" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-input-inline layui-col-lg-offset1">
-                        <button class="layui-btn btnWidth"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-                        <a class="layui-btn layui-btn-normal layui-btn-xs btnWidth" id="add">新增</a>
-                    </div>
-                </form>
-            </div>
-            <div class="layui-fluid">
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md12">
-                        <div class="layui-card">
-                            <div class="layui-card-body ">
-                                <table class="layui-table" id="citySite_table" lay-filter="citySite-filter">
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <%--省市树状--%>
+    <div style="float: left;width: 18%; height:600px;overflow: scroll;" >
+        <ul id="citySite_tree" lay-filter="citySite_tree-filter" style=" "></ul>
+    </div>
+    <%--右侧列表--%>
+    <div style="float: left;margin:  50px 3%;width: 70%">
+        <h1>城市站点配置</h1>
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so" method="post">
+
+                站点名称:<input type="text" name="siteName"  placeholder="请输入站点名称" autocomplete="off" class="layui-input">
+
+                <button class="layui-btn" type="button"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" id="add">新增</a>
+            </form>
+
         </div>
         <table id="citySite_table"  lay-filter="citySite-filter" ></table>
     </div>
 </div>
+<%--新增站点--%>
 <div class="site-text layui-row" hidden id="addForm"  >
     <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">
         <div class="layui-form-item">
@@ -236,7 +205,7 @@
     //当前点击城市
     var city;
     var cityId;
-    layui.use(['table','tree'], function(){
+    layui.use(['table','tree','form'], function(){
         var tree = layui.tree;
         var table = layui.table;
         var form = layui.form;
@@ -257,18 +226,19 @@
                             cityId=obj.data.id;
                             table.render({
                                 elem: '#citySite_table',
-                                url:'${pageContext.request.contextPath}/citySite/getCitySiteByCityId',
+                                url:'${pageContext.request.contextPath}/citySite/getCitySiteByPage',
                                 where:{
                                     "cityId":obj.data.id
                                 },
                                 cols: [[
                                     {type:'checkbox'},
-                                    {field: 'sorId',title:'序号',templet: '#index'}
+                                    {field: 'sorId',title:'序号',templet: '#index'},
+                                    {field: 'id',title:'id',hide:'true'}
                                     ,{field: 'name', title: '站点名称',sort: true,  }
                                     ,{field: 'xPosition', title: 'x坐标' }
                                     ,{field: 'yPosition',title:'y坐标' }
                                     ,{field: 'throughLine',title:'经过线路'}
-                                        ,{field: '',title:'操作' ,templet:'#cityLine_tablebar'}
+                                    ,{field: '',title:'操作' ,templet:'#cityLine_tablebar',minWidth:200}
                                 ]],
                                 page:true,
                                 limit:5,
@@ -541,7 +511,7 @@
                 $("#add_cityName").val(city);
                 $("#add_cityName").attr("cityId",cityId);
                 $("#add_provinceName").val(province);
-                $("#add_provinceName").attr("provinceId",provinceId)
+                $("#add_provinceName").attr("provinceId",provinceId);
             },
             yes:function (num,layero) {
                 layer.confirm('确认是否新增信息?', {icon: 3, title:'提示'}, function(index){

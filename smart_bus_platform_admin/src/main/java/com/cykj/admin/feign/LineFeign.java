@@ -17,7 +17,9 @@ public interface LineFeign {
 
     @RequestMapping("line/addLine")
     public String addLine(@RequestBody LineChild lineChild);
-//    @RequestMapping("citySite/updCitySiteByCityId")
-//    public String updCitySiteByCityId(@RequestBody CitySite citySite);
+    @RequestMapping("line/delLineById")
+    public String delLineById(@RequestBody LineChild lineChild);
+    @RequestMapping("line/updLineByLineId")
+    public String updLineByLineId(@RequestBody Line line);
     }
 

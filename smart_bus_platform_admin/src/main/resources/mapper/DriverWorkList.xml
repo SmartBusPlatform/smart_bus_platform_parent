@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace需要和Mapper接口对应-->
+<mapper namespace="com.cykj.admin.mapper.DriverWorkMapper">
+
+<!--    根据条件查询司机列表和数据总量-->
+    <select id="selectDriverList" parameterType="java.util.HashMap" resultType="com.cykj.pojo.AdminInfo">
+        select a.id, a.account, a.name, a.money, a.areas_id, a.phone, a.work_site_id, s.name as work_site_name
+        from tb_admin a, tb_city_site s
+        <where>
+            a.areas_id = #{cityId} and a.role_id = 4 and a.areas_id = s.city_id and a.work_site_id = s.id
+            <if test="site != null and site != ''">
+                and s.name like concat('%',#{site},'%')
+            </if>
+            <if test="name != null and name != ''">
+                and a.name like concat('%',#{name},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and a.phone like concat('%',#{phone},'%')
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+    <select id="selectDriverListCount" parameterType="java.util.HashMap" resultType="int">
+        select count(*)
+        from tb_admin a, tb_city_site s
+        <where>
+            a.areas_id = #{cityId} and a.role_id = 4 and a.areas_id = s.city_id and a.work_site_id = s.id
+            <if test="site != null and site != ''">
+                and s.name like concat('%',#{site},'%')
+            </if>
+            <if test="name != null and name != ''">
+                and a.name like concat('%',#{name},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and a.phone like concat('%',#{phone},'%')
+            </if>
+        </where>
+    </select>
+
+<!--    修改司机信息-->
+    <update id="updateDriver" parameterType="com.cykj.pojo.AdminInfo">
+        update tb_admin set name = #{name}, phone = #{phone} where id = #{id}
+    </update>
+</mapper>
