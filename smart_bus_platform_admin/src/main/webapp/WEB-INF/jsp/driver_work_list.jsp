@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html class="x-admin-sm">
 
@@ -59,22 +60,18 @@
         <%--右侧列表--%>
         <div class="right">
             <div class="maginTop">
-                <h1>司机名单</h1>
+                <h1>司机排班</h1>
             </div>
             <div class="layui-row maginTop">
                 <form class="layui-form layui-col-md12 x-so">
-                    <div class="layui-input-inline">
-                        <h3 class="layui-inline">姓名：</h3>
-                        <input type="text" id="name"  placeholder="请输入查找姓名" autocomplete="off" class="layui-input">
+                    <div class="layui-inline layui-show-xs-block">
+                        <h3 class="layui-inline">日期：</h3>
+                        <input class="layui-input search-input" type="text" autocomplete="off" placeholder="选择日期" id="chooseDate">
                     </div>
-                    <div class="layui-input-inline">
-                        <h3 class="layui-inline">手机号：</h3>
-                        <input type="text" id="phone"  placeholder="请输入查找手机号" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-input-inline">
-                        <h3 class="layui-inline">站点：</h3>
-                        <input type="text" id="site"  placeholder="请输入查找站点" autocomplete="off" class="layui-input">
-                    </div>
+<%--                    <div class="layui-input-inline">--%>
+<%--                        <h3 class="layui-inline">姓名：</h3>--%>
+<%--                        <input type="text" id="name"  placeholder="请输入查找姓名" autocomplete="off" class="layui-input">--%>
+<%--                    </div>--%>
                     <div class="layui-inline layui-show-xs-block">
                         <button class="layui-btn" lay-filter="search" id="search" type="button">
                             <i class="layui-icon">&#xe615;</i>
@@ -88,8 +85,7 @@
                     <div class="layui-col-md12">
                         <div class="layui-card">
                             <div class="layui-card-body ">
-                                <table class="layui-table" id="table" lay-filter="test">
-                                </table>
+                                <table class="layui-table" id="table" lay-filter="test"></table>
                             </div>
                         </div>
                     </div>
@@ -98,72 +94,77 @@
         </div>
     </div>
 </div>
-<div class="site-text layui-row" hidden id="addForm"  >
-<%--    <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">--%>
-<%--        <div class="layui-form-item">--%>
-<%--            <label class="layui-form-label">省:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" id="add_provinceName" name="cityName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-form-item">--%>
 
-<%--            <label class="layui-form-label">城市名称:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" id="add_cityName" name="add_cityName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-form-item">--%>
 
-<%--            <label class="layui-form-label">站点名称:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" id="add_siteName" name="add_siteName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-form-item">--%>
-
-<%--            <label class="layui-form-label">x坐标:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" id="add_xPosition" name="add_xPosition" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-form-item">--%>
-
-<%--            <label class="layui-form-label">y坐标:</label>--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <input type="text" id="add_yPosition" name="add_yPosition" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="layui-form-item">--%>
-<%--            <div class="layui-input-block">--%>
-<%--                <button class="layui-btn" type="button">地图选点</button>--%>
-<%--            </div>--%>
-
-<%--        </div>--%>
-
-<%--    </form>--%>
-</div>
 <%--自增--%>
 <script id="index" type="text/html">
-{{d.LAY_TABLE_INDEX+1}}
+    {{d.LAY_TABLE_INDEX+1}}
 </script>
-<%--表格bar--%>
-<script type="text/html" id="tableBar">
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="update">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="find">工作量查看</a>
+<%--判断当前日期是否有上班--%>
+<script id="monday" type="text/html">
+    {{# if(d.monday == null){ }}
+        <a class="layui-btn layui-btn-lg" lay-event="monday" id="mondayBtn">操作</a>
+    {{# }  else { }}
+    {{d.monday}}
+    {{# } }}
+</script>
+<script id="tuesday" type="text/html">
+    {{# if(d.tuesday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="tuesday" id="tuesdayBtn">操作</a>
+    {{# }  else { }}
+    {{d.tuesday}}
+    {{# } }}
+</script>
+<script id="wednesday" type="text/html">
+    {{# if(d.wednesday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="wednesday" id="wednesdayBtn">操作</a>
+    {{# } else { }}
+    {{d.wednesday}}
+    {{# } }}
+</script>
+<script id="thursday" type="text/html">
+    {{# if(d.thursday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="thursday" id="thursdayBtn">操作</a>
+    {{# }  else { }}
+    {{d.thursday}}
+    {{# } }}
+</script>
+<script id="friday" type="text/html">
+    {{# if(d.friday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="friday" id="fridayBtn">操作</a>
+    {{# }  else { }}
+    {{d.friday}}
+    {{# } }}
+</script>
+<script id="saturday" type="text/html">
+    {{# if(d.saturday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="saturday" id="saturdayBtn">操作</a>
+    {{# }  else { }}
+    {{d.saturday}}
+    {{# } }}
+</script>
+<script id="sunday" type="text/html">
+    {{# if(d.sunday == null){ }}
+    <a class="layui-btn layui-btn-lg" lay-event="sunday" id="sundayBtn">操作</a>
+    {{# }  else { }}
+    {{d.sunday}}
+    {{# } }}
 </script>
 <script>
     //当前点击省份
     var province;
     var provinceId;
+    var weekList=[];
     //当前点击城市
     var city;
     var cityId;
-    layui.use(['table','tree'], function(){
+    layui.use(['table','tree','form'], function(){
+        var form = layui.form;
         var tree = layui.tree;
         var table = layui.table;
         var layer = layui.layer;
-        var citeId = '';
+        var cityId = '';
+        // var weekList;
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
@@ -171,10 +172,6 @@
             dataType: "json",
             success:function (data) {
                 //渲染
-                console.log(new Date().getDay())
-                console.log(new Date().getDate())
-                console.log(new Date().getTime())
-                console.log(new Date().toLocaleDateString())
                 var inst1 = tree.render({
                     elem: '#citySite_tree'  //绑定元素
                     ,data: data.data
@@ -185,42 +182,57 @@
                         if(obj.data.children==undefined){
                             city=obj.data.title;
                             cityId=obj.data.id;
-                            table.render({
-                                elem: '#table',
-                                url:'${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
-                                where:{
-                                    "curDate": new Date().toLocaleDateString()
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate',
+                                method: 'post',
+                                dataType: 'json',
+                                data: {
+                                    'timestamp':new Date().getTime()
                                 },
-                                cols: [[
-                                    // {type:'checkbox'},
-                                    {title:'序号',templet: '#index'}
-                                    ,{title:'星期一'+cityId,templet: '#index'}
-                                    ,{field: 'name', title: '姓名' }
-                                    ,{field: 'phone', title: '电话' }
-                                    ,{field: 'workSiteName',title:'上班站点' }
-                                    ,{field: '',title:'操作', width: 200,templet:'#tableBar'}
-                                ]],
-                                page:true,
-                                // limit:5,
-                                // limits:[5,10,15,20,25],
-                                method:'post',
-                                request:{
-                                    pageName:'page',
-                                    limitName:'limit',
-                                },
-                                // response:{
-                                //     statusName:'code',
-                                //     statusCode:200,
-                                // },
-                                parseData: function(res){ //res 即为原始返回的数据
-                                    return {
-                                        "code":res.code,
-                                        "count": res.count, //解析数据长度
-                                        "data": res.data,
-                                    };
+                                success:function (msg) {
+                                    // if (msg == 'success') {
+                                        console.log("msg="+msg)
+                                        weekList=msg;
+                                    // }
+                                    table.render({
+                                        elem: '#table',
+                                        url:'${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
+                                        where:{
+                                            "cityId": cityId,
+                                            "timestamp": new Date().getTime()
+                                        },
+                                        cols: [[
+                                            // {type:'checkbox'},
+                                            // {title:'序号',templet: '#index'}
+                                            {field: "driverName",width:'75'}
+                                            ,{title: weekList[0]+' 星期一', field: "monday",width:'140',toolbar : '#monday' }
+                                            ,{title: weekList[1]+' 星期二', field: "tuesday" ,width:'140',toolbar : '#tuesday'}
+                                            ,{title: weekList[2]+' 星期三', field: "wednesday",width:'140',toolbar : '#wednesday'}
+                                            ,{title: weekList[3]+' 星期四', field: "thursday",width:'140',toolbar : '#thursday'}
+                                            ,{title: weekList[4]+' 星期五', field: "friday",width:'140',toolbar : '#friday'}
+                                            ,{title: weekList[5]+' 星期六', field: "saturday",width:'140',toolbar : '#saturday'}
+                                            ,{title: weekList[6]+' 星期日', field: "sunday",width:'140',toolbar : '#sunday'}
+                                        ]],
+                                        page: false,
+                                        method:'post',
+                                        request:{
+                                            pageName:'page',
+                                            limitName:'limit',
+                                        },
+                                        // response:{
+                                        //     statusName:'code',
+                                        //     statusCode:200,
+                                        // },
+                                        parseData: function(res){ //res 即为原始返回的数据
+                                            console.log(res);
+                                            return {
+                                                "code":0,
+                                                "data": res,
+                                            };
+                                        }
+                                    });
                                 }
-                            });
-
+                            })
                         }else{
                             province=obj.data.title;
                             provinceId=obj.data.id;
@@ -231,52 +243,69 @@
                 $($("#citySite_tree").find(".layui-tree-entry")[0]).find('.layui-tree-txt').click();
                 //默认第一次点击第一个父节点下的第一个子节点
                 $($($("#citySite_tree").find(".layui-tree-entry")[0]).next().find(".layui-tree-set")[0]).find(".layui-tree-txt").click();
-                // $(".layui-tree-set").click(function (event) {
-                //     alert(3);
-                //     event.stopPropagation();
-                // })
             }
         });
 
-        // //渲染
-        // var inst1 = tree.render({
-        //     elem: '#demo'  //绑定元素
-        //     ,data: [{
-        //         title: '江西' //一级菜单
-        //         ,children: [{
-        //             title: '南昌' //二级菜单
-        //             ,children: [{
-        //                 title: '高新区' //三级菜单
-        //                 //…… //以此类推，可无限层级
-        //             }]
-        //         }]
-        //     },{
-        //         title: '陕西' //一级菜单
-        //         ,children: [{
-        //             title: '西安' //二级菜单
-        //         }]
-        //     }]
-        // });
         //根据条件查找
         $("#search").click(function () {
-            var cityId = cityId;
-            var name = $("#name").val();
-            var phone = $("#phone").val();
-            var site = $("#site").val();
+            var val = $("#chooseDate").val()
+            var date = new Date(val);
+            var timestamp = date.getTime();
 
-            if (name != null || name != null || site != null){
-                table.reload('table',{
-                    url: '${pageContext.request.contextPath}/driverWorkController/selectDriverList',
-                    page:{
-                        curr: 1
-                    },
-                    where:{
-                        cityId: cityId,
-                        name: name,
-                        phone: phone,
-                        site: site
+            if (val != null && val != ""){
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate'
+                    ,method: 'post'
+                    ,dataType: 'json'
+                    ,data:{
+                        'timestamp': timestamp
+                    }
+                    ,success:function (msg) {
+                        weekList = msg;
+                        console.log(weekList)
+
+                        // tableRender(window.weekList);
+                        table.render({
+                            elem: '#table',
+                            url:'${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
+                            where:{
+                                "cityId": cityId,
+                                "timestamp": timestamp
+                            },
+                            cols: [[
+                                // {type:'checkbox'},
+                                // {title:'序号',templet: '#index'}
+                                {field: "driverName",width:'75'}
+                                ,{title: weekList[0]+' 星期一', field: "monday",width:'140',toolbar : '#monday' }
+                                ,{title: weekList[1]+' 星期二', field: "tuesday" ,width:'140',toolbar : '#tuesday'}
+                                ,{title: weekList[2]+' 星期三', field: "wednesday",width:'140',toolbar : '#wednesday'}
+                                ,{title: weekList[3]+' 星期四', field: "thursday",width:'140',toolbar : '#thursday'}
+                                ,{title: weekList[4]+' 星期五', field: "friday",width:'140',toolbar : '#friday'}
+                                ,{title: weekList[5]+' 星期六', field: "saturday",width:'140',toolbar : '#saturday'}
+                                ,{title: weekList[6]+' 星期日', field: "sunday",width:'140',toolbar : '#sunday'}
+                            ]],
+                            page: false,
+                            method:'post',
+                            request:{
+                                pageName:'page',
+                                limitName:'limit',
+                            },
+                            // response:{
+                            //     statusName:'code',
+                            //     statusCode:200,
+                            // },
+                            parseData: function(res){ //res 即为原始返回的数据
+                                console.log(res);
+                                return {
+                                    "code":0,
+                                    "data": res,
+                                };
+                            }
+                        });
+
                     }
                 })
+
             }
         })
 
@@ -284,169 +313,141 @@
         table.on('tool(test)',function (obj) {
             var data = obj.data;
             var layEven = obj.event;
-            console.log(data)
-            console.log(layEven)
-            console.log(obj.tr)
-            if (layEven == 'update') {
-                layer.open({
-                    type:1
-                    ,title:false
-                    ,resize: false
-                    ,content: '<div style="padding:15px 100px;font-size: 20px">信息修改</div>' +
-                        '<div style="padding: 15px;font-size: 15px">司机姓名：<input id="updateName" value="' +data.name+ '"></div>' +
-                        '<div style="padding: 15px;font-size: 15px">司机电话：<input id="updatePhone" value="' +data.phone+ '"></div>'
-                    ,btn:['保存','取消']
-                    ,btnAlign: 'c'
-                    ,yes:function (index) {
-                        var name = $("#updateName").val();
-                        var phone = $("#updatePhone").val();
+            var date;
+            console.log(weekList[0])
 
-                        if (phone == '' || name == '') {
-                            layer.msg("修改信息不能为空");
-                        } else if (phone == data.phone && name == data.name) {
-                            layer.msg("您还未做出修改");
-                        } else {
-                            layer.confirm('确认提交？',{icon:3,title:'提示'},function () {
-                                $.ajax({
-                                    url:'${pageContext.request.contextPath}/driverWorkController/updateDriver'
-                                    ,type: 'post'
-                                    ,data :{
-                                        'name': name,
-                                        'phone': phone,
-                                        'id': data.id
-                                    },
-                                    success:function (msg) {
-                                        debugger
-                                        if (msg == 'success') {
-                                            layer.close(index);
-                                            layer.msg('保存成功', {time: 1500}, function () {
-                                                location.reload();
-                                            });
-                                        } else {
-                                            layer.msg('出错啦，请联系管理员');
-                                        }
-                                    }
-                                })
-                            })
-                        }
-                    }
-                })
+            if (layEven == 'monday') {
+                date = weekList[0]
             }
+            if (layEven == 'tuesday') {
+                date = weekList[1]
+            }
+            if (layEven == 'wednesday') {
+                date = weekList[2]
+            }
+            if (layEven == 'thursday') {
+                date = weekList[3]
+            }
+            if (layEven == 'friday') {
+                date = weekList[4]
+            }
+            if (layEven == 'saturday') {
+                date = weekList[5]
+            }
+            if (layEven == 'sunday') {
+                date = weekList[6]
+            }
+            layer.open({
+                type:1
+                ,title:false
+                ,resize: false
+                ,btn:['排班','休假']
+                ,btnAlign: 'c'
+                ,yes:function (index) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/driverWorkListController/selectCityBus'
+                        ,method: 'post'
+                        ,dataType: 'json'
+                        ,data: {
+                            'cityId': cityId
+                            ,'date': date
+                        }
+                        , success:function (msg) {
+                            //这个清空需要放在前头，否则会取不到值(重置初始化一定要养成要使用前清空的习惯)
+                            $("select[name='showBus']").empty();
+                            console.log(msg)
+                            $("select[name='showBus']").append("<option value='-1' disabled selected hidden>请选择车辆</option>");
+                            $.each(msg,function (index,item) {
+                                var id = msg[index].id;
+                                var number = msg[index].number
+                                $("select[name='showBus']").append('<option value="' + id + '">' + number + '</option>');
+                                form.render('select');
+                            })
+                            layer.open({
+                                type: 1
+                                , title: '选择车辆'
+                                , resize: false
+                                , area: ['250px','300px']
+                                , btn: ['确定', '取消']
+                                , btnAlign: 'c'
+                                , content: $("#addWork")
+                                , yes: function () {
+                                    form.render('select');
+                                    if ($("select[name='showBus']").val() != null && $("select[name='showBus']").val() != "") {
+                                        $.ajax({
+                                            url: '${pageContext.request.contextPath}/driverWorkListController/setDriverWork'
+                                            , method: 'post'
+                                            , data: {
+                                                'driverId': data.driverId
+                                                , 'busId': $("select[name='showBus']").val()
+                                                , 'date': date
+                                            }
+                                            , success: function (msg) {
+                                                if (msg == 'success') {
+                                                    layer.msg('提交成功', {time: 1500}, function () {
+                                                        location.reload();
+                                                    });
+                                                } else {
+                                                    layer.msg('出错啦，请联系管理员')
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            })
+
+                        }
+                    })
+                }
+                ,btn2:function () {
+                    layer.confirm('是否确认休假',{icon:3,title:'提示'},function (index) {
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/driverWorkListController/setVacation'
+                            ,type: 'post'
+                            ,data:{
+                                'driverId':data.driverId
+                                ,'date': date
+                            }
+                            ,success:function (msg) {
+                                if (msg == 'success') {
+                                    layer.close(index);
+                                    layer.msg('设置成功', {time: 1500}, function () {
+                                        location.reload();
+                                    });
+                                } else {
+                                    layer.msg('出错啦，请联系管理员')
+                                }
+                            }
+                        })
+                    })
+                }
+            })
         })
-
     });
-
-
-
-    //新增站点
-    $("#add").click(function () {
-        <%--layer.open({--%>
-        <%--    title: '新增站点',--%>
-        <%--    type: 1,--%>
-        <%--    area: ['35%', '80%'],--%>
-        <%--    offset: 'auto',--%>
-        <%--    maxmin: true,--%>
-        <%--    shadeClose: true,--%>
-        <%--    content: $('#addForm'),--%>
-        <%--    btn: ['确定', '取消'],--%>
-        <%--    shade: [0.8, '#393D49'],--%>
-        <%--    success: function (layero, index) {--%>
-        <%--        $("#add_cityName").val("");--%>
-        <%--        $("#add_provinceName").val("");--%>
-        <%--        $("#add_cityName").val(city);--%>
-        <%--        $("#add_cityName").attr("cityId",cityId);--%>
-        <%--        $("#add_provinceName").val(province);--%>
-        <%--        $("#add_provinceName").attr("provinceId",provinceId)--%>
-        <%--    },--%>
-        <%--    yes:function (num,layero) {--%>
-        <%--        layer.confirm('确认是否新增信息?', {icon: 3, title:'提示'}, function(index){--%>
-        <%--            if($("#add_cityName").val().trim().length>0){--%>
-        <%--                if($("#add_provinceName").val().trim().length>0){--%>
-        <%--                    if($("#add_siteName").val().trim().length>0){--%>
-        <%--                        if(checkLong($("#add_xPosition").val().trim())){--%>
-        <%--                            if(checkLong($("#add_yPosition").val().trim())){--%>
-        <%--                                &lt;%&ndash;$.ajax({&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    type: "post",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    url: "${pageContext.request.contextPath}/areas/addAreas",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    data: {"cityName":$("#add_cityName").val(),"provinceId":$("#add_provinceName").val()},&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    dataType: "json",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    success: function(data){&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;        if(data.status==200){&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            layer.msg(data.msg,{&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;                time:1000&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            },function () {&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;                window.location.reload();&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            });&ndash;%&gt;--%>
-
-        <%--                                &lt;%&ndash;        }else{&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            layer.msg(data.msg);&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;        }&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    }&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;});&ndash;%&gt;--%>
-        <%--                            }else{--%>
-        <%--                                layer.msg('纬度整数部分为0-180,小数部分为0到6位!', {--%>
-        <%--                                    btn: ['明白了',]--%>
-        <%--                                });--%>
-        <%--                            }--%>
-        <%--                        }else{--%>
-        <%--                            layer.msg('经度整数部分为0-180,小数部分为0到6位!', {--%>
-        <%--                                btn: ['明白了',]--%>
-        <%--                            });--%>
-        <%--                        }--%>
-
-        <%--                    }else{--%>
-        <%--                        layer.msg('站点的值不能为空', {--%>
-        <%--                            btn: ['明白了',]--%>
-        <%--                        });--%>
-        <%--                    }--%>
-
-        <%--                }else{--%>
-        <%--                    layer.msg('省份的值不能为空', {--%>
-        <%--                        btn: ['明白了',]--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            }else{--%>
-        <%--                layer.msg('城市名称不能为空', {--%>
-        <%--                    btn: ['明白了']--%>
-        <%--                });--%>
-        <%--            }--%>
-
-
-        <%--        });--%>
-        <%--    }--%>
-
-        <%--});--%>
-    })
-
-    //校验经度是否符合规范
-    //校验经度x
-    function checkLong(longitude){
-        var longrg = /^(\-|\+)?(((\d|[1-9]\d|1[0-7]\d|0{1,3})\.\d{0,6})|(\d|[1-9]\d|1[0-7]\d|0{1,3})|180\.0{0,6}|180)$/;
-        if(!longrg.test(longitude)){
-            return false;
-        }
-        return true;
-    }
-
-    //校验纬度是否符合规范
-    //纬度y
-    function checkLat(latitude){
-        var latreg = /^(\-|\+)?([0-8]?\d{1}\.\d{0,6}|90\.0{0,6}|[0-8]?\d{1}|90)$/;
-        if(!latreg.test(latitude)){
-            return '纬度整数部分为0-90,小数部分为0到6位!';
-        }
-        return true;
-    }
 </script>
 
 
 <script>
-
-
-
+layui.use(['laydate','form'],
+    function () {
+        var laydate = layui.laydate;
+        var form = layui.form;
+        laydate.render({
+            elem: '#chooseDate',
+            trigger: 'click'
+        })
+    })
 
 </script>
-
 </body>
+<form class="layui-form" hidden id="addWork" >
+    <div>
+        <div style="width: 200px; height: 50px;padding-left: 25px;padding-top: 10px">
+            <select name="showBus">
+                <option value="1">123</option>
+            </select>
+        </div>
 
+    </div>
+</form>
 </html>

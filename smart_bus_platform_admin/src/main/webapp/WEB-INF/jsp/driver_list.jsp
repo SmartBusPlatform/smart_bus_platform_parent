@@ -259,7 +259,7 @@
             var phone = $("#phone").val();
             var site = $("#site").val();
 
-            if (name != null || name != null || site != null){
+            if (name != null && name != null && site != null){
                 table.reload('table',{
                     url: '${pageContext.request.contextPath}/driverWorkController/selectDriverList',
                     page:{
@@ -331,107 +331,6 @@
 
     });
 
-
-
-    //新增站点
-    $("#add").click(function () {
-        <%--layer.open({--%>
-        <%--    title: '新增站点',--%>
-        <%--    type: 1,--%>
-        <%--    area: ['35%', '80%'],--%>
-        <%--    offset: 'auto',--%>
-        <%--    maxmin: true,--%>
-        <%--    shadeClose: true,--%>
-        <%--    content: $('#addForm'),--%>
-        <%--    btn: ['确定', '取消'],--%>
-        <%--    shade: [0.8, '#393D49'],--%>
-        <%--    success: function (layero, index) {--%>
-        <%--        $("#add_cityName").val("");--%>
-        <%--        $("#add_provinceName").val("");--%>
-        <%--        $("#add_cityName").val(city);--%>
-        <%--        $("#add_cityName").attr("cityId",cityId);--%>
-        <%--        $("#add_provinceName").val(province);--%>
-        <%--        $("#add_provinceName").attr("provinceId",provinceId)--%>
-        <%--    },--%>
-        <%--    yes:function (num,layero) {--%>
-        <%--        layer.confirm('确认是否新增信息?', {icon: 3, title:'提示'}, function(index){--%>
-        <%--            if($("#add_cityName").val().trim().length>0){--%>
-        <%--                if($("#add_provinceName").val().trim().length>0){--%>
-        <%--                    if($("#add_siteName").val().trim().length>0){--%>
-        <%--                        if(checkLong($("#add_xPosition").val().trim())){--%>
-        <%--                            if(checkLong($("#add_yPosition").val().trim())){--%>
-        <%--                                &lt;%&ndash;$.ajax({&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    type: "post",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    url: "${pageContext.request.contextPath}/areas/addAreas",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    data: {"cityName":$("#add_cityName").val(),"provinceId":$("#add_provinceName").val()},&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    dataType: "json",&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    success: function(data){&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;        if(data.status==200){&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            layer.msg(data.msg,{&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;                time:1000&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            },function () {&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;                window.location.reload();&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            });&ndash;%&gt;--%>
-
-        <%--                                &lt;%&ndash;        }else{&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;            layer.msg(data.msg);&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;        }&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;    }&ndash;%&gt;--%>
-        <%--                                &lt;%&ndash;});&ndash;%&gt;--%>
-        <%--                            }else{--%>
-        <%--                                layer.msg('纬度整数部分为0-180,小数部分为0到6位!', {--%>
-        <%--                                    btn: ['明白了',]--%>
-        <%--                                });--%>
-        <%--                            }--%>
-        <%--                        }else{--%>
-        <%--                            layer.msg('经度整数部分为0-180,小数部分为0到6位!', {--%>
-        <%--                                btn: ['明白了',]--%>
-        <%--                            });--%>
-        <%--                        }--%>
-
-        <%--                    }else{--%>
-        <%--                        layer.msg('站点的值不能为空', {--%>
-        <%--                            btn: ['明白了',]--%>
-        <%--                        });--%>
-        <%--                    }--%>
-
-        <%--                }else{--%>
-        <%--                    layer.msg('省份的值不能为空', {--%>
-        <%--                        btn: ['明白了',]--%>
-        <%--                    });--%>
-        <%--                }--%>
-        <%--            }else{--%>
-        <%--                layer.msg('城市名称不能为空', {--%>
-        <%--                    btn: ['明白了']--%>
-        <%--                });--%>
-        <%--            }--%>
-
-
-        <%--        });--%>
-        <%--    }--%>
-
-        <%--});--%>
-    })
-
-    //校验经度是否符合规范
-    //校验经度x
-    function checkLong(longitude){
-        var longrg = /^(\-|\+)?(((\d|[1-9]\d|1[0-7]\d|0{1,3})\.\d{0,6})|(\d|[1-9]\d|1[0-7]\d|0{1,3})|180\.0{0,6}|180)$/;
-        if(!longrg.test(longitude)){
-            return false;
-        }
-        return true;
-    }
-
-    //校验纬度是否符合规范
-    //纬度y
-    function checkLat(latitude){
-        var latreg = /^(\-|\+)?([0-8]?\d{1}\.\d{0,6}|90\.0{0,6}|[0-8]?\d{1}|90)$/;
-        if(!latreg.test(latitude)){
-            return '纬度整数部分为0-90,小数部分为0到6位!';
-        }
-        return true;
-    }
 </script>
 
 

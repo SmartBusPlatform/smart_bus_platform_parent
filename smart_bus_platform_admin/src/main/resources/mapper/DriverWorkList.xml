@@ -3,46 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace需要和Mapper接口对应-->
-<mapper namespace="com.cykj.admin.mapper.DriverWorkMapper">
+<mapper namespace="com.cykj.admin.mapper.DriverWorkListMapper">
 
-<!--    根据条件查询司机列表和数据总量-->
-    <select id="selectDriverList" parameterType="java.util.HashMap" resultType="com.cykj.pojo.AdminInfo">
-        select a.id, a.account, a.name, a.money, a.areas_id, a.phone, a.work_site_id, s.name as work_site_name
-        from tb_admin a, tb_city_site s
-        <where>
-            a.areas_id = #{cityId} and a.role_id = 4 and a.areas_id = s.city_id and a.work_site_id = s.id
-            <if test="site != null and site != ''">
-                and s.name like concat('%',#{site},'%')
-            </if>
-            <if test="name != null and name != ''">
-                and a.name like concat('%',#{name},'%')
-            </if>
-            <if test="phone != null and phone != ''">
-                and a.phone like concat('%',#{phone},'%')
-            </if>
-        </where>
-        limit #{page},#{limit}
+<!--    查询司机排班表-->
+    <resultMap id="driverMap" type="com.cykj.pojo.DriverWorkInfo">
+        <result property="adminId" column="admin_id"/>
+        <result property="driverName" column="driver_name"/>
+        <collection property="list" ofType="com.cykj.pojo.DriverWorkInfo" javaType="java.util.List">
+            <result property="id" column="id"/>
+            <result property="workDate" column="work_date"/>
+            <result property="busId" column="bus_id"/>
+            <result property="busNumber" column="number"/>
+            <result property="isWork" column="is_work"/>
+        </collection>
+    </resultMap>
+    <select id="renderDriverWorkTable" parameterType="java.util.HashMap" resultMap="driverMap">
+        select w.admin_id, a.name driver_name, date_format(w.work_date,'%Y-%m-%d') work_date, w.bus_id, b.number, w.is_work, w.id
+        from tb_admin a
+        left join tb_driver_work w on a.id = w.admin_id
+        left join tb_bus b on b.id = w.bus_id
+        where YEARWEEK(date_format(w.work_date,'%y-%m-%d')) = YEARWEEK(#{jsDate}) and a.areas_id = #{cityId}
+        order by w.work_date asc;
     </select>
 
-    <select id="selectDriverListCount" parameterType="java.util.HashMap" resultType="int">
-        select count(*)
-        from tb_admin a, tb_city_site s
-        <where>
-            a.areas_id = #{cityId} and a.role_id = 4 and a.areas_id = s.city_id and a.work_site_id = s.id
-            <if test="site != null and site != ''">
-                and s.name like concat('%',#{site},'%')
-            </if>
-            <if test="name != null and name != ''">
-                and a.name like concat('%',#{name},'%')
-            </if>
-            <if test="phone != null and phone != ''">
-                and a.phone like concat('%',#{phone},'%')
-            </if>
-        </where>
+<!--    插入休假的数据-->
+    <insert id="setVacation" parameterType="com.cykj.pojo.DriverWork">
+        insert into tb_driver_work(work_date, admin_id, is_work) values (#{workDate},#{adminId},#{isWork});
+    </insert>
+
+<!--    根据城市id,车辆状态，车辆当天是否排班查询所有公交-->
+    <select id="selectCityBus" parameterType="java.util.HashMap" resultType="com.cykj.pojo.Bus">
+        select b.id, b.number
+        from tb_bus b
+        where b.state_id =1 and b.city_id = #{cityId} and b.id not in( select d.bus_id from tb_driver_work d where  work_date = #{date});
     </select>
 
-<!--    修改司机信息-->
-    <update id="updateDriver" parameterType="com.cykj.pojo.AdminInfo">
-        update tb_admin set name = #{name}, phone = #{phone} where id = #{id}
-    </update>
+<!--    插入排班（上班）数据-->
+    <insert id="setDriverWork" parameterType="com.cykj.pojo.DriverWork">
+        insert into tb_driver_work(work_date, bus_id, admin_id, is_work) values (#{workDate}, #{busId}, #{adminId}, #{isWork})
+    </insert>
 </mapper>
