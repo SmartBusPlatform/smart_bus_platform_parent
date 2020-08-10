@@ -5,6 +5,10 @@ public class TimesInfo extends Times{
     private int busId;      //巴士ID
     private int requiredTime;     //总耗时
     private int isRun;   //当前时间车辆是否在运行
+    private int busWorkId;  //当前排班id
+    private int lineId; //路线ID
+    private String lineName; //路线ID
+    private int workType;   //排班类型ID
 
     public String getNumber() {
         return number;
@@ -36,5 +40,37 @@ public class TimesInfo extends Times{
 
     public void setBusId(int busId) {
         this.busId = busId;
+    }
+
+    public int getBusWorkId() {
+        return busWorkId;
+    }
+
+    public void setBusWorkId(int busWorkId) {
+        this.busWorkId = busWorkId;
+    }
+
+    public int getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
+    }
+
+    public String getLineName() {
+        return lineName;
+    }
+
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    public int getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(int workType) {
+        this.workType = workType;
     }
 }

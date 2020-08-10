@@ -7,7 +7,7 @@ public class BusWork {
     private int lineId;
     private int timeId;
     private int isFixLine;
-    private String isAddup;
+    private int workType;
     private int startBeginOrReturn;
 
     public BusWork() {
@@ -53,12 +53,12 @@ public class BusWork {
         this.isFixLine = isFixLine;
     }
 
-    public String getIsAddup() {
-        return isAddup;
+    public int getWorkType() {
+        return workType;
     }
 
-    public void setIsAddup(String isAddup) {
-        this.isAddup = isAddup;
+    public void setWorkType(int workType) {
+        this.workType = workType;
     }
 
     public int getStartBeginOrReturn() {

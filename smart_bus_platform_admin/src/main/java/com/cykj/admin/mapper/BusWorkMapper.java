@@ -14,6 +14,10 @@ public interface BusWorkMapper {
     List<BusWorkInfo> queryBusWork(int id);
     //新增巴士排班
     int insertBusWork(BusWorkInfo busWork);
+    //修改巴士排班
+    int changeBusWork(BusWorkInfo busWork);
+    //删除巴士排班
+    int deleteBusWork(BusWork busWork);
     //查询线路班次
     public List<BusWorkInfo> findBusWorkByLineId(BusWork busWork);
 }

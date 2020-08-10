@@ -29,7 +29,7 @@
     </select>
 
 <!--    对应上面的查询总数据量-->
-    <select id="selectOpinionCount"  parameterType="java.util.HashMap">
+    <select id="selectOpinionCount"  parameterType="java.util.HashMap" resultType="int">
         select count(*)
         from  tb_user u, tb_param p, tb_opinion o
         left join tb_admin a on a.id=o.admin_id

@@ -15,6 +15,12 @@ public interface LineService {
      */
     public Result findLinePage(HashMap<String, Object> map, int startSize, int pageSize);
     /**
+     *  根据城市查询线路名称，经站点数，每日运行班次数，线路再用车辆
+     * @param map
+     * @return
+     */
+    public List<LineChild> findLine(HashMap<String, Object> map);
+    /**
      * 新增线路
      */
     public Result insLine(LineChild lineChild);

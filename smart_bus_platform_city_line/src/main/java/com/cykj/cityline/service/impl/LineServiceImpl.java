@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LineServiceImpl implements LineService {
@@ -41,6 +42,13 @@ public class LineServiceImpl implements LineService {
         result.setStatus(200);
         result.setData(pageBean);
         return result;
+    }
+
+    @Override
+    public List<LineChild> findLine(HashMap<String, Object> map) {
+        List<LineChild> lineChildList = lineMapper.findLinePage(map);
+
+        return lineChildList;
     }
 
 

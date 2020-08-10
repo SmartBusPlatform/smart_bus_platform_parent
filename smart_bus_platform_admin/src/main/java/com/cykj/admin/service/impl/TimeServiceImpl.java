@@ -3,6 +3,7 @@ package com.cykj.admin.service.impl;
 import com.cykj.admin.mapper.BusWorkMapper;
 import com.cykj.admin.mapper.TimeMapper;
 import com.cykj.admin.service.TimeService;
+import com.cykj.pojo.BusWork;
 import com.cykj.pojo.TimesInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,12 @@ public class TimeServiceImpl implements TimeService {
     TimeMapper timeMapper;
 
     @Override
-    public List<TimesInfo> queryTime(int beginOrReturn) {
-        List<TimesInfo> list = timeMapper.queryTime(beginOrReturn);
+    public List<TimesInfo> queryTime(BusWork busWork) {
+        List<TimesInfo> list = timeMapper.queryTime(busWork);
 
         if(list!=null){
             for (int i=0; i<list.size(); i++){
-                if(list.get(i).getRequiredTime()!=0){
+                if(list.get(i).getRequiredTime()!=0&&list.get(i).getBusId()!=0){
                     try {
                         String strNowTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
                         if(belongCalendar(strNowTime,list.get(i).getTime(),endTime(list.get(i).getTime(),list.get(i).getRequiredTime()))){
