@@ -1,4 +1,4 @@
-package com.cykj.service;
+package com.cykj.userapp.service;
 
 import com.cykj.pojo.Opinion;
 

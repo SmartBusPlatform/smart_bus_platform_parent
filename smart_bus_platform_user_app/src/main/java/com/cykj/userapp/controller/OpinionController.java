@@ -1,8 +1,8 @@
-package com.cykj.controller;
+package com.cykj.userapp.controller;
 
 import com.cykj.pojo.Opinion;
 import com.cykj.pojo.User;
-import com.cykj.service.OpinionService;
+import com.cykj.userapp.service.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

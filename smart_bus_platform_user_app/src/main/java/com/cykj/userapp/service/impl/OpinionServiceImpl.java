@@ -1,8 +1,8 @@
-package com.cykj.service.impl;
+package com.cykj.userapp.service.impl;
 
-import com.cykj.mapper.OpinionMapper;
+import com.cykj.userapp.mapper.OpinionMapper;
 import com.cykj.pojo.Opinion;
-import com.cykj.service.OpinionService;
+import com.cykj.userapp.service.OpinionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.cykj.mapper;
+package com.cykj.userapp.mapper;
 
 import com.cykj.pojo.Opinion;
 import org.apache.ibatis.annotations.Mapper;
