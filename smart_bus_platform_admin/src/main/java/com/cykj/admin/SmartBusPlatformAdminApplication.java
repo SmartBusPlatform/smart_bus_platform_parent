@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
-@EnableCircuitBreaker //开启断路器
 @MapperScan(basePackages = {"com.cykj.admin.mapper"})
 public class SmartBusPlatformAdminApplication {
 

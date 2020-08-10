@@ -3,6 +3,8 @@ package com.cykj.admin.controller;
 import com.alibaba.fastjson.JSON;
 import com.cykj.admin.service.BusService;
 import com.cykj.pojo.Bus;
+import com.cykj.pojo.Line;
+import com.cykj.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,5 +104,9 @@ public class BusController {
         }else{
             return JSON.toJSONString("upDataError");
         }
+    }
+    @RequestMapping("getBusByLineId")
+    public String getBusByLineId( Line line) {
+        return JSON.toJSONString(busService.findBusByLineId(line));
     }
 }
