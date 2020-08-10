@@ -82,18 +82,18 @@
     </div>
 </div>
 <div class="site-text layui-row" hidden id="addForm"  >
-    <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">
+    <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px"  method="post" lay-filter="example">
         <div class="layui-form-item">
             <label class="layui-form-label">省:</label>
             <div class="layui-input-block">
-                <input type="text" id="add_provinceName" name="cityName" autocomplete="off" placeholder="" class="layui-input">
+                <input readonly type="text" id="add_provinceName" name="cityName" autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
 
             <label class="layui-form-label">城市名称:</label>
-            <div class="layui-input-block">
-                <input type="text" id="add_cityName" name="add_cityName"  autocomplete="off" placeholder="" class="layui-input">
+            <div  class="layui-input-block">
+                <input readonly type="text" id="add_cityName" name="add_cityName"  autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -138,7 +138,7 @@
 
         </div>
         <div id="app" style="width: 100%">
-            <div style="height: 450px; min-height: 450px; width: 40%;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
+            <div class="layui-col-sm4" style="height: 400px; min-height: 400px;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in arrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
@@ -164,7 +164,7 @@
 
             <button type="button" onclick="productionResvese('edit')" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>
             </button>
-            <div style="height:450px; max-height: 450px; width: 40%;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
+            <div class="layui-col-sm4" style="height:400px; max-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in resverArrs" class="el-step is-vertical" style="flex-basis: 50%;">
                     <div class="el-step__head is-finish">
@@ -198,14 +198,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">省:</label>
             <div class="layui-input-block">
-                <input type="text" id="edit_provinceName" name="cityName" autocomplete="off" placeholder="" class="layui-input">
+                <input readonly type="text" id="edit_provinceName" name="cityName" autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
 
             <label class="layui-form-label">城市名称:</label>
             <div class="layui-input-block">
-                <input type="text" id="edit_cityName" name="add_cityName"  autocomplete="off" placeholder="" class="layui-input">
+                <input readonly type="text" id="edit_cityName" name="add_cityName"  autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -236,9 +236,9 @@
 </div>
 
 <div class="site-text layui-row" hidden id="editLineSite"  >
-    <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">
+    <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px"  method="post" lay-filter="example">
         <div id="app2" style="width: 100%">
-            <div style="height: 450px; min-height: 450px; width: 40%;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
+            <div class="layui-col-sm4" style="height: 400px; min-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in arrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
@@ -263,7 +263,7 @@
 
             <button type="button" onclick="productionResvese()" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>
             </button>
-            <div style="height:450px; max-height: 450px; width: 40%;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
+            <div class="layui-col-sm4" style=" max-height: 400px;height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in resverArrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
@@ -341,6 +341,7 @@
 
     </form>
 </div>
+<%--线路班次--%>
 <div id="findLineClasses" hidden class="layui-form-item">
     <div class="layui-input-inline" style="float: left">
 
@@ -352,7 +353,12 @@
     </div>
 
 </div>
+<%--线路在用车辆--%>
+<div id="lineReuseVehicle" hidden class="row">
 
+        <table id="lineReuseVehicle_table" class="layui-col-sm8 layui-col-lg-offset4"   lay-filter="lineReuseVehicle-filter" ></table>
+
+</div>
 <%--查看地图--%>
 <div class="site-text layui-row" hidden id="findMap">
     <div id="container" style="margin-top: 0.2cm;width:100%;height: 100%;"></div>
@@ -416,7 +422,7 @@
                                     ,{field: 'returnTime', title: '返程时间/分钟', width:150 }
                                     ,{field: 'siteNum', title: '经站点数/个',width:150 }
                                     ,{field: 'dailyFrequencyNum',title:'每日运行班次数/次',width:160,event:'lineClasses' }
-                                    ,{field: 'useVehiclesNum',title:'线路在用车辆/辆',width:150}
+                                    ,{field: 'useVehiclesNum',title:'线路在用车辆/辆',width:150,event:'useVehicles'}
                                     ,{field: '',title:'操作' ,templet:'#cityLine_tablebar' ,width:360, fixed: 'right'}
                                 ]],
                                 page:true,
@@ -573,7 +579,7 @@
                 layer.open({
                     title: '修改配置线路信息',
                     type: 1,
-                    area: ['80%', '70%'],
+                    area: ['80%', '90%'],
                     offset: 'auto',
                     maxmin: true,
                     shadeClose: false,
@@ -675,7 +681,7 @@
                     maxmin: true,
                     shadeClose: false,
                     content: $('#findLineClasses'),
-                    btn: ['确定', '取消'],
+                    btn: ['返回'],
                     shade: [0.8, '#393D49'],
                     success: function (layero, index) {
                         table.render({
@@ -740,6 +746,50 @@
                     }
                 })
 
+            }else if("useVehicles"===event){
+                var item = obj.data;
+                //线路班次界面
+                layer.open({
+                    title: '查看线路信息',
+                    type: 1,
+                    area: ['80%', '90%'],
+                    offset: 'auto',
+                    maxmin: true,
+                    shadeClose: false,
+                    content: $('#lineReuseVehicle'),
+                    btn: ['返回'],
+                    shade: [0.8, '#393D49'],
+                    success: function (layero, index) {
+                        table.render({
+                            elem: '#lineReuseVehicle_table',
+                            url:'${pageContext.request.contextPath}/bus/getBusByLineId',
+                            where:{
+                                "id":item.id,
+                            },
+                            cols: [[
+                                {type:'checkbox'},
+                                {field: 'sorId',title:'序号',templet: '#index'}
+                                ,{field: 'number', title: '车牌', }
+                                ,{field: 'departureTime', title: '发车时刻'  }
+                                ,{field: 'propertyName', title: '属性'  }
+                            ]],
+                            method:'post',
+                            response:{
+                                statusName:'status',
+                                statusCode:200,
+                            },
+                            parseData: function(res){ //res 即为原始返回的数据
+                                return {
+                                    "status":res.status,
+                                    "data": res.data,
+                                };
+                            }
+                        });
+
+                    }, yes: function (num, layero) {
+                        layer.close(num);
+                    }
+                })
             }
         });
 
@@ -2078,7 +2128,7 @@
         }
         return a;
     }
-    
+
     function productionResvese(direction) {
         if("edit"){
             vm2.resverArrs=[];
