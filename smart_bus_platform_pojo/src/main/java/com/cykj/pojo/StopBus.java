@@ -4,10 +4,10 @@ public class StopBus {
 
     private int id;
     private int busId;
-    private int stateId;
-    private String stopTime;
-    private String closeTime;
-    private String closeSite;
+    private int siteId;
+    private String arrivalTime;
+    private String closeDateTime;
+    private int closeSiteId;
 
     public StopBus() {
     }
@@ -28,47 +28,36 @@ public class StopBus {
         this.busId = busId;
     }
 
-    public int getStateId() {
-        return stateId;
+    public int getSiteId() {
+        return siteId;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setSiteId(int siteId) {
+        this.siteId = siteId;
     }
 
-    public String getStopTime() {
-        return stopTime;
+
+    public String getArrivalTime() {
+        return arrivalTime;
     }
 
-    public void setStopTime(String stopTime) {
-        this.stopTime = stopTime;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
-    public String getCloseTime() {
-        return closeTime;
+    public String getCloseDateTime() {
+        return closeDateTime;
     }
 
-    public void setCloseTime(String closeTime) {
-        this.closeTime = closeTime;
+    public void setCloseDateTime(String closeDateTime) {
+        this.closeDateTime = closeDateTime;
     }
 
-    public String getCloseSite() {
-        return closeSite;
+    public int getCloseSiteId() {
+        return closeSiteId;
     }
 
-    public void setCloseSite(String closeSite) {
-        this.closeSite = closeSite;
-    }
-
-    @Override
-    public String toString() {
-        return "StopBus{" +
-                "id=" + id +
-                ", busId=" + busId +
-                ", stateId=" + stateId +
-                ", stopTime='" + stopTime + '\'' +
-                ", closeTime='" + closeTime + '\'' +
-                ", closeSite='" + closeSite + '\'' +
-                '}';
+    public void setCloseSiteId(int closeSiteId) {
+        this.closeSiteId = closeSiteId;
     }
 }

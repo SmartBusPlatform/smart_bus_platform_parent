@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.StopBusMapper">
+
+    <!--  查询停靠巴士  -->
+    <select id="queryStopBus" resultType="com.cykj.pojo.StopBusInfo" parameterType="java.util.Map">
+        select sb.*,cs.name siteName,cs2.name closeSiteName,b.number busNumber
+        from tb_stop_bus sb
+            left join tb_bus b on sb.bus_id = b.id
+            left join tb_city_site cs on sb.site_id = cs.id
+            left join tb_city_site cs2 on sb.close_site_id = cs2.id
+        <where>
+            b.city_id = #{cityId}
+            <if test="siteName !=null and siteName !='' ">
+                and cs.name like concat('%',#{siteName},'%')
+            </if>
+            <if test="busNumber !=null and busNumber !='' ">
+                and b.number like concat('%',#{busNumber},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--  新增巴士-->
+    <insert id="insertStopBus" parameterType="com.cykj.pojo.StopBus" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_stop_bus
+            (bus_id,
+             site_id,
+             arrival_time,
+             close_date_time,
+             close_site_id,
+            )
+        values
+            (#{busId},
+             #{siteId},
+             #{arrivalTime},
+             #{closeDateTime},
+             #{closeSiteId}
+            )
+    </insert>
+
+    <!--  新增巴士-->
+    <delete id="deleteStopBus" parameterType="java.lang.Integer">
+        delete from tb_stop_bus where bus_id = #{id}
+    </delete>
+
+</mapper>

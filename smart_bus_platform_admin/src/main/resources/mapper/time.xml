@@ -5,13 +5,13 @@
 <mapper namespace="com.cykj.admin.mapper.TimeMapper">
 
     <!--  查询所有发车时刻 -->
-    <select id="queryTime" resultType="com.cykj.pojo.TimesInfo" parameterType="java.lang.Integer">
-        select t.id,t.time,b.number,b.id busId,l.start_time+l.return_time+p.value requiredTime
+    <select id="queryTime" resultType="com.cykj.pojo.TimesInfo" parameterType="com.cykj.pojo.BusWork">
+        select t.id,t.time,b.number,b.id busId,l.name lineName,l.start_time+l.return_time+p.value+p.value requiredTime,bw.id busWorkId,bw.work_type workType
         from tb_time t
-            left join tb_bus_work bw on t.id = bw.time_id and bw.start_begin_or_return = #{beginOrReturn}
-            left join tb_bus b on bw.bus_id = b.id
-            left join tb_line l on bw.line_id = l.id
-            left join tb_param p on p.type_english = 'arriveSiteRest'
-        order by id
+                 left join tb_line l on l.id = #{lineId}
+                 left join tb_bus_work bw on t.id = bw.time_id and bw.start_begin_or_return =#{startBeginOrReturn} and l.id = bw.line_id
+                 left join tb_bus b on bw.bus_id = b.id
+                 left join tb_param p on p.type_english = 'arriveSiteRest'
+        order by str_to_date(CONCAT(t.time,':00'),'%H:%i:%s') asc
     </select>
 </mapper>

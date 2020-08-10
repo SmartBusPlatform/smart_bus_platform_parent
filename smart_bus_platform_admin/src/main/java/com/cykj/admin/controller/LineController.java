@@ -26,6 +26,13 @@ public class LineController {
     public String getLineByPage(Line line, String curPage, String pageSize){
         return lineFeign.getLineByPage(line,curPage,pageSize);
     }
+
+    @RequestMapping("getLineByCityId")
+    @ResponseBody
+    public String getLineByCityId(Line line){
+        return lineFeign.getLineByCityId(line);
+    }
+
     @RequestMapping("addLine")
     @ResponseBody
     public String addCitySite(@RequestBody LineChild lineChild){

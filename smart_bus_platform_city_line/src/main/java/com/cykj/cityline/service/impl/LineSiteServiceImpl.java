@@ -25,7 +25,6 @@ public class LineSiteServiceImpl implements LineSiteService {
         map.put("start",lineSiteStartByLineId);
         map.put("back",lineSiteBackByLineId);
 
-
         return map;
     }
 

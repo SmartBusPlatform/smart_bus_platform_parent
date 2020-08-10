@@ -7,7 +7,6 @@ import com.cykj.pojo.CitySite;
 import com.cykj.pojo.Line;
 import com.cykj.pojo.LineChild;
 import com.cykj.util.Result;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +44,16 @@ public class LineController {
         }
         return JSON.toJSONString(lineService.findLinePage(condition,startNum,pageNum));
     }
+
+    @RequestMapping("getLineByCityId")
+    public String getLineByCityId(@RequestBody Line line){
+        HashMap<String,Object> condition = new HashMap<String, Object>();
+        if(line.getCityId()!=0){
+            condition.put("cityId",line.getCityId());
+        }
+        return JSON.toJSONString(lineService.findLine(condition));
+    }
+
     @RequestMapping("addLine")
     public String insLine(@RequestBody LineChild lineChild) {
         return JSON.toJSONString(lineService.insLine(lineChild));

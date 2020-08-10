@@ -6,15 +6,15 @@
 
     <!--  查询巴士  -->
     <select id="queryBus" resultType="com.cykj.pojo.BusInfo" parameterType="java.util.Map">
-        select b.*, p.name stateName, a.name cityName, ad.name repairmanName,bl.line_id lineId,l.name lineName,a2.id provinceId,bm.time maintainTime
-        from tb_bus b
-            left join tb_param p on b.state_id = p.value and p.type_english = 'busState'
-            left join tb_areas a on b.city_id = a.id
-            left join tb_areas a2 on a2.id = a.parent_id
-            left join tb_admin ad on b.repairman_id = ad.id
-            left join tb_bus_line bl on b.id = bl.bus_id
-            left join tb_line l on bl.line_id = l.id
-            left join tb_bus_maintain bm on b.id = bm.bus_id and bm.state_id = 1
+        select b.*, p.name stateName, a.name cityName, ad.name repairmanName,a2.id provinceId,bm.time maintainTime,group_concat(distinct l.name) lineName
+            from tb_bus b
+                left join tb_param p on b.state_id = p.value and p.type_english = 'busState'
+                left join tb_areas a on b.city_id = a.id
+                left join tb_areas a2 on a2.id = a.parent_id
+                left join tb_admin ad on b.repairman_id = ad.id
+                left join tb_bus_work bw on b.id = bw.bus_id
+                left join tb_line l on bw.line_id = l.id
+                left join tb_bus_maintain bm on b.id = bm.bus_id and bm.state_id = 1
         <where>
             <if test="id !=null and id !='' ">
                 and b.id = #{id}
@@ -38,6 +38,7 @@
                 and b.city_id = #{cityId}
             </if>
         </where>
+        group by b.id
     </select>
 
     <!--  查询单个巴士  -->
@@ -69,9 +70,6 @@
             <if test=" userTimeRatio!=null and userTimeRatio!=''">
                 user_time_ratio = #{userTimeRatio},
             </if>
-            <if test=" cityId!=null and cityId!=''">
-                city_id = #{cityId},
-            </if>
         </set>
         where id = #{id}
     </update>
@@ -91,7 +89,7 @@
                1,
                #{endTime},
                #{cityId},
-               '是',
+               '否',
                #{repairmanId},
                #{productionTime})
     </insert>
