@@ -23,10 +23,10 @@ public interface LineSiteMapper {
     /**
      * 查询线路站点关系,始程
      */
-    public List<LineSite> findLineSiteStartByLineId(LineChild lineChild);
+    public List<CitySiteArr> findLineSiteStartByLineId(LineChild lineChild);
     /**
      * 查询线路站点关系,返程
      */
-    public List<LineSite> findLineSiteBackByLineId(LineChild lineChild);
+    public List<CitySiteArr> findLineSiteBackByLineId(LineChild lineChild);
 
 }

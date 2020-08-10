@@ -38,4 +38,8 @@ public interface CitySiteService {
      */
     public List<CitySite> findCitySiteAllByCityId(CitySite citySite);
 
+    /**
+     * 根据城市id和站点id模糊搜索站点
+     */
+    public Result findCitySiteByCityIdLikeName(CitySiteChild citySiteChild);
 }

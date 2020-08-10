@@ -1,5 +1,7 @@
 package com.cykj.pojo;
 
+import java.util.List;
+
 public class LineSite {
     private int id;
     private int lineId;
@@ -9,6 +11,7 @@ public class LineSite {
     private int backIndex;
 
     public LineSite() {
+
     }
 
     public int getId() {

@@ -6,6 +6,7 @@ public class AdvertiserInfo extends Advertiser{
     private String stateName;
     private String carouselName;
     private String coordinate;
+    private String image;
 
     public String getPartnerName() {
         return partnerName;
@@ -39,13 +40,11 @@ public class AdvertiserInfo extends Advertiser{
         this.coordinate = coordinate;
     }
 
-    @Override
-    public String toString() {
-        return "AdvertiserInfo{" +
-                "partnerName='" + partnerName + '\'' +
-                ", stateName='" + stateName + '\'' +
-                ", carouselName='" + carouselName + '\'' +
-                ", coordinate='" + coordinate + '\'' +
-                '}';
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

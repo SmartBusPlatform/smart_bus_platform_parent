@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.CityLineMapper">
+
+    <!-- 根据站点查线路 -->
+    <select id="queryLineBySite" resultType="com.cykj.pojo.LineChild" parameterType="java.lang.Integer">
+        select distinct l.*,cs2.name endSiteName,cs3.name startSiteName
+            from tb_line l
+                 left join tb_line_site ls on l.id = ls.line_id
+                 left join tb_city_site cs on ls.site_id = cs.id
+            ,tb_line_site ls2
+            ,tb_line_site ls3
+            ,tb_city_site cs2
+            ,tb_city_site cs3
+        where cs.id = #{siteId}
+            and ls2.line_id = l.id
+            and ls2.property_id = 2
+            and ls2.back_index = 1
+            and ls2.site_id = cs2.id
+            and ls3.line_id = l.id
+            and ls3.property_id = 1
+            and ls3.start_index = 1
+            and ls3.site_id = cs3.id
+    </select>
+</mapper>

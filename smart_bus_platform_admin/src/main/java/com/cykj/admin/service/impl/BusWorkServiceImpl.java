@@ -23,6 +23,8 @@ import java.util.Map;
 public class BusWorkServiceImpl implements BusWorkService {
     @Autowired
     BusWorkMapper busWorkMapper;
+    @Autowired
+    BusMapper busMapper;
 
     @Override
     public List<BusWorkInfo> queryBusWork(int id) {
@@ -58,31 +60,100 @@ public class BusWorkServiceImpl implements BusWorkService {
         TimeServiceImpl timeService = new TimeServiceImpl();
         boolean isRunning = false;
 
-        try {
-            //循环判断当前时间段车辆是否在运行中
-            for (int i=0; i<list.size(); i++){
-                //判断开始时间是否在车辆运行的时间中
-                if(timeService.belongCalendar(busWork.getStartTime()+":00",list.get(i).getDepartureTime(),
-                        timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
-                    isRunning = true;
-                    break;
+        if(list!=null){
+            try {
+                //循环判断当前时间段车辆是否在运行中
+                for (int i=0; i<list.size(); i++){
+                    //判断整点是否被占用
+                    if(busWork.getStartTime().equals(list.get(i).getDepartureTime())&&timeService.endTime(busWork.getStartTime(),busWork.getAllTime()).equals(timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
+                    //判断开始时间是否在车辆运行的时间中
+                    if(timeService.belongCalendar(busWork.getStartTime()+":00",list.get(i).getDepartureTime(),
+                            timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
+                    //判断返程到站时间是否在车辆运行的时间中
+                    if(timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())
+                            ,list.get(i).getDepartureTime(), timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
                 }
-                //判断返程到站时间是否在车辆运行的时间中
-                if(timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())
-                        ,list.get(i).getDepartureTime(), timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
-                    isRunning = true;
-                    break;
-                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
 
         if(isRunning){
             isSuccess = -9999;
         }else{
             isSuccess = busWorkMapper.insertBusWork(busWork);
+            if (busWork.getWorkType()==1){
+                Bus bus = new Bus();
+                bus.setId(busWork.getBusId());
+                bus.setIsFixedLine("是");
+                isSuccess = busMapper.changeBus(bus);
+            }
         }
+
+        return isSuccess;
+    }
+
+    @Override
+    public int changeBusWork(BusWorkInfo busWork) {
+        List<BusWorkInfo> list = busWorkMapper.queryBusWork(busWork.getBusId());
+
+        int isSuccess = 0;
+        TimeServiceImpl timeService = new TimeServiceImpl();
+        boolean isRunning = false;
+
+        if(list!=null){
+            try {
+                //循环判断当前时间段车辆是否在运行中
+                for (int i=0; i<list.size(); i++){
+                    //判断整点是否在运行时间内
+                    if(busWork.getStartTime().equals(list.get(i).getDepartureTime())&&timeService.endTime(busWork.getStartTime(),busWork.getAllTime()).equals(timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
+                    //判断开始时间是否在车辆运行的时间中
+                    if(timeService.belongCalendar(busWork.getStartTime()+":00",list.get(i).getDepartureTime(),
+                            timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
+                    //判断返程到站时间是否在车辆运行的时间中
+                    if(timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())
+                            ,list.get(i).getDepartureTime(), timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
+                        isRunning = true;
+                        break;
+                    }
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(isRunning){
+            isSuccess = -9999;
+        }else{
+            isSuccess = busWorkMapper.changeBusWork(busWork);
+            Bus bus = new Bus();
+            bus.setId(busWork.getBusId());
+            bus.setIsFixedLine("是");
+            isSuccess = busMapper.changeBus(bus);
+        }
+
+        return isSuccess;
+
+    }
+
+    @Override
+    public int deleteBusWork(BusWork busWork) {
+        int isSuccess = busWorkMapper.deleteBusWork(busWork);
 
         return isSuccess;
     }

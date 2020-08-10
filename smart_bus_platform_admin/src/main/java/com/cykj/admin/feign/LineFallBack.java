@@ -17,6 +17,14 @@ public class LineFallBack implements LineFeign {
     }
 
     @Override
+    public String getLineByCityId(Line line) {
+        Result result = new Result();
+        result.setMsg("您的网络出现问题，请刷新");
+        result.setStatus(202);
+        return JSON.toJSONString(result);
+    }
+
+    @Override
     public String addLine(LineChild lineChild) {
         Result result = new Result();
         result.setMsg("您的网络出现问题，请刷新");

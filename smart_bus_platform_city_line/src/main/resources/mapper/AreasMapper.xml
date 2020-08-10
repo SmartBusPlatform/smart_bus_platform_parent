@@ -104,5 +104,6 @@
 			tb_areas
 		WHERE
 			type = #{type} and parent_id = #{parentId}
-		</select>
+	</select>
+
 </mapper>

@@ -13,6 +13,7 @@ public class BusWorkInfo extends BusWork{
     private int allTime; //总消耗时间
     private String remarks;//备注
     private String time;//时刻
+
     public String getStartTime() {
         return startTime;
     }

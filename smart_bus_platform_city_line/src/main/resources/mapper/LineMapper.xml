@@ -48,12 +48,14 @@
                 AND ls2.property_id = 2
             )
         ) siteNum,
+        p.value+l.return_time+l.start_time+p.value allTime,
         (select count(distinct bus_id) from tb_bus_work where line_id=l.id) useVehiclesNum
         FROM
             tb_areas a
         INNER JOIN tb_line l ON l.city_id = a.id
         LEFT JOIN tb_city_site cs ON cs.city_id = l.city_id
         LEFT JOIN tb_line_site ls ON ls.line_id = l.id
+        left join tb_param p on p.type_english = 'arriveSiteRest'
         <where>
             <if test="cityId!=null">
                 and a.id = #{cityId}
