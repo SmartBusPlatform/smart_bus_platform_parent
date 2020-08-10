@@ -57,4 +57,8 @@ public class CitySiteController {
     public String getCitySiteAllByCityId(@RequestBody CitySite citySite) {
         return JSON.toJSONString(citySiteService.findCitySiteAllByCityId(citySite));
     }
+    @RequestMapping("getCitySiteByCityIdLikeName")
+    public String getCitySiteByCityIdLikeName(CitySiteChild citySiteChild){
+        return JSON.toJSONString(citySiteService.findCitySiteByCityIdLikeName(citySiteChild));
+    }
 }

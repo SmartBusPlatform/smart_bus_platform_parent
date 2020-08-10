@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace需要和Mapper接口对应-->
-<mapper namespace="com.cykj.admin.mapper.DriverWorkMapper">
+<mapper namespace="com.cykj.admin.mapper.DriverWorkListMapper">
 
 <!--    根据条件查询司机列表和数据总量-->
     <select id="selectDriverList" parameterType="java.util.HashMap" resultType="com.cykj.pojo.AdminInfo">

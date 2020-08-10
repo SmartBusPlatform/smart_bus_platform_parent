@@ -83,45 +83,43 @@
 </div>
 <div class="site-text layui-row" hidden id="addForm"  >
     <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px"  method="post" lay-filter="example">
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
             <label class="layui-form-label">省:</label>
-            <div class="layui-input-block">
+            <div class="layui-input-block " >
                 <input readonly type="text" id="add_provinceName" name="cityName" autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
 
             <label class="layui-form-label">城市名称:</label>
             <div  class="layui-input-block">
                 <input readonly type="text" id="add_cityName" name="add_cityName"  autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
 
             <label class="layui-form-label">线路名称:</label>
             <div class="layui-input-block">
                 <input type="text" id="add_lineName" name="add_lineName"  autocomplete="off" placeholder="" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+<%--        <div class="layui-form-item">--%>
 
-            <label class="layui-form-label">始程发车站:</label>
-            <div class="layui-input-block">
-                <input type="text" id="add_startStation" name="add_startStation"  autocomplete="off" placeholder="" class="layui-input">
-                <button class="layui-btn" i="-1" onclick="mapSelection(this,'left')" type="button">地图选择</button>
-            </div>
+<%--            <label class="layui-form-label">始程发车站:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_startStation" name="add_startStation"  autocomplete="off" placeholder="" class="layui-input">--%>
+<%--                <button class="layui-btn" i="-1" onclick="mapSelection(this,'left')" type="button">地图选择</button>--%>
+<%--            </div>--%>
 
-        </div>
-        <div class="layui-form-item">
-
-            <label class="layui-form-label">返程发车站:</label>
-            <div class="layui-input-block">
-                <input type="text" id="add_reStation" name="add_reStation" autocomplete="off" placeholder="" class="layui-input">
-                <button class="layui-btn mapSelection" i="-2" onclick="mapSelection(this,'left')" type="button">地图选择</button>
-            </div>
-
-        </div>
-        <div class="layui-form-item">
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <label class="layui-form-label">返程发车站:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_reStation" name="add_reStation" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--                <button class="layui-btn mapSelection" i="-2" onclick="mapSelection(this,'right')" type="button">地图选择</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+        <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
 
             <label class="layui-form-label">单程费用:</label>
             <div class="layui-input-block">
@@ -129,7 +127,7 @@
             </div>
 
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
 
             <label class="layui-form-label">司机费用:</label>
             <div class="layui-input-block">
@@ -137,8 +135,12 @@
             </div>
 
         </div>
-        <div id="app" style="width: 100%">
+        <div id="app" class="layui-col-sm6" style="width: 100%">
+
             <div class="layui-col-sm4" style="height: 400px; min-height: 400px;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
+                <div class="layui-input-block">
+                    <button class="layui-btn" v-if="arrs.length==0" i="-1" onclick="mapSelection(this,'left')" type="button">新增始程站点</button>
+                </div>
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in arrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
@@ -158,13 +160,17 @@
                             </div>
                         </div>
                     </div>
-                    <span v-if="arrs.length>1">始程时间:{{comp()}}</span>
+<%--                    <span v-if="arrs.length>1">始程时间:{{comp()}}</span>--%>
                 </div>
             </div>
 
-            <button type="button" onclick="productionResvese('edit')" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>
-            </button>
-            <div class="layui-col-sm4" style="height:400px; max-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
+<%--            <button type="button" onclick="productionResvese('edit')" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>--%>
+<%--            </button>--%>
+
+            <div class="layui-col-sm4 layui-col-sm-offset1" style="height:400px; max-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
+                <div class="layui-input-block">
+                    <button class="layui-btn" v-if="resverArrs.length==0" i="-1" onclick="mapSelection(this,'right')" type="button">新增返程站点</button>
+                </div>
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in resverArrs" class="el-step is-vertical" style="flex-basis: 50%;">
                     <div class="el-step__head is-finish">
@@ -184,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-                    <span   v-if="arrs.length>1">返程时间:{{reverComp()}}</span>
+<%--                    <span   v-if="arrs.length>1">返程时间:{{reverComp()}}</span>--%>
                 </div>
             </div>
 
@@ -237,8 +243,12 @@
 
 <div class="site-text layui-row" hidden id="editLineSite"  >
     <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px"  method="post" lay-filter="example">
+
         <div id="app2" style="width: 100%">
             <div class="layui-col-sm4" style="height: 400px; min-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
+                <div class="layui-input-block">
+                    <button class="layui-btn" v-if="arrs.length==0" i="-1" onclick="mapSelection(this,'edit_left')" type="button">新增始程站点</button>
+                </div>
                 <div class="el-steps el-steps--vertical">
                     <div v-for="(arr,i) in arrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
@@ -261,10 +271,13 @@
                 </div>
             </div>
 
-            <button type="button" onclick="productionResvese()" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>
-            </button>
+<%--            <button type="button" onclick="productionResvese()" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>--%>
+<%--            </button>--%>
             <div class="layui-col-sm4" style=" max-height: 400px;height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
                 <div class="el-steps el-steps--vertical">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" v-if="resverArrs.length==0" i="-1" onclick="mapSelection(this,'edit_right')" type="button">新增返程站点</button>
+                    </div>
                     <div v-for="(arr,i) in resverArrs" class="el-step is-vertical" style="flex-basis: 50%;">
                         <div class="el-step__head is-finish">
                             <div class="el-step__line" style="margin-right: 0px;"><i class="el-step__line-inner" style="transition-delay: 0ms; border-width: 0px; height: 0%;"></i></div>
@@ -597,15 +610,6 @@
                             success:function (data) {
                                 vm2.arrs=data.start;
                                 vm2.resverArrs=data.back
-                                // if(data.status==200){
-                                //     layer.msg(data.msg,{
-                                //         time: 1000
-                                //     },function () {
-                                //         window.location.reload();
-                                //     });
-                                // }else{
-                                //     layer.msg(data.msg);
-                                // }
                             },
                             error:function () {
                                 layer.msg("网络繁忙，请稍候重试");
@@ -613,28 +617,44 @@
                         });
                     }, yes: function (num, layero) {
                         layer.confirm('确认是否修改信息?', {icon: 3, title:'提示'}, function(index){
-                            $.ajax({
-                                url:"${pageContext.request.contextPath}/lineSite/updLineSiteByLineId",
-                                method:"post",
-                                dataType:"json",
-                                traditional:true,
-                                contentType: "application/json;charset=UTF-8",
-                                data:JSON.stringify({"lineId":item.id,"arrs":vm2.arrs,"resverArrs":vm2.resverArrs}),
-                                success:function (data) {
-                                    if(data.status==200){
-                                        layer.msg(data.msg,{
-                                            time: 1000
-                                        },function () {
-                                            window.location.reload();
+                            if(vm2.arrs.length>2&&vm2.resverArrs.length>2){
+                                if(vm2.arrs[0].name==vm2.resverArrs[vm2.resverArrs.length-1].name&&
+                                    vm2.arrs[vm2.arrs.length-1].name==vm2.resverArrs[0].name){
+                                    $.ajax({
+                                        url:"${pageContext.request.contextPath}/lineSite/updLineSiteByLineId",
+                                        method:"post",
+                                        dataType:"json",
+                                        traditional:true,
+                                        contentType: "application/json;charset=UTF-8",
+                                        data:JSON.stringify({"name":item.name,"lineId":item.id,"arrs":vm2.arrs,"resverArrs":vm2.resverArrs}),
+                                        success:function (data) {
+                                            if(data.status==200){
+                                                layer.msg(data.msg,{
+                                                    time: 1000
+                                                },function () {
+                                                    window.location.reload();
+                                                });
+                                            }else if(data.status==203){
+                                                layer.msg(data.msg);
+                                            }else{
+                                                layer.msg(data.msg);
+                                            }
+                                        },
+                                        error:function () {
+                                            layer.msg("网络繁忙，请稍候重试");
+                                        }
+                                    });
+                                }else{
+                                        layer.msg('您配置的站点有误请重新配置', {
+                                            btn: ['明白了',]
                                         });
-                                    }else{
-                                        layer.msg(data.msg);
                                     }
-                                },
-                                error:function () {
-                                    layer.msg("网络繁忙，请稍候重试");
+                                }else{
+                                    layer.msg('请配置始程和返程的站点', {
+                                        btn: ['明白了',]
+                                    });
                                 }
-                            });
+
                         })
                     }
                 })
@@ -845,11 +865,13 @@
                     if($("#add_cityName").val().trim().length>0){
                         if($("#add_provinceName").val().trim().length>0){
                             if($("#add_lineName").val().trim().length>0){
-                                if($("#add_startStation").val().trim().length>0){
-                                    if($("#add_reStation").val().trim().length>0){
+                                if(vm.arrs.length>2&&vm.resverArrs.length>2){
+                                    if(vm.arrs[0].name==vm.resverArrs[vm.resverArrs.length-1].name&&
+                                        vm.arrs[vm.arrs.length-1].name==vm.resverArrs[0].name){
                                         if ($("#add_oneMoney").val().trim().length > 0 && isRealNum($("#add_oneMoney").val().trim())) {
                                             if($("#add_travelMoney").val().trim().length>0&&isRealNum($("#add_travelMoney").val().trim())){
-                                            $.ajax({
+
+                                                $.ajax({
                                                 type: "post",
                                                 url: "${pageContext.request.contextPath}/line/addLine",
                                                 traditional:true,
@@ -889,12 +911,12 @@
                                             });
                                         }
                                     }else{
-                                        layer.msg('返程车站的值不能为空', {
+                                        layer.msg('您配置的站点有误请重新配置', {
                                             btn: ['明白了',]
                                         });
                                     }
                                 }else{
-                                    layer.msg('始发车站的值不能为空', {
+                                    layer.msg('请配置始程和返程的站点', {
                                         btn: ['明白了',]
                                     });
                                 }
@@ -944,6 +966,7 @@
     //删除站点
     function deleteStation(node,direction) {
        if(confirm("确认是否删除该站点")){
+
            if(direction=="left"){
                if($(node).attr("i")==0){
                    $("#add_startStation").val("");
@@ -1114,6 +1137,7 @@
               if(confirm("确认是否添加该站点到线路中")){
                   if(direction=='left'){
                       console.log(e)
+
                       //首站
                       if($(select).attr('i')==-1){
                           document.getElementById('tip').innerHTML=e.target.Ce.label.content;
@@ -1365,7 +1389,6 @@
                       }else{
                           //点击第一个
                           if($(select).attr('i')==0){
-                              alert(1)
                               if(vm.resverArrs.length>1){
                                   $.ajax({
                                       url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
@@ -1545,7 +1568,6 @@
                       }else{
                           //点击第一个
                           if($(select).attr('i')==0){
-                              alert(1)
                               if(vm2.arrs.length>1){
                                   $.ajax({
                                       url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
@@ -1622,7 +1644,6 @@
                                   }
                               });
                           }else{
-                              alert(3)
                               $.ajax({
                                   url:"http://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
                                   dataType: "json",
@@ -1666,17 +1687,17 @@
                           $(select).prev().val(e.target.Ce.label.content);
                           $(select).prev().attr("title",e.target.Ce.label.title);
                           // let distance;
-                          if(vm.arrs.length>1){
+                          if(vm.resverArrs.length>1){
                               // distance = Math.round(new AMap.LngLat(e.lnglat.lng, e.lnglat.lat).distance(new AMap.LngLat(vm.arrs[vm.arrs.length - 1].xPosition, vm.arrs[vm.arrs.length - 1].yPosition)));
                               //首站和下一站距离
                               $.ajax({
                                   url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
                                   dataType: "json",
                                   method:"get",
-                                  data:{"output":"json","origin":vm2.arrs[0].xPosition+","+vm2.arrs[0].yPosition,"destination":e.lnglat.lng+","+e.lnglat.lat,"city":city},
+                                  data:{"output":"json","origin":vm2.resverArrs[0].xPosition+","+vm2.resverArrs[0].yPosition,"destination":e.lnglat.lng+","+e.lnglat.lat,"city":city},
                                   success:function (data) {
                                       console.log(data);
-                                      vm2.arrs.splice(0,0,{
+                                      vm2.resverArrs.splice(0,0,{
                                           name:e.target.Ce.label.content,
                                           title:e.target.Ce.label.title,
                                           xPosition:e.lnglat.lng,
@@ -1687,7 +1708,7 @@
                               });
 
                           }else{
-                              vm2.arrs.splice(0,0,{
+                              vm2.resverArrs.splice(0,0,{
                                   name:e.target.Ce.label.content,
                                   title:e.target.Ce.label.title,
                                   xPosition:e.lnglat.lng,
@@ -1764,17 +1785,17 @@
                                       url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
                                       dataType: "json",
                                       method:"get",
-                                      data:{"output":"json","origin":vm.resverArrs[0].xPosition+","+vm.resverArrs[0].yPosition,"destination":e.lnglat.lng+","+e.lnglat.lat,"city":city},
+                                      data:{"output":"json","origin":vm2.resverArrs[0].xPosition+","+vm2.resverArrs[0].yPosition,"destination":e.lnglat.lng+","+e.lnglat.lat,"city":city},
                                       success:function (data) {
                                          if(data.info=="OK"){
-                                             vm.resverArrs.splice($(select).attr('i')+1,0,{
+                                             vm2.resverArrs.splice($(select).attr('i')+1,0,{
                                                  name:e.target.Ce.label.content,
                                                  title:e.target.Ce.label.title,
                                                  xPosition:e.lnglat.lng,
                                                  yPosition:e.lnglat.lat,
 
                                              });
-                                             vm.resverArrs[Number($(select).attr('i'))].distance=data.route.distance;
+                                             vm2.resverArrs[Number($(select).attr('i'))].distance=data.route.distance;
                                          }
                                       }
                                   });
@@ -1891,7 +1912,7 @@
 
         }
     });
-
+/*修改站点*/
     var vm2=new Vue({
         el:"#app2",
         data:{
@@ -1903,6 +1924,7 @@
         computed:{
             calDistance(o){
                 return function (o) {
+                    //第一个并且长度大于1
                        if(o==0&&this.arrs.length>1){
                            $.ajax({
                                url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
@@ -1916,6 +1938,7 @@
                                }
                            });
                            return  vm2.arrs[o].distance;
+                           //不是最后一个并且长度大于等于2
                        }else if(this.arrs.length>=2&&(o!=this.arrs.length-1)){
                            $.ajax({
                                url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
@@ -1929,7 +1952,8 @@
                                }
                            });
                            return  vm2.arrs[o].distance;
-                       }else if(o==this.arrs.length-1){
+                           //是最后一个并且长度等于2
+                       }else if(o==this.arrs.length-1&&this.arrs.length==2){
                            $.ajax({
                                url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
                                dataType: "json",
@@ -1975,7 +1999,7 @@
                             }
                         });
                         return  vm2.resverArrs[o].distance;
-                    }else if(o==this.resverArrs.length-1){
+                    }else if(o==this.resverArrs.length-1&&this.resverArrs.length==2){
                         $.ajax({
                             url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",
                             dataType: "json",
@@ -1997,7 +2021,7 @@
 
         }
     });
-
+/*查看站点*/
     var vm3=new Vue({
         el:"#app3",
         data:{

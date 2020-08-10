@@ -1,5 +1,6 @@
 package com.cykj.cityline.service.impl;
 
+import com.cykj.cityline.mapper.AddSiteRecordMapper;
 import com.cykj.cityline.mapper.CitySiteMapper;
 import com.cykj.cityline.mapper.LineMapper;
 import com.cykj.cityline.mapper.LineSiteMapper;
@@ -22,6 +23,8 @@ public class LineServiceImpl implements LineService {
     private LineMapper lineMapper;
     @Autowired
     private LineSiteMapper lineSiteMapper;
+    @Autowired
+    private AddSiteRecordMapper addSiteRecordMapper;
     @Override
     public Result findLinePage(HashMap<String, Object> map, int startSize, int pageSize){
         PageHelper.startPage(startSize, pageSize);
@@ -47,7 +50,10 @@ public class LineServiceImpl implements LineService {
         int num = lineMapper.insLine(lineChild);
         int line_id=num;
         Result result = new Result();
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("新增线路,");
         if(num!=0){
+            stringBuffer.append("线路名:"+lineChild.getName()+",始程站点:");
             for (int k=0;k<lineChild.getArrs().size();k++){
                 LineSite lineSite = new LineSite();
                 lineSite.setLineId(lineChild.getId());
@@ -55,7 +61,9 @@ public class LineServiceImpl implements LineService {
                 lineSite.setStartIndex(k+1);
                 lineSite.setSiteId(lineChild.getArrs().get(k).getTitle());
                 num+=lineSiteMapper.insLineSite(lineSite);
+                stringBuffer.append(lineChild.getArrs().get(k).getName()+",");
             }
+            stringBuffer.append("返程站点:");
             for (int k=0;k<lineChild.getResverArrs().size();k++){
                 LineSite lineSite = new LineSite();
                 lineSite.setLineId(lineChild.getId());
@@ -63,12 +71,21 @@ public class LineServiceImpl implements LineService {
                 lineSite.setBackIndex(k+1);
                 lineSite.setSiteId(lineChild.getResverArrs().get(k).getTitle());
                 num+=lineSiteMapper.insLineSite(lineSite);
+                stringBuffer.append(lineChild.getResverArrs().get(k).getName());
+                if(k!=lineChild.getResverArrs().size()-1){
+                    stringBuffer.append(",");
+                }
             }
             if(num!=(1+lineChild.getArrs().size()+lineChild.getResverArrs().size())){
+
                 result.setStatus(201);
                 result.setMsg("新增失败");
                 return result;
             }else{
+                AddSiteRecord  addSiteRecord = new AddSiteRecord();
+                addSiteRecord.setStateId(1);
+                addSiteRecord.setContent(stringBuffer.toString());
+                addSiteRecordMapper.insAddSiteRecord(addSiteRecord);
                 result.setStatus(200);
                 result.setMsg("新增成功");
                 return result;

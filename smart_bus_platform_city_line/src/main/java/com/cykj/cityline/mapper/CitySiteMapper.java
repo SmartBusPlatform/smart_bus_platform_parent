@@ -34,6 +34,10 @@ public interface CitySiteMapper {
      * @return
      */
     public int updCitySiteByCityId(CitySite citySite);
+    /**
+     * 根据城市id和站点id模糊搜索站点
+     */
+    public List<CitySite> findCitySiteByCityIdLikeName(CitySiteChild citySiteChild);
 //    /**
 //     * 根据id查询该城市所有站点
 //     */

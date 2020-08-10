@@ -66,6 +66,23 @@
         </set>
         where id=#{id}
     </update>
+    <select id="findCitySiteByCityIdLikeName" parameterType="citySite" resultType="citySiteChild">
+        SELECT
+        id id,
+        NAME NAME,
+        x_position xPosition,
+        y_position yPosition
+        FROM
+        tb_city_site
+        <where>
+            <if test="cityId!=null">
+                and city_id = #{cityId}
+            </if>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
 <!--    <select id="findCitySiteAllByCityId" parameterType="citySite" resultType="citySite" >-->
 <!--        select id id,name name,x_position xPosition,y_position yPosition from tb_city_site where city_id=#{cityId}-->
 <!--    </select>-->
