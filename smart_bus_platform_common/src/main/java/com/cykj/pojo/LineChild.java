@@ -24,6 +24,15 @@ public class LineChild extends  Line {
     //返程线路站点数组
     private List<CitySiteArr> resverArrs;
 
+    private int allTime;    //一趟总耗时
+
+    private String endSiteName;     //终点站
+    private String startSiteName;     //起始站
+    private int propertyId; //始程或返程属性id
+    private String firstTime;   //第一班时间
+    private String lastTime;    //最后一班时间
+    private String nowTime;     //最近一班的发车时间
+
     public int getLineId() {
         return lineId;
     }
@@ -108,10 +117,68 @@ public class LineChild extends  Line {
         this.resverArrs = resverArrs;
     }
 
+    public int getAllTime() {
+        return allTime;
+    }
+
+    public void setAllTime(int allTime) {
+        this.allTime = allTime;
+    }
+
+    public String getEndSiteName() {
+        return endSiteName;
+    }
+
+    public void setEndSiteName(String endSiteName) {
+        this.endSiteName = endSiteName;
+    }
+
+    public String getStartSiteName() {
+        return startSiteName;
+    }
+
+    public void setStartSiteName(String startSiteName) {
+        this.startSiteName = startSiteName;
+    }
+
+    public int getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(String firstTime) {
+        this.firstTime = firstTime;
+    }
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public String getNowTime() {
+        return nowTime;
+    }
+
+    public void setNowTime(String nowTime) {
+        this.nowTime = nowTime;
+    }
+
+
     @Override
     public String toString() {
         return "LineChild{" +
-                "siteNum=" + siteNum +
+                "lineId=" + lineId +
+                ", siteNum=" + siteNum +
                 ", dailyFrequencyNum=" + dailyFrequencyNum +
                 ", useVehiclesNum=" + useVehiclesNum +
                 ", oneMoney=" + oneMoney +
@@ -120,6 +187,7 @@ public class LineChild extends  Line {
                 ", returnTime=" + returnTime +
                 ", arrs=" + arrs +
                 ", resverArrs=" + resverArrs +
+                ", allTime=" + allTime +
                 '}';
     }
 }

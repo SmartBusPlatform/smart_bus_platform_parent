@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.CityLineMapper">
+
+    <!-- 根据站点查线路 -->
+    <select id="queryLineBySite" resultType="com.cykj.pojo.LineChild" parameterType="java.lang.Integer">
+        select distinct l.*,cs2.name endSiteName,cs3.name startSiteName
+            from tb_line l
+                 left join tb_line_site ls on l.id = ls.line_id
+                 left join tb_city_site cs on ls.site_id = cs.id
+            ,tb_line_site ls2
+            ,tb_line_site ls3
+            ,tb_city_site cs2
+            ,tb_city_site cs3
+        where cs.id = #{siteId}
+            and ls2.line_id = l.id
+            and ls2.property_id = 2
+            and ls2.back_index = 1
+            and ls2.site_id = cs2.id
+            and ls3.line_id = l.id
+            and ls3.property_id = 1
+            and ls3.start_index = 1
+            and ls3.site_id = cs3.id
+    </select>
+
+    <!-- 根据站点Id查询线路信息-->
+    <select id="queryLineInfByLineId" resultType="com.cykj.pojo.LineChild" parameterType="java.lang.Integer">
+        select id,name,one_money
+            from tb_line
+        where id = #{lineId}
+    </select>
+
+    <!-- 根据站点Id查询线路发车时刻-->
+    <select id="queryLineTimeByLineId" resultType="com.cykj.pojo.Times" parameterType="java.lang.Integer">
+        select distinct t.id,t.time
+            from tb_bus_work bw,tb_time t
+            where bw.line_id = #{lineId}
+                and bw.start_begin_or_return = #{propertyId}
+                and t.id = bw.time_id
+            order by t.id asc
+    </select>
+
+    <!-- 根据两个线路id查询他们共同的线路-->
+    <select id="findStartLineBySiteId" resultType="com.cykj.pojo.UserToSiteRoute" parameterType="java.lang.Integer">
+        select distinct l.name lineName,ls.line_id lineId,cs.name startSiteName,cs2.name endSiteName
+              ,cs.x_position startSiteLongitude,cs.y_position startSiteLatitude,ls.start_index startIndex
+              ,cs2.x_position endSiteLongitude,cs2.y_position endSiteLatitude,ls2.start_index endIndex
+              ,p.name propertyName,p.value propertyId
+        from tb_line_site ls
+                left join tb_city_site cs on cs.id = #{startSiteId}
+                left join tb_line l on ls.line_id = l.id
+            ,tb_line_site ls2
+                left join tb_city_site cs2 on cs2.id = #{endSiteId}
+            ,tb_param p
+        where ls.site_id = #{startSiteId}
+            and ls2.site_id = #{endSiteId}
+            and p.type_english = 'lineDirection'
+            and ls.property_id = 1 and ls2.property_id = 1
+            and ls2.start_index > ls.start_index
+            and p.value = 1
+    </select>
+
+    <!-- 根据两个线路id查询他们共同的线路-->
+    <select id="findEndLineBySiteId" resultType="com.cykj.pojo.UserToSiteRoute" parameterType="java.lang.Integer">
+        select distinct l.name lineName,ls.line_id lineId,cs.name startSiteName,cs2.name endSiteName
+              ,cs.x_position startSiteLongitude,cs.y_position startSiteLatitude,ls.back_index startIndex
+              ,cs2.x_position endSiteLongitude,cs2.y_position endSiteLatitude,ls2.back_index endIndex
+              ,p.name propertyName,p.value propertyId
+        from tb_line_site ls
+                left join tb_city_site cs on cs.id = #{startSiteId}
+                left join tb_line l on ls.line_id = l.id
+            ,tb_line_site ls2
+                left join tb_city_site cs2 on cs2.id = #{endSiteId}
+            ,tb_param p
+        where ls.site_id = #{startSiteId}
+            and ls2.site_id = #{endSiteId}
+            and p.type_english = 'lineDirection'
+            and ls.property_id = 2 and ls2.property_id = 2
+            and ls2.back_index > ls.back_index
+            and p.value = 2
+    </select>
+</mapper>

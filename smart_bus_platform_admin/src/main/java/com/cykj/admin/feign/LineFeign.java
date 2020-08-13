@@ -15,6 +15,9 @@ public interface LineFeign {
     @RequestMapping("line/getLineByPage")
     public String getLineByPage(@RequestBody Line line, @RequestParam("curPage") String curPage, @RequestParam("pageSize") String pageSize);
 
+    @RequestMapping("line/getLineByCityId")
+    public String getLineByCityId(@RequestBody Line line);
+
     @RequestMapping("line/addLine")
     public String addLine(@RequestBody LineChild lineChild);
     @RequestMapping("line/delLineById")

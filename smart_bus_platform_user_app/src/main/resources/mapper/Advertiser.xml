@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.AdvertiserMapper">
+
+    <!-- 查询首页轮播的广告 -->
+    <select id="queryCarouselAdvertiser" resultType="com.cykj.pojo.AdvertiserInfo">
+        select * from tb_advertiser where is_carousel = 1 and state_id = 1
+    </select>
+
+    <!-- 查询所有广告 -->
+    <select id="queryAllAdvertiser" resultType="com.cykj.pojo.Advertiser">
+        select * from tb_advertiser where state_id = 1
+    </select>
+
+</mapper>

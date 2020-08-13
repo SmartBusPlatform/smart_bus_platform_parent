@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">是否固定路线：</label>
+                            <label class="layui-form-label">是否固定班次：</label>
                             <div class="layui-input-inline">
                                 <select name="isFixedLine">
                                     <option value="">请选择</option>
@@ -162,25 +162,9 @@
 <div class="layui-form-item layui-row" id="changeBus" hidden style="margin-top: 20px">
     <from class="layui-form layui-col-lg10 layui-col-lg-offset1" lay-filter="change">
         <div class="layui-form-item">
-            <label for="changeProvince" class="layui-form-label">省份：</label>
-            <div class="layui-input-inline">
-                <select name="provinceId" id="changeProvince" lay-verify="required" lay-filter="changeProvince">
-                    <option value="">请选择省份</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="changeCity" class="layui-form-label">城市：</label>
-            <div class="layui-input-inline">
-                <select name="cityId" id="changeCity" lay-verify="required">
-                    <option value="">请先选择省份</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label for="changeNumber" class="layui-form-label">车牌：</label>
             <div class="layui-input-inline">
-                <input type="text" id="changeNumber" name="number" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" id="changeNumber" name="number" lay-verify="number" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -188,15 +172,6 @@
             <div class="layui-input-inline">
                 <select name="repairmanId" id="changeRepairmanid" lay-verify="required">
                     <option value="2">吴师傅</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="changeIsFixedLine" class="layui-form-label">是否固定线路：</label>
-            <div class="layui-input-inline">
-                <select name="isFixedLine" id="changeIsFixedLine" lay-verify="required">
-                    <option value="是">是</option>
-                    <option value="否">否</option>
                 </select>
             </div>
         </div>
@@ -245,7 +220,6 @@
                 {field: 'id', hide:"true"}
                 ,{field: 'cityId', hide:"true"}
                 ,{field: 'repairmanId', hide:"true"}
-                ,{field: 'lineId', hide:"true"}
                 ,{field: 'provinceId', hide:"true"}
                 ,{field: 'number', align: 'center', title : '车牌'}
                 ,{field: 'repairmanName', align: 'center', title : '维护人'}
@@ -349,9 +323,9 @@
             if(layEvent == '排班'){
                 layer.open({
                     type: 2,
-                    content: ['/manager/time_line'],
+                    content: ['/manager/bus_work'],
                     maxmin:true,
-                    area:['800px','700px'],
+                    area:['1300px','650px'],
                     success:function (layero, index) {
                         let body = layer.getChildFrame('body', index);
                         body.find(".transmitData").eq(0).val(data.number);
@@ -360,6 +334,7 @@
                         body.find(".marginBottom").eq(0).text(data.number);
                         var iframe = window['layui-layer-iframe' + index];
                         iframe.queryBusWork();
+                        iframe.queryLine();
                     }
                 });
                 //修改巴士数据
@@ -371,12 +346,11 @@
                     title: '修改巴士',
                     content: $('#changeBus'),
                     offset: '150px',
-                    area: ['450px', '450px'],
+                    area: ['450px', '250px'],
                     success : function(layero, index){
                         form.val('change', {
                             "number": data.number
                             ,"repairmanId": data.repairmanId
-                            ,"isFixedLine": data.isFixedLine
                             ,"id": data.id
                         });
                     }
@@ -471,7 +445,7 @@
             getCity(data.value,null,false);
         });
 
-        function getCity(parentId,cityId,isInsert){
+        function getCity(parentId,cityId){
             $.ajax({
                 url:'/areas/getCityByProvince',
                 method:'post',
@@ -479,29 +453,13 @@
                 data:{"parentId":parentId,"type":2},
                 success:function(data){
                     if(data.length>0){
-                        if(isInsert){
-                            $("#insertCity").empty();
-                            $("#insertCity").append("<option  value=''>请选择城市</option>");
+                        $("#insertCity").empty();
+                        $("#insertCity").append("<option  value=''>请选择城市</option>");
 
-                            for(var i =0;i<data.length;i++){
-                                $("#insertCity").append("<option  value=\""+data[i].id+"\">"+data[i].name+"</option>");
-                            }
-                            form.render("select")
-                        }else{
-                            $("#changeCity").empty();
-                            $("#changeCity").append("<option  value=''>请选择城市</option>");
-
-                            for(var i =0;i<data.length;i++){
-                                $("#changeCity").append("<option  value=\""+data[i].id+"\">"+data[i].name+"</option>");
-                            }
-                            //重新渲染
-                            if(cityId!=null){
-                                form.val('change', {
-                                    "cityId": cityId
-                                });
-                            }
-                            form.render("select")
+                        for(var i =0;i<data.length;i++){
+                            $("#insertCity").append("<option  value=\""+data[i].id+"\">"+data[i].name+"</option>");
                         }
+                        form.render("select")
                     }else{
                         layer.msg(data.msg);
                     }
@@ -509,7 +467,7 @@
             });
         }
 
-        function getProvince(parentId,isInsert) {
+        function getProvince(parentId) {
             //获取省份
             $.ajax({
                 url:'/areas/getProvinceNameAll',
@@ -518,28 +476,15 @@
                 data:{"type":1},
                 success:function(data){
                     if(data.status==200){
-                        if(isInsert){
-                            $("#insertProvince").empty();
-                            $("#insertProvince").append("<option  value=''>请选择省份</option>");
-                            for(var i =0;i<data.data.length;i++){
-                                $("#insertProvince").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
-                            }
-                            form.val('insert', {
-                                "provinceId": ""
-                            });
-                        }else{
-                            $("#changeProvince").empty();
-                            $("#changeProvince").append("<option  value=''>请选择省份</option>");
-                            for(var i =0;i<data.data.length;i++){
-                                $("#changeProvince").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
-                            }
-                            //重新渲染
-                            if(parentId!=null){
-                                form.val('change', {
-                                    "provinceId": parentId
-                                });
-                            }
+                        $("#insertProvince").empty();
+                        $("#insertProvince").append("<option  value=''>请选择省份</option>");
+                        for(var i =0;i<data.data.length;i++){
+                            $("#insertProvince").append("<option  value=\""+data.data[i].id+"\">"+data.data[i].name+"</option>");
                         }
+                        form.val('insert', {
+                            "provinceId": ""
+                        });
+
                         form.render("select");
                     }else{
                         layer.msg(data.msg);

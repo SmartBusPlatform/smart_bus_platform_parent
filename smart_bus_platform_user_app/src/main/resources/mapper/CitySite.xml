@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.CitySiteMapper">
+
+    <!-- 根据城市名查站点 -->
+    <select id="queryCitySiteByCityName" resultType="com.cykj.pojo.CitySiteInfo" parameterType="java.lang.String">
+        select cs.*
+            from tb_city_site cs
+                left join tb_areas a on a.id = cs.city_id
+            where a.name = #{cityName}
+    </select>
+
+    <!-- 根据线路id和往返程id查始程站点-->
+    <select id="findLineSiteStartByLineId" resultType="citySiteArr" parameterType="lineChild">
+		SELECT
+            cs.name name,cs.id title,cs.x_position xPosition,cs.y_position yPosition
+        FROM
+            tb_city_site cs
+        INNER JOIN tb_line_site ls ON ls.site_id = cs.id and ls.property_id= #{propertyId}
+
+        WHERE
+            ls.line_id = #{lineId}
+            <if test=" propertyId==1 ">
+                order by ls.start_index asc
+            </if>
+            <if test=" propertyId==2 ">
+                order by ls.back_index asc
+            </if>
+	</select>
+
+    <!--  根据线路id和往返程属性id以及索引范围来查询站点  -->
+    <select id="findSiteByLineIdIndex" resultType="citySiteArr" parameterType="com.cykj.pojo.UserToSiteRoute">
+        select cs.name,cs.x_position,cs.y_position
+            from tb_line_site ls
+                left join tb_city_site cs on ls.site_id = cs.id
+        where ls.line_id = #{lineId}
+            and ls.property_id = #{propertyId}
+            <if test=" propertyId == 1">
+                and ls.start_index > #{startIndex}
+                and #{endIndex} > ls.start_index
+            </if>
+            <if test=" propertyId == 2">
+                and ls.back_index > #{startIndex}
+                and #{endIndex} > ls.back_index
+            </if>
+    </select>
+</mapper>

@@ -6,7 +6,7 @@
 
     <!--  查询巴士排班 -->
     <select id="queryBusWork" resultType="com.cykj.pojo.BusWorkInfo" parameterType="java.lang.Integer">
-        select bw.*,t.time departureTime,l.name lineName,l.start_time,l.return_time,b.number,l.start_time+l.return_time+p.value all_time
+        select bw.*,t.time departureTime,l.name lineName,l.start_time,l.return_time,b.number,l.start_time+l.return_time+p.value+p.value all_time
         from tb_bus_work bw
                  left join tb_time t on bw.time_id = t.id
                  left join tb_line l on bw.line_id = l.id
@@ -22,45 +22,38 @@
              line_id,
              time_id,
              start_begin_or_return,
-             is_addup
+             work_type
              )
         values
                (#{busId},
                 #{lineId},
                 #{timeId},
                 #{startBeginOrReturn},
-                #{isAddup}
+                #{workType}
                )
     </insert>
 
-    <!--  修改巴士排班-->
+    <!--  修改巴士排班/排班替换-->
     <update id="changeBusWork" parameterType="com.cykj.pojo.BusWorkInfo">
         update tb_bus_work
         <set>
-            <if test=" title!=null and title!=''">
-                title = #{title},
-            </if>
-            <if test=" isCarousel!=null and isCarousel!=''">
-                is_carousel = #{isCarousel},
-            </if>
-            <if test=" endTime!=null and endTime!=''">
-                end_time = #{endTime},
-            </if>
-            <if test=" stateId!=null and stateId!=''">
-                state_id = #{stateId},
-            </if>
-            <if test=" imgUrl!=null and imgUrl!=''">
-                img_url = #{imgUrl},
-            </if>
-            <if test=" advertiserX!=null and advertiserX!=''">
-                advertiser_x = #{advertiserX},
-            </if>
-            <if test=" advertiserY!=null and advertiserY!=''">
-                advertiser_y = #{advertiserY},
-            </if>
+            bus_id = #{busId}
         </set>
         where id = #{id}
     </update>
+
+    <!--  删除巴士排班-->
+    <delete id="deleteBusWork" parameterType="com.cykj.pojo.BusWork">
+        delete from tb_bus_work
+        <where>
+            <if test="id!=null and id!=''">
+                id = #{id}
+            </if>
+            <if test="busId!=null and busId!=''">
+                bus_id = #{busId}
+            </if>
+        </where>
+    </delete>
 
     <!--查询线路班次-->
     <select id="findBusWorkByLineId" parameterType="busWork" resultType="busWorkInfo">

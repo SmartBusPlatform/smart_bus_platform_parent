@@ -11,5 +11,4 @@ public class SmartBusPlatformEurekaServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(SmartBusPlatformEurekaServerApplication.class, args);
     }
-
 }
