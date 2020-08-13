@@ -2,6 +2,8 @@ package com.cykj.pojo;
 
 import com.cykj.pojo.Areas;
 
+import java.util.List;
+
 public class AreasChild extends Areas {
     //城市id
     private int cityId;
@@ -15,6 +17,26 @@ public class AreasChild extends Areas {
     private int siteNum;
     //线路数量
     private int lineNum;
+    //城市首字母
+    private String idx;
+    //城市集合
+    private List<Areas> cities;
+
+    public String getIdx() {
+        return idx;
+    }
+
+    public void setIdx(String idx) {
+        this.idx = idx;
+    }
+
+    public List<Areas> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<Areas> cities) {
+        this.cities = cities;
+    }
 
     public int getCityId() {
         return cityId;

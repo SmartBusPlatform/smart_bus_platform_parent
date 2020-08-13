@@ -4,6 +4,7 @@ public class Opinion {
 
     private int id;
     private int userId;
+    private String opinionImgUrl;
     private String userOpinion;
     private int adminId;
     private String result;
@@ -29,6 +30,14 @@ public class Opinion {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getOpinionImgUrl() {
+        return opinionImgUrl;
+    }
+
+    public void setOpinionImgUrl(String opinionImgUrl) {
+        this.opinionImgUrl = opinionImgUrl;
     }
 
     public String getUserOpinion() {
@@ -92,6 +101,7 @@ public class Opinion {
         return "Opinion{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", opinionImgUrl='" + opinionImgUrl + '\'' +
                 ", userOpinion='" + userOpinion + '\'' +
                 ", adminId=" + adminId +
                 ", result='" + result + '\'' +

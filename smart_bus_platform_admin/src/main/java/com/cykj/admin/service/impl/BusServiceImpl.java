@@ -104,4 +104,18 @@ public class BusServiceImpl implements BusService {
 
         return isSuccess;
     }
+
+    @Override
+    public Result findBusByLineId(Line line) {
+        Result result = new Result();
+        if(line!=null){
+            List<BusChild> busChildList = busMapper.findBusByLineId(line);
+            result.setData(busChildList);
+            result.setStatus(200);
+            return  result;
+        }
+        result.setMsg("数据格式有误");
+        result.setStatus(201);
+        return result;
+    }
 }

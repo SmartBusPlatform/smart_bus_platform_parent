@@ -94,6 +94,22 @@
                #{productionTime})
     </insert>
 
-
+    <select id="findBusByLineId" parameterType="line" resultType="busChild">
+        SELECT
+            b.number number,
+            GROUP_CONCAT(DISTINCT t.time) departureTime,
+        p.name propertyName
+        FROM
+            tb_bus b
+        LEFT JOIN tb_bus_work bw ON b.id = bw.bus_id
+        LEFT JOIN tb_line l ON l.id = bw.line_id
+        LEFT JOIN tb_time t ON bw.time_id = t.id
+        LEFT JOIN tb_param p ON p.value= bw.work_type and p.type_english='workState'
+        WHERE
+            l.id = #{id}
+        AND b.state_id = 1
+        GROUP BY
+            b.number;
+    </select>
 
 </mapper>

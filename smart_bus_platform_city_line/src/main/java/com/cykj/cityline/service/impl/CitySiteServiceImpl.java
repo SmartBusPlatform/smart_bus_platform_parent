@@ -1,5 +1,6 @@
 package com.cykj.cityline.service.impl;
 
+import com.cykj.cityline.mapper.AreasMapper;
 import com.cykj.cityline.mapper.CitySiteMapper;
 import com.cykj.cityline.service.CitySiteService;
 import com.cykj.pojo.AreasChild;
@@ -19,6 +20,8 @@ import java.util.List;
 public class CitySiteServiceImpl implements CitySiteService {
     @Autowired
     private CitySiteMapper citySiteMapper;
+    @Autowired
+    private AreasMapper areasMapper;
     @Override
     public Result findCitySiteByPage(HashMap<String, Object> map, int startSize, int pageSize) {
         PageHelper.startPage(startSize, pageSize);
@@ -96,5 +99,27 @@ public class CitySiteServiceImpl implements CitySiteService {
     @Override
     public List<CitySite> findCitySiteAllByCityId(CitySite citySite) {
         return citySiteMapper.findCitySiteByCityId(citySite);
+    }
+
+    @Override
+    public Result findCitySiteByCityIdLikeName(CitySiteChild citySiteChild) {
+        Result result = new Result();
+        if(citySiteChild!=null){
+            if(citySiteChild.getCityName()!=null&&citySiteChild.getName()!=null&&!citySiteChild.getName().equals("")){
+                AreasChild areasChild = new AreasChild();
+                areasChild.setCityName(citySiteChild.getCityName());
+                AreasChild areasChild1 = areasMapper.findAreaByCityName(areasChild);
+                if(areasChild1!=null){
+                    citySiteChild.setCityId(areasChild1.getId());
+                    List<CitySite> citySiteByCityIdLikeName = citySiteMapper.findCitySiteByCityIdLikeName(citySiteChild);
+                    result.setStatus(200);
+                    result.setData(citySiteByCityIdLikeName);
+                    return result;
+                }
+            }
+        }
+        result.setStatus(201);
+        result.setMsg("查无此站点");
+        return null;
     }
 }

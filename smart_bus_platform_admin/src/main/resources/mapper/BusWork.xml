@@ -57,22 +57,39 @@
 
     <!--查询线路班次-->
     <select id="findBusWorkByLineId" parameterType="busWork" resultType="busWorkInfo">
-       SELECT
-            t.time time,
-            b.number number,
-        IF (
-            STRCMP(bw.is_addup ,'否'),
-            '加开',
-          ''
-        ) remarks
+        SELECT t.time time,
+         b.number number,
+         p2. NAME remarks
         FROM
             tb_bus_work bw
         INNER JOIN tb_time t ON bw.time_id = t.id
         INNER JOIN tb_bus b ON b.id = bw.bus_id
         INNER JOIN tb_param p ON p.type_english = 'busDirection'
-        AND p.VALUE= bw.start_begin_or_return
-        AND p.VALUE=#{startBeginOrReturn}
+        AND p.VALUE
+            = bw.start_begin_or_return
+        AND p.VALUE
+            = #{startBeginOrReturn}
+        inner join tb_param p2 on  p2.VALUE
+            = bw.work_type
+        AND p2.type_english = 'workState'
         WHERE
-            bw.line_id = #{lineId} order by t.id
+            bw.line_id = #{lineId}
+        ORDER BY
+            t.id
+
     </select>
+<!--    &#45;&#45;        SELECT-->
+<!--    &#45;&#45;             t.time time,-->
+<!--    &#45;&#45;             b.number number,-->
+<!--    &#45;&#45;             p.name remarks-->
+<!--    &#45;&#45;         FROM-->
+<!--    &#45;&#45;             tb_bus_work bw-->
+<!--    &#45;&#45;         INNER JOIN tb_time t ON bw.time_id = t.id-->
+<!--    &#45;&#45;         INNER JOIN tb_bus b ON b.id = bw.bus_id-->
+<!--    &#45;&#45;         INNER JOIN tb_param p ON p.type_english = 'busDirection'-->
+<!--    &#45;&#45;         AND p.VALUE= bw.start_begin_or_return-->
+<!--    &#45;&#45;         AND p.VALUE=#{startBeginOrReturn}-->
+<!--    &#45;&#45;         AND P.VALUE=bw.work_type and p.type_english='workState'-->
+<!--    &#45;&#45;         WHERE-->
+<!--    &#45;&#45;             bw.line_id = #{lineId} order by t.id-->
 </mapper>

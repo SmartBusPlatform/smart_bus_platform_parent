@@ -6,6 +6,7 @@ public class DriverWork {
     private String workDate;
     private int busId;
     private int adminId;
+    private int isWork;
 
     public DriverWork() {
     }
@@ -42,13 +43,13 @@ public class DriverWork {
         this.adminId = adminId;
     }
 
-    @Override
-    public String toString() {
-        return "DriverWork{" +
-                "id=" + id +
-                ", workDate='" + workDate + '\'' +
-                ", busId=" + busId +
-                ", adminId=" + adminId +
-                '}';
+    public int getIsWork() {
+        return isWork;
     }
+
+    public void setIsWork(int isWork) {
+        this.isWork = isWork;
+    }
+
+
 }
