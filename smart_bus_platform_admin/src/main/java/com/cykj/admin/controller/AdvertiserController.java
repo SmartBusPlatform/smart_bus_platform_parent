@@ -1,15 +1,19 @@
 package com.cykj.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.admin.bean.FTPParam;
 import com.cykj.admin.service.AdvertiserService;
 import com.cykj.pojo.Advertiser;
 import com.cykj.pojo.AdvertiserInfo;
+import com.cykj.util.FtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import sun.swing.FilePane;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +28,8 @@ import java.util.*;
 public class AdvertiserController{
     @Autowired
     AdvertiserService advertiserService;
-
+    @Autowired
+    private FTPParam ftpParam;
     @RequestMapping(value = "queryAdvertiserByPage")
     //分页查询广告，id为空就查全部
     public Object queryAdvertiserByPage(HttpServletRequest request){
@@ -62,8 +67,16 @@ public class AdvertiserController{
     @RequestMapping(value = "insertIamge")
     //上传图片
     public Object insertIamge(MultipartFile file,HttpServletRequest req) {
+//        String fileName=null;
+//        boolean result= false;
+//        try {
+//            result=FtpUtil.uploadFile(ftpParam.getHost(),ftpParam.getPort(),ftpParam.getUsername(),ftpParam.getPassword(),ftpParam.getBasePath(),ftpParam.getFilePath(),fileName,file.getInputStream())
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }finally {
+//           String url="http://"+ftpParam.getHost()+":80"+ ftpParam.getFilePath()+fileName;
+//        }
         String filePath = req.getParameter("filePath");
-
         Map<String,Object> map = new HashMap<String,Object>();
 
         if(filePath!=null&&!"".equals(filePath)){

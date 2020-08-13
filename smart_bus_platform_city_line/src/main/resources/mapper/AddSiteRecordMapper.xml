@@ -3,7 +3,7 @@
 
 <mapper namespace="com.cykj.cityline.mapper.AddSiteRecordMapper">
     <insert id="insAddSiteRecord" parameterType="addSiteRecord">
-		insert into tb_add_site_record(content,state_id) values(#{content},#{stateId})
+		insert into tb_add_site_record(content,city_id) values(#{content},#{cityId})
 	</insert>
 
 </mapper>

@@ -42,6 +42,13 @@ feign:
       default:
         connect-timeout: 10000
         read-timeout: 20000
+ftpclient:
+  host: 120.25.211.135
+  port: 21
+  username: ftpuser
+  password: ftpuser
+  basePath: /home/ftpuser/
+  filePath: /
 
 
 

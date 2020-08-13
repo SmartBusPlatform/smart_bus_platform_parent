@@ -5,13 +5,21 @@ public class AddSiteRecord {
     private String time;
     private String content;
     private int stateId;
-
+    private int cityId;
     public AddSiteRecord() {
     }
 
-    public AddSiteRecord(String content, int stateId) {
+    public AddSiteRecord(String content, int cityId) {
         this.content = content;
-        this.stateId = stateId;
+        this.cityId = cityId;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public int getId() {

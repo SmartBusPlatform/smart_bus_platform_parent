@@ -8,10 +8,12 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.cykj.pojo.AreasChild;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("areas")
@@ -64,5 +66,9 @@ public class AreasController {
     @RequestMapping("getCityByProvince")
     public String getCityByProvince(@RequestBody AreasChild areasChild) {
         return JSON.toJSONString(areasService.findAreasByTypeParentId(areasChild));
+    }
+    @RequestMapping("getAreasAll")
+    public String getAreasAll() {
+        return JSON.toJSONString(areasService.findAreasAll());
     }
 }

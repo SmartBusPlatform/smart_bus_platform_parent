@@ -15,12 +15,21 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.5.1.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/xadmin.js"></script>
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=01c4bad1d55c4b802d04ee5e62657af1&plugin=AMap.StationSearch"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=01c4bad1d55c4b802d04ee5e62657af1&plugin=AMap.StationSearch&plugin=AMap.Driving"></script>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
     <script type="text/javascript" src="http://webapi.amap.com/demos/js/liteToolbar.js"></script>
     <style type="text/css">
         .layui-unselect dl { max-height:200px; }
+        .queryDiv{
+            margin-top: 20px;
+            margin-left: 5%;
+        }
+        .map{
+            width: 90%;
+            height: 70%;
+            margin-top: 5%;
+        }
     </style>
 </head>
 
@@ -41,7 +50,25 @@
 <div class="x-body">
     <%--查看地图--%>
     <div class="site-text layui-row" hidden id="findMap">
-        <div id="container" style="margin-top: 0.2cm;width:100%;height: 100%;"></div>
+        <div class="layui-row"  >
+            <div class="queryDiv layui-col-lg-offset1" hidden>
+                <form class="layui-form layui-col-space5" lay-filter="lineForm">
+                    <div class="layui-inline">
+                        <h3 class="layui-inline">线路：</h3>
+                        <div class="layui-input-inline">
+                            <select name="lineId" id="selectLine">
+                                <option value="">请选择线路</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-lg-offset1">
+                        <button class="layui-btn btnWidth layui-btn-disabled" lay-submit lay-filter="query" id="queryBtn" disabled>查询</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="map" id="container"  ></div>
 
     </div>
     <div class="layui-row">
@@ -146,7 +173,8 @@
 
 </div>
 <script>
-
+var myMap;
+var markers = [];
         layui.use(['table','form'], function(){
             var table = layui.table;
             var form = layui.form;
@@ -342,9 +370,151 @@
                     <%--    }});--%>
 
                     findSite(obj.data.cityId,obj.data.cityName)
+                }else if("lineNum"===event){
+                    $(".queryDiv").css("display","block");
+                    let map = new AMap.Map("container", {
+                        // center: [116.397428, 39.90923],//地图中心点
+                        zoom: 13 //地图显示的缩放级别
+                    });
+                    myMap=map;
+                    layer.open({
+                        title: '查看线路',
+                        type: 1,
+                        area: ['80%', '80%'],
+                        offset: 'auto',
+                        maxmin: true,
+                        shadeClose: false,
+                        content: $('#findMap'),
+                        btn: ['返回'],
+                        shade: [0.8, '#393D49'],
+                        success: function (layero, index) {
+                            map.setCity(obj.data.cityName);
+                            queryLine(obj.data.cityId);
+
+                        },yes:function(num,layero){
+                            map.destroy();
+                            myMap.destroy();
+                            markers=[];
+                            layer.close(num);
+                        },btn2: function(index, layero){
+                            map.destroy();
+                            myMap.destroy();
+                            markers=[];
+                        }
+                        ,cancel:function () {
+                            map.destroy();
+                            myMap.destroy();
+                            markers=[];
+                        }
+                    });
                 }
             });
+            //根据城市查线路
+            function queryLine(cityId){
+                $.ajax({
+                    type: "post",
+                    url: "/line/getLineByCityId",
+                    dataType: "json",
+                    data : {"cityId":cityId},
+                    success:function (data) {
+                        if(data.length>0){
+                            $("#selectLine").empty();
+                            $.each(data,function (index,item) {
+                                $("#selectLine").append("<option value='"+item.id+"'>"+item.name+"</option>");
+                            })
+                            form.val("lineForm", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                                "lineId": data[0].id
+                            });
+                            form.render('select');
+                            $("#queryBtn").removeClass("layui-btn-disabled")
+                            $("#queryBtn").removeAttr("disabled");
+                        }else{
+                            $("#selectLine").empty();
+                            $("#selectLine").append("<option value=''>该城市暂无线路</option>");
+                            form.render('select');
+                            $("#queryBtn").addClass("layui-btn-disabled");
+                            $("#queryBtn").attr("disabled","disabled");
+                        }
+                    },
+                    error : function () {
+                        layer.msg("服务器出错了");
+                    }
+                });
+            }
 
+            //查询按钮
+            form.on('submit(query)', function(data){
+                markers=[];
+                $.ajax({
+                    type: "post",
+                    url: "/lineSite/getLineSiteByLineId",
+                    dataType: "json",
+                    data : {"lineId":data.field.lineId},
+                    success:function (data) {
+                        if(data.start.length>2){
+                            //定义导航
+                            var driving = new AMap.Driving({
+                                map: myMap,
+                                hideMarkers : true
+                            });
+                            //循环获取站点数组
+                            $.each(data.start,function (index,item) {
+                                markers.push([item.xPosition,item.yPosition,item.name]);
+                            });
+                            var path = new Array();
+                            for (var i=0; i<markers.length;i++){
+                                if(i!=0&&i!=markers.length-1){
+                                    path.push(new AMap.LngLat(markers[i][0],markers[i][1]));
+                                }
+                            }
+                            driving.search(new AMap.LngLat(markers[0][0],markers[0][1]),new AMap.LngLat(markers[markers.length-1][0],markers[markers.length-1][1]),
+                                {waypoints:path}
+                                ,function(status, result) {
+                                    //成功就把所有站点显示出来
+                                    if (status === 'complete') {
+                                        //设置maker图标
+                                        var icon = new AMap.Icon({
+                                            image: '/static/images/map_bus.png',  // Icon的图像
+                                        });
+                                        $.each(markers,function (index,item) {
+                                            var marker = new AMap.Marker({
+                                                position: [item[0],item[1]], // 基点位置
+                                                icon : icon,
+                                            });
+                                            myMap.add(marker);
+                                            if(index==0){
+                                                marker.setLabel({
+                                                    content:item[2]+"(始发站)",
+                                                    direction: 'right'
+                                                })
+                                            }else if(index==markers.length-1){
+                                                marker.setLabel({
+                                                    content:item[2]+"(终点站)",
+                                                    direction: 'right'
+                                                })
+                                            }else{
+                                                marker.setLabel({
+                                                    content:item[2],
+                                                    direction: 'right'
+                                                })
+                                            }
+                                        });
+
+                                    } else {
+                                        layer.msg('获取数据失败')
+                                    }
+                                }
+                            );
+                        }else{
+                            layer.msg("该线路站点尚未配置齐全,无法显示");
+                        }
+                    },
+                    error : function () {
+                        layer.msg("服务器出错了");
+                    }
+                });
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
         });
 
 
@@ -549,15 +719,15 @@
                         ,yes:function(num,layero){
 
                             layer.close(num);
-                            // map.destroy();
+                            map.destroy();
                         },btn2: function(index, layero){
                             //按钮【按钮二】的回调
-                            // map.destroy();
+                            map.destroy();
                             // $("#add_startStation").val("");
                             // $("#add_reStation").val("");
                         }
                         ,cancel:function () {
-                            // map.destroy();
+                            map.destroy();
                             // $("#add_startStation").val("");
                             // $("#add_reStation").val("");
                         }});
@@ -583,6 +753,12 @@
                     direction: 'right' //设置文本标注方位
                 });
             });
+        }
+
+
+        //地图查看线路
+        function findLine() {
+
         }
 
 </script>

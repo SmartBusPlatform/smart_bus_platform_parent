@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace需要和Mapper接口对应-->
+<mapper namespace="com.cykj.userapp.mapper.DriverWorkMapper">
+    <resultMap id="driverWorkMap" type="com.cykj.pojo.LineChild">
+        <result property="shiftTime" column="shiftTime"/>
+        <result property="name" column="name"/>
+        <collection property="siteArr" ofType="com.cykj.pojo.CitySite" javaType="java.util.List">
+            <result property="name" column="siteName"/>
+        </collection>
+    </resultMap>
+    <select id="findDiverWorkByIdAndDate" resultMap="driverWorkMap">
+
+        SELECT
+            l.name name,t.time shiftTime,cs.name siteName
+        FROM
+            tb_driver_work dw
+        INNER JOIN tb_bus_work bw ON dw.bus_id = bw.bus_id and dw.is_work=1
+        inner join tb_time t on t.id=bw.time_id
+        inner join tb_line l on bw.line_id=l.id
+        inner join tb_line_site ls on l.id=ls.line_id
+        inner join tb_city_site cs on ls.site_id=cs.id and bw.start_begin_or_return=ls.property_id
+
+        where
+        dw.admin_id=#{adminId} and dw.work_date=#{date}
+    </select>
+</mapper>

@@ -23,7 +23,10 @@ public class LineChild extends  Line {
     private List<CitySiteArr> arrs;
     //返程线路站点数组
     private List<CitySiteArr> resverArrs;
-
+    //班次时间
+    private String shiftTime;
+    //站点集合
+        private List<CitySite> siteArr;
     private int allTime;    //一趟总耗时
 
     private String endSiteName;     //始程终点站
@@ -137,6 +140,24 @@ public class LineChild extends  Line {
         this.startSiteName = startSiteName;
     }
 
+
+    public String getShiftTime() {
+        return shiftTime;
+    }
+
+    public void setShiftTime(String shiftTime) {
+        this.shiftTime = shiftTime;
+    }
+
+    public List<CitySite> getSiteArr() {
+        return siteArr;
+    }
+
+    public void setSiteArr(List<CitySite> siteArr) {
+        this.siteArr = siteArr;
+    }
+
+
     @Override
     public String toString() {
         return "LineChild{" +
@@ -150,7 +171,11 @@ public class LineChild extends  Line {
                 ", returnTime=" + returnTime +
                 ", arrs=" + arrs +
                 ", resverArrs=" + resverArrs +
+                ", shiftTime='" + shiftTime + '\'' +
+                ", siteArr=" + siteArr +
                 ", allTime=" + allTime +
+                ", endSiteName='" + endSiteName + '\'' +
+                ", startSiteName='" + startSiteName + '\'' +
                 '}';
     }
 }

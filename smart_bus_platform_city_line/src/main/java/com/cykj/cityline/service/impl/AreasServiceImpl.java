@@ -120,4 +120,9 @@ public class AreasServiceImpl implements AreasService {
     public List<AreasChild> findAreasByTypeParentId(AreasChild areasChild) {
         return areasMapper.findAreasByTypeParentId(areasChild);
     }
+
+    @Override
+    public List<AreasChild> findAreasAll() {
+        return areasMapper.findAreasAll();
+    }
 }

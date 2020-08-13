@@ -50,4 +50,8 @@ public interface AreasMapper {
      * @return
      */
     public List<AreasChild> findAreasByTypeParentId(AreasChild areasChild);
+    /**
+     * 查询所有城市信息
+     */
+    public List<AreasChild> findAreasAll();
 }
