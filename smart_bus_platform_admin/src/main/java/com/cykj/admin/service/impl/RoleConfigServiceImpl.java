@@ -7,13 +7,11 @@ import com.cykj.pojo.AdminInfo;
 import com.cykj.pojo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@EnableTransactionManagement
 public class RoleConfigServiceImpl implements RoleConfigService {
 
     @Autowired
