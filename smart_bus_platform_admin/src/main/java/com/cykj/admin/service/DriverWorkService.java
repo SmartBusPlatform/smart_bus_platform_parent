@@ -11,4 +11,6 @@ public interface DriverWorkService {
     LayuiData selectDriverList( HashMap<String, Object> map);
 
     String updateDriver(AdminInfo adminInfo);
+
+    LayuiData selectWorkload(HashMap<String, Object> map);
 }

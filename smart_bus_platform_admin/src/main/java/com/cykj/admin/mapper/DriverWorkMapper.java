@@ -1,5 +1,6 @@
 package com.cykj.admin.mapper;
 
+import com.cykj.admin.bean.DriverWorkload;
 import com.cykj.pojo.AdminInfo;
 
 import java.util.HashMap;
@@ -14,5 +15,8 @@ public interface DriverWorkMapper {
 
     //修改司机信息
     int updateDriver(AdminInfo adminInfo);
+
+    //查询司机工作量
+    List<DriverWorkload> selectWorkload(HashMap<String, Object> map);
 
 }

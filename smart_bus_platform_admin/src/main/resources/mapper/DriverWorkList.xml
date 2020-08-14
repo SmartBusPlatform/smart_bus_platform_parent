@@ -35,7 +35,8 @@
     <select id="selectCityBus" parameterType="java.util.HashMap" resultType="com.cykj.pojo.Bus">
         select b.id, b.number
         from tb_bus b
-        where b.state_id =1 and b.city_id = #{cityId} and b.id not in( select d.bus_id from tb_driver_work d where  work_date = #{date});
+        where b.state_id =1 and b.city_id = #{cityId} and b.id not in( select d.bus_id from tb_driver_work d where  work_date = #{date})
+        and b.id in (select bus_id from tb_bus_work);
     </select>
 
 <!--    插入排班（上班）数据-->
