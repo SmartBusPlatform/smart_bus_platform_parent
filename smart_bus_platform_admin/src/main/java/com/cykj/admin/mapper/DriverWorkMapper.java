@@ -9,7 +9,7 @@ import java.util.List;
 public interface DriverWorkMapper {
 
     //根据城市查询司机列表和总数据量
-    List<AdminInfo> selectDriverList(HashMap<String,Object> map);
+    List<AdminInfo> selectDriverList(HashMap<String, Object> map);
 
     int selectDriverListCount(HashMap<String, Object> map);
 

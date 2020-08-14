@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface AdvertiserService {
     //分页查询广告
-    public Result queryAdvertiserByPage(HashMap<String,Object> condition, int startSize, int pageSize);
+    public Result queryAdvertiserByPage(HashMap<String, Object> condition, int startSize, int pageSize);
     //查询广告
-    public List<AdvertiserInfo> queryAdvertiser(HashMap<String,Object> condition);
+    public List<AdvertiserInfo> queryAdvertiser(HashMap<String, Object> condition);
     //新增广告
     public int insertAdvertiser(Advertiser advertiser);
     //修改广告

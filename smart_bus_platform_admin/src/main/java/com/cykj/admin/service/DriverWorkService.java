@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public interface DriverWorkService {
 
-    LayuiData selectDriverList( HashMap<String, Object> map);
+    LayuiData selectDriverList(HashMap<String, Object> map);
 
     String updateDriver(AdminInfo adminInfo);
 

@@ -17,7 +17,7 @@ public interface DriverWorkListMapper {
     int setVacation(DriverWork driverWork);
 
     //查询本地空闲可排班使用的车辆
-    List<Bus> selectCityBus(HashMap<String,Object> map);
+    List<Bus> selectCityBus(HashMap<String, Object> map);
 
     //插入排班（上班）数据
     int setDriverWork(DriverWork driverWork);
