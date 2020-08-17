@@ -270,7 +270,7 @@ ul,ol{
 }
 </style>
 </head>
-<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4 onload="alipayment.submit()">
+<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4 onload="">
 	<div id="main">
 		<div id="head">
             <dl class="alipay_link">
@@ -287,7 +287,7 @@ ul,ol{
 				<li class="last">3、确认完成</li>
             </ol>
         </div>
-        <form name=alipayment action="" method=post target="_blank">
+        <form name=alipayment action="" method=post target="_parent">
             <div id="body" style="clear:left">
                 <dl class="content">
 					<dt>商户订单号：</dt>
@@ -336,4 +336,32 @@ ul,ol{
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var webSocket = null;
+        //判断当前浏览器是否支持
+        if ('WebSocket' in window) {
+            webSocket = new WebSocket("ws://localhost:8081/webSocket/1");
+        } else {
+            alert("不支持");
+        }
+        webSocket.onopen = function (ev) {
+            alert("连接打开")
+        }
+        webSocket.onclose = function (ev) {
+            alert("连接关闭")
+        }
+//    将信息放到页面的div--接收信息
+        webSocket.onmessage = function (ev) {
+            console.log(ev.data)
+            if (ev.data == "reload") {
+                window.location.reload();
+            }
+        };
+
+        alipayment.submit();
+    }
+
+</script>
 </html>
