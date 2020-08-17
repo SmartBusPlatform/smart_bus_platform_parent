@@ -116,7 +116,7 @@ public class FaceController {
             String result = HttpUtil.post(url, FaceSearch.accessToken, "application/json", param);
             System.out.println("人脸检测="+result);
 
-            org.json.JSONObject jsonObject = new org.json.JSONObject(result);
+            JSONObject jsonObject = new JSONObject(result);
 
             String face_type = jsonObject.getString("error_msg");
 
