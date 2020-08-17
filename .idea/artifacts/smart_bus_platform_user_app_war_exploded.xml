@@ -129,6 +129,7 @@
           <element id="archive" name="smart_bus_platform_common-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="smart_bus_platform_common" />
           </element>
+          <element id="library" level="project" name="Maven: commons-net:commons-net:3.3" />
           <element id="archive" name="smart_bus_platform_pojo-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="smart_bus_platform_pojo" />
           </element>
@@ -166,6 +167,12 @@
           <element id="library" level="project" name="Maven: com.google.j2objc:j2objc-annotations:1.3" />
           <element id="library" level="project" name="Maven: io.reactivex:rxjava-reactive-streams:1.2.1" />
           <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.3" />
+          <element id="archive" name="smart_bus_platform_admin-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="smart_bus_platform_admin" />
+          </element>
+          <element id="library" level="project" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
+          <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.3.2" />
+          <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.15" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.3.2.RELEASE" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.2.3" />

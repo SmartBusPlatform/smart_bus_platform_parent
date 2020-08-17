@@ -24,7 +24,7 @@
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <script>
         // 是否开启刷新记忆tab功能
-        // var is_remember = false;
+        var is_remember = false;
         <%--$(function () {--%>
         <%--    window.location.href = "${pageContext.request.contextPath}/";--%>
         <%--})--%>

@@ -139,18 +139,18 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label for="insertEndTime" class="layui-form-label">车辆报废时间：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="insertEndTime"  lay-verify="required" autocomplete="off" class="layui-input" placeholder="车辆报废时间">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label for="insertRepairmanId" class="layui-form-label">维护人：</label>
             <div class="layui-input-inline">
                 <select name="repairmanId" id="insertRepairmanId" lay-verify="required">
                     <option value="">请先选择维护人</option>
                     <option value="2">吴师傅</option>
                 </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="insertEndTime" class="layui-form-label">车辆报废时间：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="endTime" id="insertEndTime"  lay-verify="required" autocomplete="off" class="layui-input" placeholder="车辆报废时间">
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;margin-top: 30px">

@@ -72,14 +72,13 @@ public class PartnerServiceImpl implements PartnerService {
         int isSuccess = 0;
         if (partner.getPartner()!=null&&!"".equals(partner.getPartner())){
             Partner isPartner = partnerMapper.queryOnePartner(partner.getPartner(),partner.getId());
-
             if(isPartner==null){
                 isSuccess = partnerMapper.changePartner(partner);
             }else{
                 isSuccess = -9999;
             }
         }else{
-            isSuccess = -9998;
+            isSuccess = partnerMapper.changePartner(partner);
         }
 
         return isSuccess;

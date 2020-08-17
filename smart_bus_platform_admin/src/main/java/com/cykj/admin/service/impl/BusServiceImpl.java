@@ -73,14 +73,13 @@ public class BusServiceImpl implements BusService {
         int isSuccess = 0;
         if (bus.getNumber()!=null&&!"".equals(bus.getNumber())){
             Bus isBus = busMapper.queryOneBus(bus.getNumber(),bus.getId());
-
             if(isBus==null){
                 isSuccess = busMapper.changeBus(bus);
             }else{
                 isSuccess = -9999;
             }
         }else{
-            isSuccess = -9998;
+            isSuccess = busMapper.changeBus(bus);
         }
 
         return isSuccess;

@@ -27,7 +27,7 @@ public class TimeServiceImpl implements TimeService {
                 if(list.get(i).getRequiredTime()!=0&&list.get(i).getBusId()!=0){
                     try {
                         String strNowTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
-                        if(belongCalendar(strNowTime,list.get(i).getTime(),endTime(list.get(i).getTime(),list.get(i).getRequiredTime()))){
+                        if(belongCalendar(strNowTime+":00",list.get(i).getTime()+":00",endTime(list.get(i).getTime(),list.get(i).getRequiredTime())+":00")){
                             list.get(i).setIsRun(1);
                         }else{
                             list.get(i).setIsRun(2);
@@ -48,20 +48,29 @@ public class TimeServiceImpl implements TimeService {
     public static boolean belongCalendar(String strNowTime,String strStartTime, String strEndTime) throws ParseException {
         Date nowTime = new SimpleDateFormat("HH:mm:ss").parse(strNowTime);
         Date endTime = new SimpleDateFormat("HH:mm:ss").parse(strEndTime);
-        Date startTime = new SimpleDateFormat("HH:mm:ss").parse(strStartTime+":00");
+        Date startTime = new SimpleDateFormat("HH:mm:ss").parse(strStartTime);
 
-        return nowTime.getTime() > startTime.getTime() && nowTime.getTime() < endTime.getTime();
+        return nowTime.getTime() >= startTime.getTime() && nowTime.getTime() <= endTime.getTime();
     }
 
     public static String endTime(String strStartTime, int strRequiredTime){
         String[] arr = strStartTime.split(":");
         int branch = Integer.valueOf(arr[1])+strRequiredTime;
         if(branch>60){
-            arr[0] = Integer.valueOf(arr[0])+1+"";
-            if (branch-60<10){
-                arr[1] = "0"+(branch-60);
+            if(branch>120){
+                arr[0] = Integer.valueOf(arr[0])+2+"";
+                if (branch-120<10){
+                    arr[1] = "0"+(branch-120);
+                }else{
+                    arr[1] = branch-120+"";
+                }
             }else{
-                arr[1] = branch-60+"";
+                arr[0] = Integer.valueOf(arr[0])+1+"";
+                if (branch-60<10){
+                    arr[1] = "0"+(branch-60);
+                }else{
+                    arr[1] = branch-60+"";
+                }
             }
         }else if (branch==60){
             arr[0] = Integer.valueOf(arr[0])+1+"";
@@ -70,7 +79,7 @@ public class TimeServiceImpl implements TimeService {
             arr[1] = branch+"";
         }
 
-        String strEndTime = arr[0]+":"+arr[1]+":00";
+        String strEndTime = arr[0]+":"+arr[1];
 
         return strEndTime;
     }

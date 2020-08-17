@@ -5,7 +5,7 @@ import java.util.List;
 public class UserToSiteRoute {
     private String lineName;    //线路名
     private int lineId;     //线路ID
-    private double distance;  //距离
+    private int distance;  //距离
     private String startSiteId;   //开始站点ID
     private String startSiteName;   //开始站点名
     private String endSiteId;   //开始站ID
@@ -140,11 +140,11 @@ public class UserToSiteRoute {
         this.endIndex = endIndex;
     }
 
-    public double getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 }
