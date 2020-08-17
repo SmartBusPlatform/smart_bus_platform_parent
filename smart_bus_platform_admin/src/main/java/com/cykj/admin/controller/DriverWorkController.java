@@ -21,6 +21,7 @@ public class DriverWorkController {
     @Autowired
     private DriverWorkService driverWorkService;
 
+    //查询司机列表
     @RequestMapping("selectDriverList")
     @ResponseBody
     public String selectDriverList(String cityId, String name, String phone, String site, int page, int limit) {
@@ -38,7 +39,7 @@ public class DriverWorkController {
         return JSON.toJSONString(layuiData);
     }
 
-    //修改司机信息
+    //修改单个司机信息
     @RequestMapping("updateDriver")
     @ResponseBody
     public String updateDriver(int id, String name, String phone) {
@@ -56,6 +57,17 @@ public class DriverWorkController {
     @ResponseBody
     public String failureStop(@RequestBody DriverWork driverWork){
         return JSON.toJSONString(driverWorkService.failureStop(driverWork));
+    }
+
+    //查询单个司机工作量
+    @RequestMapping("selectWorkload")
+    @ResponseBody
+    public String selectWorkload(int driverId, long timestamp) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("driverId", driverId);
+        map.put("timestamp", timestamp);
+        LayuiData layuiData = driverWorkService.selectWorkload(map);
+        return JSON.toJSONString(layuiData);
     }
 
     @RequestMapping("vehicleMaintenace")

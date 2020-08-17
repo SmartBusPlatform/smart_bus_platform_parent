@@ -8,33 +8,41 @@
     <title>欢迎页面-X-admin2.1</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/xadminR.css">
-<!--    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.5.1.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/lib/layui/layuiR.js" charset="utf-8"></script>
+    <!--    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.5.1.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/lib/layui/layuiR.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/xadmin.js"></script>
     <style type="text/css">
-        .layui-unselect dl { max-height:200px; }
+        .layui-unselect dl {
+            max-height: 200px;
+        }
 
         /*修改源码点击选中变色*/
         .custom-tree-item-clicked {
             color: #ff5722
         }
-        .maginTop{
+
+        .maginTop {
             margin-top: 20px;
             margin-left: 30px;
         }
-        .tree{
+
+        .tree {
             float: left;
             width: 15%;
-            height:680px;
+            height: 680px;
             overflow-y: auto;
             background-color: white;
             border: 0.5px solid #393D49;
         }
-        .right{
+
+        .right {
             float: left;
             width: 80%;
             margin-left: 2.5%;
@@ -42,7 +50,8 @@
             height: 680px;
             overflow-y: auto;
         }
-        .btnWidth{
+
+        .btnWidth {
             margin-top: 1px;
             width: 50px;
         }
@@ -53,7 +62,7 @@
 <div class="x-body">
     <div class="allBorder">
         <%--省市树状--%>
-        <div class="tree" >
+        <div class="tree">
             <ul id="citySite_tree" lay-filter="citySite_tree-filter" style=" "></ul>
         </div>
         <%--右侧列表--%>
@@ -65,11 +74,11 @@
                 <form class="layui-form layui-col-md12 x-so">
                     <div class="layui-input-inline">
                         <h3 class="layui-inline">姓名：</h3>
-                        <input type="text" id="name"  placeholder="请输入查找姓名" autocomplete="off" class="layui-input">
+                        <input type="text" id="name" placeholder="请输入查找姓名" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
                         <h3 class="layui-inline">手机号：</h3>
-                        <input type="text" id="phone"  placeholder="请输入查找手机号" autocomplete="off" class="layui-input">
+                        <input type="text" id="phone" placeholder="请输入查找手机号" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
                         <h3 class="layui-inline">站点：</h3>
@@ -145,7 +154,7 @@
 </div>
 <%--自增--%>
 <script id="index" type="text/html">
-{{d.LAY_TABLE_INDEX+1}}
+    {{d.LAY_TABLE_INDEX+1}}
 </script>
 <%--表格bar--%>
 <script type="text/html" id="tableBar">
@@ -159,7 +168,7 @@
     //当前点击城市
     var city;
     var cityId;
-    layui.use(['table','tree'], function(){
+    layui.use(['table', 'tree'], function () {
         var tree = layui.tree;
         var table = layui.table;
         var layer = layui.layer;
@@ -167,20 +176,20 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/areas/getAreaTree",
             dataType: "json",
-            success:function (data) {
+            success: function (data) {
                 //渲染
                 var inst1 = tree.render({
                     elem: '#citySite_tree'  //绑定元素
-                    ,data: data.data
+                    , data: data.data
                     // ,showCheckbox: true
-                    ,click:function (obj) {
+                    , click: function (obj) {
                         citeId = obj.data.id;
                         //点击的城市如果没有子节点说明选中了地区，执行查询数据操作
-                        if(obj.data.children==undefined){
-                            city=obj.data.title;
-                            cityId=obj.data.id;
+                        if (obj.data.children == undefined) {
+                            city = obj.data.title;
+                            cityId = obj.data.id;
                             table.render({
                                 elem: '#table',
                                 url:'${pageContext.request.contextPath}/admin/driverWorkController/selectDriverList',
@@ -189,36 +198,36 @@
                                 },
                                 cols: [[
                                     // {type:'checkbox'},
-                                    {title:'序号',templet: '#index'}
-                                    ,{field: 'name', title: '姓名' }
-                                    ,{field: 'phone', title: '电话' }
-                                    ,{field: 'workSiteName',title:'上班站点' }
-                                    ,{field: '',title:'操作', width: 200,templet:'#tableBar'}
+                                    {title: '序号', templet: '#index'}
+                                    , {field: 'name', title: '姓名'}
+                                    , {field: 'phone', title: '电话'}
+                                    , {field: 'workSiteName', title: '上班站点'}
+                                    , {field: '', title: '操作', width: 200, templet: '#tableBar'}
                                 ]],
-                                page:true,
+                                page: true,
                                 // limit:5,
                                 // limits:[5,10,15,20,25],
-                                method:'post',
-                                request:{
-                                    pageName:'page',
-                                    limitName:'limit',
+                                method: 'post',
+                                request: {
+                                    pageName: 'page',
+                                    limitName: 'limit',
                                 },
                                 // response:{
                                 //     statusName:'code',
                                 //     statusCode:200,
                                 // },
-                                parseData: function(res){ //res 即为原始返回的数据
+                                parseData: function (res) { //res 即为原始返回的数据
                                     return {
-                                        "code":res.code,
+                                        "code": res.code,
                                         "count": res.count, //解析数据长度
                                         "data": res.data,
                                     };
                                 }
                             });
 
-                        }else{
-                            province=obj.data.title;
-                            provinceId=obj.data.id;
+                        } else {
+                            province = obj.data.title;
+                            provinceId = obj.data.id;
                         }
                     }
                 });
@@ -265,7 +274,7 @@
                     page:{
                         curr: 1
                     },
-                    where:{
+                    where: {
                         cityId: cityId,
                         name: name,
                         phone: phone,
@@ -276,7 +285,7 @@
         })
 
         //监听修改和工作量查看
-        table.on('tool(test)',function (obj) {
+        table.on('tool(test)', function (obj) {
             var data = obj.data;
             var layEven = obj.event;
             console.log(data)
@@ -284,15 +293,15 @@
             console.log(obj.tr)
             if (layEven == 'update') {
                 layer.open({
-                    type:1
-                    ,title:false
-                    ,resize: false
-                    ,content: '<div style="padding:15px 100px;font-size: 20px">信息修改</div>' +
-                        '<div style="padding: 15px;font-size: 15px">司机姓名：<input id="updateName" value="' +data.name+ '"></div>' +
-                        '<div style="padding: 15px;font-size: 15px">司机电话：<input id="updatePhone" value="' +data.phone+ '"></div>'
-                    ,btn:['保存','取消']
-                    ,btnAlign: 'c'
-                    ,yes:function (index) {
+                    type: 1
+                    , title: false
+                    , resize: false
+                    , content: '<div style="padding:15px 100px;font-size: 20px">信息修改</div>' +
+                        '<div style="padding: 15px;font-size: 15px">司机姓名：<input id="updateName" value="' + data.name + '"></div>' +
+                        '<div style="padding: 15px;font-size: 15px">司机电话：<input id="updatePhone" value="' + data.phone + '"></div>'
+                    , btn: ['保存', '取消']
+                    , btnAlign: 'c'
+                    , yes: function (index) {
                         var name = $("#updateName").val();
                         var phone = $("#updatePhone").val();
 
@@ -310,7 +319,7 @@
                                         'phone': phone,
                                         'id': data.id
                                     },
-                                    success:function (msg) {
+                                    success: function (msg) {
                                         debugger
                                         if (msg == 'success') {
                                             layer.close(index);
@@ -325,19 +334,73 @@
                             })
                         }
                     }
+                });
+            } else if (layEven == 'find') {
+                //查询工作量明细
+                $("#chooseDate").val("")
+                var workerload = table.render({
+                    elem: '#workload'
+                    , url: '${pageContext.request.contextPath}/admin/driverWorkController/selectWorkload'
+                    ,method: 'post'
+                    , where: {
+                        'timestamp': new Date().getTime()
+                        , 'driverId': data.id
+                    }
+                    , cols: [[
+                        {title: '序号', templet: '#index', width: 80}
+                        , {field: 'busNumber', title: '车牌', width: 130}
+                        , {field: 'lineName', title: '线路', width: 80}
+                        , {field: 'startTime', title: '时间'}
+                    ]]
+                })
+                layer.open({
+                    type: 1
+                    , title: false
+                    , resize: false
+                    ,area: ['500px','200px']
+                    , content: $("#work")
                 })
             }
+            //根据指定日期查询司机工作量
+            $("#search2").click(function () {
+                var timestamp = $("#chooseDate").val();
+                if (timestamp != null && timestamp != '') {
+                    workerload.reload({
+                        where:{
+                            'timestamp': new Date(timestamp).getTime()
+                            , 'driverId': data.id
+                        }
+                    });
+                }
+            })
         })
 
     });
 
 </script>
-
-
+<div class="layui-card-body" hidden id="work">
+    <div class="layui-inline layui-show-xs-block">
+        <input class="layui-input search-input" type="text" autocomplete="off" placeholder="选择日期" id="chooseDate">
+    </div>
+    <div class="layui-inline layui-show-xs-block">
+        <button class="layui-btn" lay-filter="search" id="search2" type="button">
+            <i class="layui-icon">&#xe615;</i>
+        </button>
+    </div>
+    <table class="layui-table" id="workload" lay-filter="test"></table>
+</div>
+</body>
 <script>
-
-
-
+    layui.use(['laydate'],
+        function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseDate',
+                trigger: 'click',
+                value: new Date(),
+                isInitValue: true
+            })
+        })
 
 </script>
 

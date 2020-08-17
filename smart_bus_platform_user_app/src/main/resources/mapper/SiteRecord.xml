@@ -9,7 +9,7 @@
         select asr.id,asr.time,asr.content
         from tb_add_site_record asr
            ,tb_areas a
-        where a.name = '安庆'
+        where a.name = #{cityName}
           and a.id = asr.city_id
     </select>
 

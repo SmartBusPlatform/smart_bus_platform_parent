@@ -60,7 +60,7 @@ public class AroundServiceImpl implements AroundService {
     }
 
     @Override
-    public List<CitySiteInfo> queryAroundSiteLine(String cityName, double longitude, double latitude) {
+    public List<CitySiteInfo> queryAroundLineSite(String cityName, double longitude, double latitude) {
         Distance userDistance = new Distance(longitude,latitude);
         List<CitySiteInfo> siteList = citySiteMapper.queryCitySiteByCityName(cityName);
         List<CitySiteInfo> newSiteList = new ArrayList<>();
@@ -68,7 +68,9 @@ public class AroundServiceImpl implements AroundService {
         if(siteList!=null){
             for (int i=0; i<siteList.size(); i++){
                 Distance siteDistance = new Distance(siteList.get(i).getxPosition(),siteList.get(i).getyPosition());
-                if(userDistance.getDistance(userDistance,siteDistance)<1000){
+                double distance = userDistance.getDistance(userDistance,siteDistance);
+                if(distance<1000){
+                    siteList.get(i).setDistance((int)distance);
                     newSiteList.add(siteList.get(i));
                 }
             }
@@ -79,6 +81,13 @@ public class AroundServiceImpl implements AroundService {
         }
 
         return newSiteList;
+    }
+
+    @Override
+    public List<CitySite> querySameSiteBySiteName(String siteName) {
+        List<CitySite> list = citySiteMapper.querySameSiteBySiteName(siteName);
+
+        return list;
     }
 
     @Override

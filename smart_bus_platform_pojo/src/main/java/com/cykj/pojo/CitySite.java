@@ -19,6 +19,12 @@ public class CitySite {
         this.stateId = stateId;
     }
 
+    public CitySite(String name, double xPosition, double yPosition) {
+        this.name = name;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+    }
+
     public int getId() {
         return id;
     }

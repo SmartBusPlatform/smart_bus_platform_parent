@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BusService {
     //分页查询巴士
-    public Result queryBusByPage(HashMap<String,Object> condition, int startSize, int pageSize);
+    public Result queryBusByPage(HashMap<String, Object> condition, int startSize, int pageSize);
     //修改巴士
     public int changeBus(Bus bus);
     //新增巴士

@@ -2,6 +2,7 @@ package com.cykj.userapp.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.pojo.LineChild;
+import com.cykj.pojo.Navigation;
 import com.cykj.userapp.service.AdvertiserService;
 import com.cykj.userapp.service.AroundService;
 import org.apache.ibatis.annotations.Param;
@@ -32,7 +33,17 @@ public class AroundController {
     //查询周围1000米的广告和站点
     public Object queryAroundLineSite(@Param("cityName") String cityName,@Param("longitude") double longitude,@Param("latitude") double latitude){
         if (cityName!=null&&!"".equals(cityName)){
-            return JSON.toJSONString(aroundService.queryAroundSiteLine(cityName,longitude,latitude));
+            return JSON.toJSONString(aroundService.queryAroundLineSite(cityName,longitude,latitude));
+        }else {
+            return JSON.toJSONString("dataError");
+        }
+    }
+
+    @RequestMapping(value = "querySameSiteBySiteName")
+    //查询同名站点
+    public Object querySameSiteBySiteName(@Param("siteId") String siteName){
+        if (siteName!=null&&!"".equals(siteName)){
+            return JSON.toJSONString(aroundService.querySameSiteBySiteName(siteName));
         }else {
             return JSON.toJSONString("dataError");
         }

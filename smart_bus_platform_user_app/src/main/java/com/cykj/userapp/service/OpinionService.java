@@ -2,7 +2,12 @@ package com.cykj.userapp.service;
 
 import com.cykj.pojo.Opinion;
 
-public interface OpinionService {
+import java.util.List;
 
-    String addUserOpinion(Opinion opinion);
+public interface OpinionService {
+    //查询用户的意见建议
+    public List<Opinion> queryOpinionByUserId(int userId);
+    //新增用户的意见建议
+    public String insertOpinion(Opinion opinion);
+
 }

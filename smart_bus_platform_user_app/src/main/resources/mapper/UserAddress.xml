@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.UserAddressMapper">
+
+    <!-- 查看用户地址 -->
+    <select id="queryUserAddress" parameterType="java.lang.Integer" resultType="com.cykj.pojo.User">
+        select home_x,home_y,company_x,company_y from tb_user where id = #{id}
+    </select>
+
+    <!-- 修改用户地址 -->
+    <update id="changeUserAddress" parameterType="com.cykj.pojo.User">
+        update tb_user
+        <set>
+            <if test=" homeX!=null and homeX!='' ">
+                ,home_x = #{homeX}
+                ,home_y = #{homeY}
+            </if>
+            <if test=" companyX!=null and companyX!='' ">
+                ,company_x = #{companyX}
+                ,company_y = #{companyY}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

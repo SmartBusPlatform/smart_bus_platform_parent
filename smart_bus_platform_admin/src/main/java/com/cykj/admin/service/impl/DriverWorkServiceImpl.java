@@ -2,6 +2,7 @@ package com.cykj.admin.service.impl;
 
 import com.cykj.admin.mapper.BusMaintainMapper;
 import com.cykj.admin.mapper.BusMapper;
+import com.cykj.admin.bean.DriverWorkload;
 import com.cykj.admin.mapper.DriverWorkMapper;
 import com.cykj.admin.service.DriverWorkService;
 import com.cykj.pojo.*;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +50,26 @@ public class DriverWorkServiceImpl implements DriverWorkService {
         return "error";
     }
 
+//查询司机工作量
+    @Override
+    public LayuiData selectWorkload(HashMap<String, Object> map) {
+        //根据时间戳格式化日期
+        long timestamp = (long) map.get("timestamp");
+        Date date = new Date(timestamp);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = format.format(date);
+
+        map.put("strDate", strDate);
+        List<DriverWorkload> list = mapper.selectWorkload(map);
+
+        LayuiData layuiData = new LayuiData();
+        if (list != null && list.size() != 0) {
+            layuiData.setData(list);
+            layuiData.setCode(0);
+        }
+
+        return layuiData;
+    }
     @Override
     public Result failureStop(DriverWork driverWork) {
         Result result = new Result();

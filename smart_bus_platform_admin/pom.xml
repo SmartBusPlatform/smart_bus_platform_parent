@@ -146,7 +146,18 @@
             <artifactId>smart_bus_platform_redis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--    定时器 -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
 
+        <!--引入AOP依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

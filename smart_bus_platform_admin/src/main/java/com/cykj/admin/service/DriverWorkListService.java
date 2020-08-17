@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DriverWorkListService {
 
-    List<DriverJS> renderDriverWorkTable(HashMap<String,Object> condition) throws ParseException;
+    List<DriverJS> renderDriverWorkTable(HashMap<String, Object> condition) throws ParseException;
 
     String setVacation(DriverWork driverWork);
 

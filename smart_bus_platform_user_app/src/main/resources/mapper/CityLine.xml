@@ -25,7 +25,7 @@
             and ls3.site_id = cs3.id
     </select>
 
-    <!-- 根据站点Id查询线路信息-->
+    <!-- 根据线路Id查询线路信息-->
     <select id="queryLineInfByLineId" resultType="com.cykj.pojo.LineChild" parameterType="java.lang.Integer">
         select id,name,one_money
             from tb_line
@@ -62,7 +62,7 @@
             and p.value = 1
     </select>
 
-    <!-- 根据两个线路id查询他们共同的线路-->
+    <!-- 根据两个站点id查询他们共同的线路-->
     <select id="findEndLineBySiteId" resultType="com.cykj.pojo.UserToSiteRoute" parameterType="java.lang.Integer">
         select distinct l.name lineName,ls.line_id lineId,cs.name startSiteName,cs2.name endSiteName
               ,cs.x_position startSiteLongitude,cs.y_position startSiteLatitude,ls.back_index startIndex
@@ -80,5 +80,11 @@
             and ls.property_id = 2 and ls2.property_id = 2
             and ls2.back_index > ls.back_index
             and p.value = 2
+    </select>
+
+    <!--  根据站点id查线路-->
+    <select id="findOneLineBySiteId" resultType="com.cykj.pojo.LineSite" parameterType="java.lang.Integer">
+        select * from tb_line_site ls
+        where ls.site_id = #{siteId}
     </select>
 </mapper>

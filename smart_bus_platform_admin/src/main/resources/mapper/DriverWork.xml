@@ -5,7 +5,7 @@
 <!--namespace需要和Mapper接口对应-->
 <mapper namespace="com.cykj.admin.mapper.DriverWorkMapper">
 
-<!--    根据条件查询司机列表和数据总量-->
+    <!--    根据条件查询司机列表和数据总量-->
     <select id="selectDriverList" parameterType="java.util.HashMap" resultType="com.cykj.pojo.AdminInfo">
         select a.id, a.account, a.name, a.money, a.areas_id, a.phone, a.work_site_id, s.name as work_site_name
         from tb_admin a, tb_city_site s
@@ -41,10 +41,22 @@
         </where>
     </select>
 
-<!--    修改司机信息-->
+    <!--    修改司机信息-->
     <update id="updateDriver" parameterType="com.cykj.pojo.AdminInfo">
         update tb_admin set name = #{name}, phone = #{phone} where id = #{id}
     </update>
+
+    <!--    查询司机工作量-->
+    <select id="selectWorkload" parameterType="java.util.HashMap" resultType="com.cykj.admin.bean.DriverWorkload">
+        select b.number bus_number, l.name line_name, t.time start_time from tb_driver_work w, tb_departure_time t, tb_bus b, tb_bus_line bl, tb_line l
+        where w.admin_id = #{driverId}
+        and w.bus_id = t.bus_id
+        and b.id = w.bus_id
+        and bl.bus_id = b.id
+        and bl.line_id = l.id
+        and date_format(t.time,'%Y-%m-%d') = #{strDate}
+        and w.work_date = #{strDate};
+    </select>
 
     <select id="findDriverWorkByDateAndAdId" resultType="driverWorkInfo" parameterType="driverWork">
         SELECT

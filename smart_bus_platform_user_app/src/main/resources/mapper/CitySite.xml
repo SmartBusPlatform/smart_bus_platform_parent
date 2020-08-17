@@ -6,10 +6,16 @@
 
     <!-- 根据城市名查站点 -->
     <select id="queryCitySiteByCityName" resultType="com.cykj.pojo.CitySiteInfo" parameterType="java.lang.String">
-        select cs.*
-            from tb_city_site cs
-                left join tb_areas a on a.id = cs.city_id
-            where a.name = #{cityName}
+        select cs.id, cs.name, cs.city_id, cs.x_position, cs.y_position, cs2.sameNum
+        from tb_city_site cs,
+             tb_areas a,
+             (select count(id) sameNum, id, city_id
+              from tb_city_site
+              group by name) cs2
+        where a.name = #{cityName}
+          and a.id = cs.city_id
+          and a.id = cs2.city_id
+          and cs.id = cs2.id
     </select>
 
     <!-- 根据线路id和往返程id查始程站点-->
@@ -45,5 +51,24 @@
                 and ls.back_index > #{startIndex}
                 and #{endIndex} > ls.back_index
             </if>
+    </select>
+
+    <!--  查询同名站点-->
+    <select id="querySameSiteBySiteName" resultType="com.cykj.pojo.CitySite" parameterType="java.lang.String">
+        select id,name,city_id,x_position,y_position from tb_city_site where name = #{siteName}
+    </select>
+
+    <!--  查询线路id和始程或返程来查询所有站点-->
+    <select id="queryAllSiteByLineIdProId" resultType="com.cykj.pojo.CitySiteInfo" parameterType="com.cykj.pojo.LineSite">
+        select cs.id,cs.name,cs.x_position,cs.y_position,ls.start_index,ls.back_index
+        from tb_line_site ls
+            left join tb_city_site cs on ls.site_id = cs.id
+        where ls.line_id = #{lineId}
+            and ls.property_id = #{propertyId}
+    </select>
+
+    <!--  查询站点id查站点-->
+    <select id="querySiteBySiteId" resultType="com.cykj.pojo.CitySite" parameterType="java.lang.Integer">
+        select * from tb_city_site where id = #{siteId}
     </select>
 </mapper>

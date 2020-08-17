@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public interface DriverWorkService {
 
-    LayuiData selectDriverList( HashMap<String, Object> map);
+    LayuiData selectDriverList(HashMap<String, Object> map);
 
     String updateDriver(AdminInfo adminInfo);
 
@@ -26,4 +26,6 @@ public interface DriverWorkService {
     public Result endMaintenance(DriverWork driverWork);
     //车辆报废
     public Result vehicleScrapping(DriverWork driverWork);
+
+    LayuiData selectWorkload(HashMap<String, Object> map);
 }

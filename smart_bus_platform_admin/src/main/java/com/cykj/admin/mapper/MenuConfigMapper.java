@@ -19,8 +19,8 @@ public interface MenuConfigMapper {
     /**
      * 菜单配置完成保存菜单的业务，insertRoleMenu：插入新增的权限菜单。deleteRoleMenu：删除去除的权限菜单
      */
-    int insertRoleMenu(@Param("roleId")int roleId, @Param("list")List<Integer> insertList);
+    int insertRoleMenu(@Param("roleId") int roleId, @Param("list") List<Integer> insertList);
 
-    int deleteRoleMenu(@Param("roleId")int roleId, @Param("list")List<Integer> deleteList);
+    int deleteRoleMenu(@Param("roleId") int roleId, @Param("list") List<Integer> deleteList);
 
 }

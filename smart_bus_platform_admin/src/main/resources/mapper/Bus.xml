@@ -29,7 +29,7 @@
                 and ad.name = #{repairmanName}
             </if>
             <if test="number !=null and number !='' ">
-                and b.number = #{number}
+                and b.number like concat('%',#{number},'%')
             </if>
             <if test="stateId !=null and stateId !='' ">
                 and b.state_Id = #{stateId}

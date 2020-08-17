@@ -10,6 +10,7 @@ public class BusWork {
     private int workType;
     private int startBeginOrReturn;
 
+
     public BusWork() {
     }
 

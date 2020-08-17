@@ -69,12 +69,10 @@ public class BusController {
             int isSuccess = busService.changeBus(bus);
 
             if (isSuccess!=0){
-                if (isSuccess != -9999){
-                    return JSON.toJSONString("success");
-                }else if(isSuccess != -9998){
-                    return JSON.toJSONString("upDataError");
-                }else{
+                if (isSuccess == -9999){
                     return JSON.toJSONString("repeat");
+                }else{
+                    return JSON.toJSONString("success");
                 }
             }else{
                 return JSON.toJSONString("error");

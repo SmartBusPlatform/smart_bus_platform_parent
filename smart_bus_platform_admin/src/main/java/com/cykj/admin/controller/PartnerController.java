@@ -112,8 +112,6 @@ public class PartnerController {
             if (isSuccess!=0){
                 if (isSuccess != -9999){
                     return JSON.toJSONString("success");
-                }else if(isSuccess != -9998){
-                    return JSON.toJSONString("upDataError");
                 }else{
                     return JSON.toJSONString("repeat");
                 }
