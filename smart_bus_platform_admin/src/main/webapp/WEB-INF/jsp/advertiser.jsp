@@ -248,7 +248,7 @@
         //初始表格
         table.render({
             elem: '#advertiserTable'
-            ,url: '/advertiser/queryAdvertiserByPage' //数据接口
+            ,url: '${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserByPage' //数据接口
             ,page: true //开启分页
             ,limit: 5
             ,limits: [5,10,15,20]
@@ -278,7 +278,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('advertiserTable', {
-                url: '/advertiser/queryAdvertiserByPage'
+                url: '${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserByPage'
                 ,where: {
                     partner : data.field.partner,
                     isCarousel : data.field.isCarousel,
@@ -296,7 +296,7 @@
             $("#insertAdvertiser").find("input").val("");
             form.render('select');
             $.ajax({
-                url: '/partner/queryPartner',
+                url: '${pageContext.request.contextPath}/admin/partner/queryPartner',
                 method:'post',
                 dataType:'json',
                 success:function(msg){
@@ -352,7 +352,7 @@
             //查看
             if(layEvent == '查看'){
                 $("#lookImage").removeAttr('src')
-                $("#lookImage").attr('src', "/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime());
+                $("#lookImage").attr('src', "${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime());
                 layer.open({
                     type: 1,
                     title: '查看广告',
@@ -392,7 +392,7 @@
                         stateId = 1;
                     }
                     $.ajax({
-                        url: "/advertiser/changeAdvertiser",
+                        url: "${pageContext.request.contextPath}/admin/advertiser/changeAdvertiser",
                         method:'post',
                         dataType:'json',
                         contentType : 'application/json;charset=utf-8',
@@ -423,7 +423,7 @@
         form.on('submit(change)', function(data){
             layer.confirm('是否修改？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/advertiser/changeAdvertiser",
+                    url: "${pageContext.request.contextPath}/admin/advertiser/changeAdvertiser",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -451,7 +451,7 @@
         //广告图片上传
         upload.render({
             elem: '#uploadImage'
-            ,url: '/advertiser/insertIamge' //改成您自己的上传接口
+            ,url: '${pageContext.request.contextPath}/admin/advertiser/insertIamge' //改成您自己的上传接口
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
@@ -477,7 +477,7 @@
         //修改图片上传
         upload.render({
             elem: '#changeImage'
-            ,url: '/advertiser/insertIamge' //改成您自己的上传接口
+            ,url: '${pageContext.request.contextPath}/admin/advertiser/insertIamge' //改成您自己的上传接口
             ,data: {
                 filePath: function () {
                     return $('#imagePath').val();
@@ -500,7 +500,7 @@
         form.on('submit(insert)', function(data){
             layer.confirm('是否新增？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/advertiser/insertAdvertiser",
+                    url: "${pageContext.request.contextPath}/admin/advertiser/insertAdvertiser",
                     type:'post',
                     dataType:'json',
                     data : JSON.stringify(data.field),

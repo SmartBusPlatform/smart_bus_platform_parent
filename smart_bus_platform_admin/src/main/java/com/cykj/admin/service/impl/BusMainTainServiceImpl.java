@@ -2,6 +2,7 @@ package com.cykj.admin.service.impl;
 
 import com.cykj.admin.mapper.BusMaintainMapper;
 import com.cykj.admin.service.BusMainTainService;
+import com.cykj.pojo.BusMaintain;
 import com.cykj.pojo.BusMaintainInfo;
 import com.cykj.pojo.PageBean;
 import com.cykj.util.Result;
@@ -37,4 +38,30 @@ public class BusMainTainServiceImpl implements BusMainTainService {
         }
         return result;
     }
+
+    @Override
+    public Result queryBusMainTainByRepairId(HashMap<String, Object> condition) {
+        List<BusMaintainInfo> busMainTainList = busMaintainMapper.queryBusMainTain(condition);
+        Result result = new Result();
+        if(busMainTainList==null){
+            result.setStatus(201);
+            result.setMsg("暂无数据");
+        }else{
+            result.setData(busMainTainList);
+            result.setStatus(200);
+        }
+        return result;
+    }
+
+    @Override
+    public int insBusMainTain(BusMaintain busMaintain) {
+
+        return busMaintainMapper.insBusMainTain(busMaintain);
+    }
+
+    @Override
+    public int updBusMainTainByByBusId(BusMaintain busMaintain) {
+        return busMaintainMapper.updBusMainTainByByBusId(busMaintain);
+    }
+
 }

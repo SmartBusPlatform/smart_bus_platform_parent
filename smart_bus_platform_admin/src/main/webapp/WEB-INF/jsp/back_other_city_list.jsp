@@ -27,8 +27,8 @@
         }
         .map{
             width: 90%;
-            height: 70%;
-            margin-top: 5%;
+            height: 80%;
+            margin-top: 7%;
         }
     </style>
 </head>
@@ -50,7 +50,7 @@
 <div class="x-body">
     <%--查看地图--%>
     <div class="site-text layui-row" hidden id="findMap">
-        <div class="layui-row"  >
+        <div class="layui-row">
             <div class="queryDiv layui-col-lg-offset1" hidden>
                 <form class="layui-form layui-col-space5" lay-filter="lineForm">
                     <div class="layui-inline">
@@ -180,7 +180,7 @@ var markers = [];
             var form = layui.form;
             table.render({
                 elem: '#areas_table',
-                url:'${pageContext.request.contextPath}/areas/getAreasByPage',
+                url:'${pageContext.request.contextPath}/admin/areas/getAreasByPage',
                 cols: [[
                     {type:'checkbox'}
                     ,{field: 'provinceName', title: '省',sort: true,  }
@@ -229,7 +229,7 @@ var markers = [];
                         provinceName:provinceName,
                         //可传多个参数到后台...  ，分隔
                     }
-                    , url:'${pageContext.request.contextPath}/areas/getAreasByPage'//后台做模糊搜索接口路径
+                    , url:'${pageContext.request.contextPath}/admin/areas/getAreasByPage'//后台做模糊搜索接口路径
                     , method: 'post'
                 });
                 return false;//false：阻止表单跳转  true：表单跳转
@@ -264,7 +264,7 @@ var markers = [];
                                     if($("#upd_provinceName").val().trim().length>0){
                                         $.ajax({
                                             type: "post",
-                                            url: "${pageContext.request.contextPath}/areas/updAreaById",
+                                            url: "${pageContext.request.contextPath}/admin/areas/updAreaById",
                                             data: {"cityName":$("#upd_cityName").val(),"provinceId":$("#upd_provinceName").val(),"cityId":item.cityId},
                                             dataType: "json",
                                             success: function(data){
@@ -301,7 +301,7 @@ var markers = [];
                     var item = obj.data;
                     layer.confirm('确认是否删除改城市信息?', function(index) {
                         $.ajax({
-                            url:"${pageContext.request.contextPath}/areas/updAreaById",
+                            url:"${pageContext.request.contextPath}/admin/areas/updAreaById",
                             method:"post",
                             dataType:"json",
                             traditional:true,
@@ -324,6 +324,7 @@ var markers = [];
                         layer.close(index)
                     });
                 }else if("siteNum"===event){
+                    $(".queryDiv").css("display","none");
                     <%--layer.open({--%>
                     <%--    title : '修改线路信息',--%>
                     <%--    type : 1,--%>
@@ -413,7 +414,7 @@ var markers = [];
             function queryLine(cityId){
                 $.ajax({
                     type: "post",
-                    url: "/line/getLineByCityId",
+                    url: "${pageContext.request.contextPath}/admin/line/getLineByCityId",
                     dataType: "json",
                     data : {"cityId":cityId},
                     success:function (data) {
@@ -447,7 +448,7 @@ var markers = [];
                 markers=[];
                 $.ajax({
                     type: "post",
-                    url: "/lineSite/getLineSiteByLineId",
+                    url: "${pageContext.request.contextPath}/admin/lineSite/getLineSiteByLineId",
                     dataType: "json",
                     data : {"lineId":data.field.lineId},
                     success:function (data) {
@@ -541,7 +542,7 @@ var markers = [];
                             if($("#add_provinceName").val().trim().length>0){
                                 $.ajax({
                                     type: "post",
-                                    url: "${pageContext.request.contextPath}/areas/addAreas",
+                                    url: "${pageContext.request.contextPath}/admin/areas/addAreas",
                                     data: {"cityName":$("#add_cityName").val(),"provinceId":$("#add_provinceName").val()},
                                     dataType: "json",
                                     success: function(data){
@@ -576,7 +577,7 @@ var markers = [];
         })
         function getProvinceName() {
             $.ajax({
-                url:'${pageContext.request.contextPath}/areas/getProvinceNameAll',
+                url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
                 method:'post',
                 dataType:'json',
                 data:{"type":1},
@@ -596,7 +597,7 @@ var markers = [];
 
         function getAddProvinceName() {
             $.ajax({
-                url:'${pageContext.request.contextPath}/areas/getProvinceNameAll',
+                url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
                 method:'post',
                 dataType:'json',
                 data:{"type":1},
@@ -617,7 +618,7 @@ var markers = [];
 
         function getupdProvinceName(provinceId) {
             $.ajax({
-                url:'${pageContext.request.contextPath}/areas/getProvinceNameAll',
+                url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
                 method:'post',
                 dataType:'json',
                 data:{"type":1},
@@ -642,7 +643,7 @@ var markers = [];
             let map;
             $.ajax({
                 type: "post",
-                url: "${pageContext.request.contextPath}/citySite/getCitySiteAllByCityId",
+                url: "${pageContext.request.contextPath}/admin/citySite/getCitySiteAllByCityId",
                 data: {"cityId":cityId},
                 dataType: "json",
                 success: function(data){
@@ -670,7 +671,7 @@ var markers = [];
                                 function(){
                                     map.addControl(new AMap.ToolBar());
                                     map.addControl(new AMap.Scale());
-                                    map.addControl(new AMap.DistrictSearch())
+                                    // map.addControl(new AMap.DistrictSearch())
                                 });
                             AMap.service(["AMap.PlaceSearch",'AMap.DistrictSearch'], function () {
                                 //构造地点查询类

@@ -167,7 +167,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -183,7 +183,7 @@
                             cityId=obj.data.id;
                             table.render({
                                 elem: '#table',
-                                url:'${pageContext.request.contextPath}/driverWorkController/selectDriverList',
+                                url:'${pageContext.request.contextPath}/admin/driverWorkController/selectDriverList',
                                 where:{
                                     "cityId":obj.data.id
                                 },
@@ -261,7 +261,7 @@
 
             if (name != null && name != null && site != null){
                 table.reload('table',{
-                    url: '${pageContext.request.contextPath}/driverWorkController/selectDriverList',
+                    url: '${pageContext.request.contextPath}/admin/driverWorkController/selectDriverList',
                     page:{
                         curr: 1
                     },
@@ -303,7 +303,7 @@
                         } else {
                             layer.confirm('确认提交？',{icon:3,title:'提示'},function () {
                                 $.ajax({
-                                    url:'${pageContext.request.contextPath}/driverWorkController/updateDriver'
+                                    url:'${pageContext.request.contextPath}/admin/driverWorkController/updateDriver'
                                     ,type: 'post'
                                     ,data :{
                                         'name': name,

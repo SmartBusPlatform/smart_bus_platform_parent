@@ -51,7 +51,7 @@
                 console.log(data);
                 // alert(888)
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/adminControl/login',
+                    url: '${pageContext.request.contextPath}/admin/adminControl/login',
                     type: 'post',
                     dataType: 'json',
                     data: {
@@ -60,7 +60,7 @@
                     },
                     success:function (msg) {
                         if (msg.code == '00') {
-                            location.href = '${pageContext.request.contextPath}/adminController/selectRoleMenus';
+                            location.href = '${pageContext.request.contextPath}/admin/adminController/selectRoleMenus';
                         } else {
                             layer.msg(msg.message);
                         }

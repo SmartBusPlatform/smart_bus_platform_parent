@@ -5,7 +5,17 @@ public class CitySiteChild extends  CitySite {
     private String throughLine;
     //城市名
     private String cityName;
+    //客流量
+    private int flowNum;
     public CitySiteChild() {
+    }
+
+    public int getFlowNum() {
+        return flowNum;
+    }
+
+    public void setFlowNum(int flowNum) {
+        this.flowNum = flowNum;
     }
 
     public String getCityName() {

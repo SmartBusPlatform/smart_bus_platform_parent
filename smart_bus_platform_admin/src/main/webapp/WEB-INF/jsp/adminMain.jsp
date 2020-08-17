@@ -24,7 +24,7 @@
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <script>
         // 是否开启刷新记忆tab功能
-        // var is_remember = false;
+        var is_remember = false;
         <%--$(function () {--%>
         <%--    window.location.href = "${pageContext.request.contextPath}/";--%>
         <%--})--%>
@@ -93,7 +93,7 @@
                     <ul class="sub-menu">
                         <c:forEach var="j" items="${i.menuList}">
                             <li>
-                                <a onclick="xadmin.add_tab('${j.menuName}','${pageContext.request.contextPath}/${j.menuUrl}')">
+                                <a onclick="xadmin.add_tab('${j.menuName}','${pageContext.request.contextPath}/admin/${j.menuUrl}')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>${j.menuName}</cite></a>
                             </li>

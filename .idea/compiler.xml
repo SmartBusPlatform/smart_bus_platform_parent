@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="smart_bus_platform_common" />
         <module name="smart_bus_platform_user_app" />
-        <module name="smart_bus_platform_pojo" />
         <module name="smart_bus_platform_user" />
         <module name="smart_bus_platform_zuul" />
         <module name="smart_bus_platform_city_line" />
-        <module name="smart_bus_platform_common" />
+        <module name="smart_bus_platform_pojo" />
         <module name="smart_bus_platform_admin" />
         <module name="smart_bus_platform_redis" />
         <module name="smart_bus_platform_eureka_server" />

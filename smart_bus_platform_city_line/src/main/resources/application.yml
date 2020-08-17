@@ -15,8 +15,8 @@ spring:
       validation-query: select 1
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-      test-on-borrow: false
-      test-on-return: false
+      test-on-borrow: true
+      test-on-return: true
       keep-alive: true
   application:
     name: city-line

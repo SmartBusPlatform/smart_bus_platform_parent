@@ -168,7 +168,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -183,7 +183,7 @@
                             city=obj.data.title;
                             cityId=obj.data.id;
                             $.ajax({
-                                url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate',
+                                url: '${pageContext.request.contextPath}/admin/driverWorkListController/getWeekDate',
                                 method: 'post',
                                 dataType: 'json',
                                 data: {
@@ -196,7 +196,7 @@
                                     // }
                                     table.render({
                                         elem: '#table',
-                                        url:'${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
+                                        url:'${pageContext.request.contextPath}/admin/driverWorkListController/renderDriverWorkTable',
                                         where:{
                                             "cityId": cityId,
                                             "timestamp": new Date().getTime()
@@ -254,7 +254,7 @@
 
             if (val != null && val != ""){
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate'
+                    url: '${pageContext.request.contextPath}/admin/driverWorkListController/getWeekDate'
                     ,method: 'post'
                     ,dataType: 'json'
                     ,data:{
@@ -267,7 +267,7 @@
                         // tableRender(window.weekList);
                         table.render({
                             elem: '#table',
-                            url:'${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
+                            url:'${pageContext.request.contextPath}/admin/driverWorkListController/renderDriverWorkTable',
                             where:{
                                 "cityId": cityId,
                                 "timestamp": timestamp
@@ -345,7 +345,7 @@
                 ,btnAlign: 'c'
                 ,yes:function (index) {
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/driverWorkListController/selectCityBus'
+                        url: '${pageContext.request.contextPath}/admin/driverWorkListController/selectCityBus'
                         ,method: 'post'
                         ,dataType: 'json'
                         ,data: {
@@ -375,7 +375,7 @@
                                     form.render('select');
                                     if ($("select[name='showBus']").val() != null && $("select[name='showBus']").val() != "") {
                                         $.ajax({
-                                            url: '${pageContext.request.contextPath}/driverWorkListController/setDriverWork'
+                                            url: '${pageContext.request.contextPath}/admin/driverWorkListController/setDriverWork'
                                             , method: 'post'
                                             , data: {
                                                 'driverId': data.driverId
@@ -402,7 +402,7 @@
                 ,btn2:function () {
                     layer.confirm('是否确认休假',{icon:3,title:'提示'},function (index) {
                         $.ajax({
-                            url: '${pageContext.request.contextPath}/driverWorkListController/setVacation'
+                            url: '${pageContext.request.contextPath}/admin/driverWorkListController/setVacation'
                             ,type: 'post'
                             ,data:{
                                 'driverId':data.driverId

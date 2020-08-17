@@ -165,7 +165,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" type="button">地图选点</button>
+                <button class="layui-btn" type="button" id="mapSelection2">地图选点</button>
             </div>
 
         </div>
@@ -194,21 +194,23 @@
     //当前点击省份
     var province;
     var provinceId;
-
+    var selprovince;
+    var selprovinceId;
     // var map2 = new AMap.Map("container2", {
     //     resizeEnable: true
     // });
     //当前点击城市
     var city;
     var cityId;
+    var table;
     layui.use(['table','tree','form'], function(){
         var tree = layui.tree;
-        var table = layui.table;
-        var form = layui.form;
+         table = layui.table;
+       var form = layui.form;
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -220,9 +222,11 @@
                         if(obj.data.children==undefined){
                             city=obj.data.title;
                             cityId=obj.data.id;
+                            province=selprovince;
+                            provinceId=selprovinceId;
                             table.render({
                                 elem: '#citySite_table',
-                                url:'${pageContext.request.contextPath}/citySite/getCitySiteByPage',
+                                url:'${pageContext.request.contextPath}/admin/citySite/getCitySiteByPage',
                                 where:{
                                     "cityId":obj.data.id
                                 },
@@ -258,8 +262,8 @@
                             });
 
                         }else{
-                            province=obj.data.title;
-                            provinceId=obj.data.id;
+                            selprovince=obj.data.title;
+                            selprovinceId=obj.data.id
                         }
                     }
                 });
@@ -309,7 +313,7 @@
                                             if(checkLong($("#edit_yPosition").val().trim())){
                                                 $.ajax({
                                                     type: "post",
-                                                    url: "${pageContext.request.contextPath}/citySite/updCitySiteByCityId",
+                                                    url: "${pageContext.request.contextPath}/admin/citySite/updCitySiteByCityId",
                                                     data: {"cityId":cityId,"name":$("#edit_siteName").val(),"xPosition":$("#edit_xPosition").val().trim(),"yPosition":$("#edit_yPosition").val().trim(),"id":item.id},
                                                     dataType: "json",
                                                     success: function(data){
@@ -317,12 +321,18 @@
                                                             layer.msg(data.msg,{
                                                                 time:1000
                                                             },function () {
-                                                                window.location.reload();
+                                                                obj.update({
+                                                                    name:$("#edit_siteName").val(),
+                                                                    xPosition: $("#edit_xPosition").val().trim(),
+                                                                    yPosition: $("#edit_yPosition").val().trim(),
+                                                                })
+                                                                // window.location.reload();
                                                             });
 
                                                         }else{
                                                             layer.msg(data.msg);
                                                         }
+                                                        layer.close(num)
                                                     }
                                                 });
                                             }else{
@@ -457,7 +467,7 @@
                     name: name,
                     //可传多个参数到后台...  ，分隔
                 }
-                , url:'${pageContext.request.contextPath}/citySite/getCitySiteByPage'//后台做模糊搜索接口路径
+                , url:'${pageContext.request.contextPath}/admin/citySite/getCitySiteByPage'//后台做模糊搜索接口路径
                 , method: 'post'
             });
             return false;//false：阻止表单跳转  true：表单跳转
@@ -508,6 +518,9 @@
                 $("#add_cityName").attr("cityId",cityId);
                 $("#add_provinceName").val(province);
                 $("#add_provinceName").attr("provinceId",provinceId);
+                $("#add_siteName").val("");
+                $("#add_xPosition").val("");
+                $("#add_yPosition").val("")
             },
             yes:function (num,layero) {
                 layer.confirm('确认是否新增信息?', {icon: 3, title:'提示'}, function(index){
@@ -518,7 +531,7 @@
                                     if(checkLong($("#add_yPosition").val().trim())){
                                         $.ajax({
                                             type: "post",
-                                            url: "${pageContext.request.contextPath}/citySite/addCitySite",
+                                            url: "${pageContext.request.contextPath}/admin/citySite/addCitySite",
                                             data: {"cityId":cityId,"name":$("#add_siteName").val(),"xPosition":$("#add_xPosition").val().trim(),"yPosition":$("#add_yPosition").val().trim()},
                                             dataType: "json",
                                             success: function(data){
@@ -526,7 +539,7 @@
                                                     layer.msg(data.msg,{
                                                         time:1000
                                                     },function () {
-                                                        window.location.reload();
+                                                        table.reload('citySite_table');
                                                     });
 
                                                 }else{
@@ -534,6 +547,7 @@
                                                 }
                                             }
                                         });
+                                        layer.close(num)
                                     }else{
                                         layer.msg('纬度整数部分为0-180,小数部分为0到6位!', {
                                             btn: ['明白了',]
@@ -630,7 +644,7 @@
     $("#mapSelection").click(function () {
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/citySite/getCitySiteAllByCityId",
+            url: "${pageContext.request.contextPath}/admin/citySite/getCitySiteAllByCityId",
             data: {"cityId":cityId},
             dataType: "json",
             success: function(data){
@@ -743,6 +757,135 @@
                         map.destroy();
                         $("#add_xPosition").val("");
                         $("#add_yPosition").val("");
+                    }});
+            }
+        });
+
+
+    })
+
+    //选点
+    $("#mapSelection2").click(function () {
+        $.ajax({
+            type: "post",
+            url: "${pageContext.request.contextPath}/admin/citySite/getCitySiteAllByCityId",
+            data: {"cityId":cityId},
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                let x;
+                let y;
+                let map = new AMap.Map("container", {
+                    resizeEnable: true,
+                    center: [$("#edit_xPosition").val(),$("#edit_yPosition").val()],
+                    // mapStyle:'amap://styles/f0c43041630ebe2835503272216aa80d',
+                    features: ['bg', 'road', 'building', 'point'],
+                    zoom:15,
+                });
+                // map.setMapStyle('amap://styles/f0c43041630ebe2835503272216aa80d');
+                // map.setFeatures(['road','bg','building','point']);
+                // mapObj=map;
+
+
+                //点击事件
+                map.on('click', function(e) {
+                    document.getElementById('tip').innerHTML="经度:"+ e.lnglat.getLng()+","+"纬度:"+e.lnglat.getLat();
+                    x=e.lnglat.getLng();
+                    y=e.lnglat.getLat();
+
+                    console.log(e)
+                    // //经度
+                    // document.getElementById("#lat").value = e.lnglat.getLng();
+                    // //纬度
+                    // document.getElementById("#lon").value = e.lnglat.getLat();
+                });
+
+                // AMap.event.addListener(map, 'click', getLnglat);
+
+                layer.open({
+                    title: '选定站点',
+                    type: 1,
+                    area: ['80%', '80%'],
+                    offset: 'auto',
+                    maxmin: true,
+                    shadeClose: true,
+                    content: $('#findMap'),
+                    btn: ['确定', '取消'],
+                    shade: [0.8, '#393D49'],
+                    success: function (layero, index) {
+                        AMap.plugin(['AMap.ToolBar','AMap.Scale'],
+                            function(){
+                                map.addControl(new AMap.ToolBar());
+                                map.addControl(new AMap.Scale());
+                                map.addControl(new AMap.DistrictSearch())
+                            });
+                        AMap.service(["AMap.PlaceSearch",'AMap.DistrictSearch'], function () {
+                            //构造地点查询类
+                            var placeSearch = new AMap.PlaceSearch({
+                                showCover:false,
+                                pageSize: 0, // 单页显示结果条数
+                                pageIndex: 1, // 页码
+                                city: city, // 兴趣点城市
+                                citylimit: true,  //是否强制限制在设置的城市内搜索
+                                map: map, // 展现结果的地图实例
+                                // autoFitView: true, // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
+                            });
+                            // placeSearch.search(city,() => {
+                            //
+                            //     placeSearch.render.markerList.clear() // 这个为清除搜索结果的点，不想清除注释即可
+                            // })
+                            var districtSearch =  new AMap.DistrictSearch({
+                                extensions:'all',
+                                subdistrict:0,
+                            })
+                            districtSearch.search(city,function(status,result) {
+                                console.log(result)
+                                // map.setCenter([result.districtList[0].center.lng,result.districtList[0].center.lat])
+                                addMarker(map,data)
+                                // 外多边形坐标数组和内多边形坐标数组
+                                var outer = [
+                                    new AMap.LngLat(-360, 90, true),
+                                    new AMap.LngLat(-360, -90, true),
+                                    new AMap.LngLat(360, -90, true),
+                                    new AMap.LngLat(360, 90, true),
+                                ];
+                                var holes = result.districtList[0].boundaries
+
+                                var pathArray = [
+                                    outer
+                                ];
+                                pathArray.push.apply(pathArray, holes)
+                                var polygon = new AMap.Polygon({
+                                    pathL: pathArray,
+                                    strokeColor: '#00eeff',
+                                    strokeWeight: 1,
+                                    fillColor: '#71B3ff',
+                                    fillOpacity: 0.5
+                                });
+                                polygon.setPath(pathArray);
+                                map.add(polygon)
+                            });
+                            // var cpoint = [119.299506,26.075097]; //中心点坐标
+                            // var cpoint = [obj.data.xPosition,obj.data.yPosition]; //中心点坐标
+                            // placeSearch.searchNearBy('', cpoint, 120, function (status, result) {
+                            // });
+                        });
+                    }
+
+                    ,yes:function(num,layero){
+                        if(confirm("确认是否使用该坐标")){
+                            $("#edit_xPosition").val(x);
+                            $("#edit_yPosition").val(y);
+                            layer.close(num);
+                            map.destroy();
+                        }
+
+                    },btn2: function(index, layero){
+                        //按钮【按钮二】的回调
+                        map.destroy();
+                    }
+                    ,cancel:function () {
+                        map.destroy();
                     }});
             }
         });

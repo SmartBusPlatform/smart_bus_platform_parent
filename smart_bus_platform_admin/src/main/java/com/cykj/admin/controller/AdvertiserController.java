@@ -67,18 +67,10 @@ public class AdvertiserController{
     @RequestMapping(value = "insertIamge")
     //上传图片
     public Object insertIamge(MultipartFile file,HttpServletRequest req) {
-//        String fileName=null;
-//        boolean result= false;
-//        try {
-//            result=FtpUtil.uploadFile(ftpParam.getHost(),ftpParam.getPort(),ftpParam.getUsername(),ftpParam.getPassword(),ftpParam.getBasePath(),ftpParam.getFilePath(),fileName,file.getInputStream())
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }finally {
-//           String url="http://"+ftpParam.getHost()+":80"+ ftpParam.getFilePath()+fileName;
-//        }
+
         String filePath = req.getParameter("filePath");
         Map<String,Object> map = new HashMap<String,Object>();
-
+        System.out.println(file.getOriginalFilename());
         if(filePath!=null&&!"".equals(filePath)){
             String path = filePath.substring(0,filePath.lastIndexOf("\\"));
 
@@ -98,32 +90,49 @@ public class AdvertiserController{
                 e.printStackTrace();
             }
         }else{
-            String path = req.getSession().getServletContext().getRealPath("image");
+//            String url="http://"+ftpParam.getHost()+":80"+ ftpParam.getFilePath()+fileName;
+//            String path = req.getSession().getServletContext().getRealPath("image");
 
-            File dir = new File(path);
-            if(!dir.exists()){
-                dir.mkdirs();
-            }
+//            File dir = new File(path);
+//            if(!dir.exists()){
+//                dir.mkdirs();
+//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             Random random = new Random();
             String fileName = random.nextInt(89999 + 10000) + simpleDateFormat.format(new Date());
-
-            dir = new File(path+"\\"+fileName);
-            if(dir.exists()){
-                map.put("msg","repeat");
-                map.put("code",0);
-            }else{
-                try {
-                    file.transferTo(dir);
+            boolean  result=false;
+            try {
+                 result = FtpUtil.uploadFile(ftpParam.getHost(), ftpParam.getPort(), ftpParam.getUsername(), ftpParam.getPassword(), ftpParam.getBasePath(), ftpParam.getFilePath(), fileName+".jpg", file.getInputStream());
+                System.out.println(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if(result){
                     map.put("msg",fileName);
                     map.put("code",200);
-                } catch (IOException e) {
+                }else{
                     map.put("msg","error");
                     map.put("code",0);
-                    e.printStackTrace();
                 }
             }
+            System.out.println("fileName:"+fileName);
+
+            //            dir = new File(path+"\\"+fileName);
+//            if(dir.exists()){
+//                map.put("msg","repeat");
+//                map.put("code",0);
+//            }else{
+//                try {
+//                    file.transferTo(dir);
+//                    map.put("msg",fileName);
+//                    map.put("code",200);
+//                } catch (IOException e) {
+//                    map.put("msg","error");
+//                    map.put("code",0);
+//                    e.printStackTrace();
+//                }
+//            }
         }
 
         return JSON.toJSONString(map);
@@ -133,7 +142,9 @@ public class AdvertiserController{
     //新增广告
     public String insertAdvertiser(@RequestBody Advertiser advertiser,HttpServletRequest req){
         if (advertiser!=null){
-            advertiser.setImgUrl(req.getSession().getServletContext().getRealPath("image")+"\\"+advertiser.getImgUrl());
+            String url="http://"+ftpParam.getHost()+":80"+ ftpParam.getFilePath()+advertiser.getImgUrl();
+//            req.getSession().getServletContext().getRealPath("image")+"\\"+advertiser.getImgUrl()
+            advertiser.setImgUrl(url);
             int isSuccess = advertiserService.insertAdvertiser(advertiser);
 
             if (isSuccess!=0){

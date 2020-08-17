@@ -13,8 +13,8 @@
         FROM
             tb_areas a
         INNER JOIN tb_city_site cs ON a.id = cs.city_id and a.state_id=1
-        LEFT JOIN tb_line l ON a.id = l.city_id
-        LEFT JOIN tb_line_site ls ON ls.line_id = l.id
+        LEFT JOIN tb_line_site ls ON ls.site_id=cs.id
+        LEFT JOIN tb_line l ON a.id = l.city_id and ls.line_id=l.id
         <where>
             <if test="cityId!=null">
                and a.id = #{cityId}

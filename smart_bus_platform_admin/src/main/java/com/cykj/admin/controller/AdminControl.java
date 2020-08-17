@@ -2,12 +2,14 @@ package com.cykj.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.admin.service.AdminService;
+import com.cykj.redis.util.RedisUtil;
 import com.cykj.util.LayuiData;
 import com.cykj.util.Result;
 import com.cykj.util.ResultUtil;
 import com.cykj.pojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +23,8 @@ import java.util.Map;
 public class AdminControl {
     @Autowired
     private AdminService adminService;
-
+    @Autowired
+    private RedisUtil redisUtil;
     //登录
     @RequestMapping(value = "/login")
     @ResponseBody
@@ -48,21 +51,42 @@ public class AdminControl {
     //登录
     @RequestMapping(value = "/applogin")
     @ResponseBody
-    public Object applogin(String account,String password) {
-
-        Admin admin = new Admin();
-        admin.setAccount(account);
-        admin.setPassword(password);
-        admin = adminService.login(admin);
+    public String applogin(String account,String password,String code) {
         Result result = new Result();
-        if (admin != null && admin.getStateId() == 1) {
-            admin.setPassword(null);
-            result.setData(admin);
-            result.setStatus(200);
-        } else {
-           result.setStatus(201);
-           result.setData("账号或密码错误");
-        }
+        String  redisCode = (String) redisUtil.get("code");
+//        if(redisCode!=null&&!"".equals(redisCode)){
+//            if(redisCode.equals(code)){
+                Admin admin = new Admin();
+                admin.setPhone(account);
+                admin.setPassword(password);
+                admin = adminService.login(admin);
+                System.out.println(admin);
+
+                    if (admin != null) {
+                        if(admin.getStateId() == 2){
+                            admin.setPassword(null);
+                            result.setData(admin);
+                            result.setStatus(200);
+                        }else {
+                            result.setStatus(201);
+                            result.setMsg("该用户被禁止登录");
+                        }
+
+                    } else {
+                        result.setStatus(201);
+                        result.setMsg("账号或密码错误");
+                    }
+
+
+//            }else{
+//                result.setMsg("验证码错误");
+//                result.setStatus(201);
+//            }
+//        }else{
+//            result.setMsg("验证码失效");
+//            result.setStatus(201);
+//        }
+
         return JSON.toJSONString(result);
     }
     //列表layui
@@ -85,6 +109,23 @@ public class AdminControl {
         LayuiData layuiData = adminService.selectList(admin, Integer.parseInt(pageStr), Integer.parseInt(pageSizeStr));
         //response.getWriter().write(JSON.toJSONString(layuiData));
         return JSON.toJSONString(layuiData);
+    }
+
+    @RequestMapping("resetPwd")
+    @ResponseBody
+    public String resetPwd(@RequestBody Admin admin,String code){
+        String  redisCode = (String) redisUtil.get("code");
+//        if(redisCode!=null&&!"".equals(redisCode)){
+//            if(redisCode.equals(code)){
+//            }else{
+////                result.setMsg("验证码错误");
+////                result.setStatus(201);
+////            }
+////        }else{
+////            result.setMsg("验证码失效");
+////            result.setStatus(201);
+////        }
+        return JSON.toJSONString(adminService.resetPwd(admin));
     }
 
 }

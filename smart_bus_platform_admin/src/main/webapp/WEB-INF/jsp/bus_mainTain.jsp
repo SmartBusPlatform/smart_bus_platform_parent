@@ -120,7 +120,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -135,7 +135,7 @@
                             //正在维修车辆表
                             table.render({
                                 elem: '#repairBusTable',
-                                url:'/bus/queryBusByPage',
+                                url:'${pageContext.request.contextPath}/admin/bus/queryBusByPage',
                                 where:{
                                     "cityId":cityId,
                                     "stateId": 3
@@ -162,7 +162,7 @@
                             //维修总记录表
                             table.render({
                                 elem: '#busMainTainTable',
-                                url:'/busMainTain/queryBusMainTainByPage',
+                                url:'${pageContext.request.contextPath}/admin/busMainTain/queryBusMainTainByPage',
                                 where:{
                                     "cityId":cityId
                                 },
@@ -205,7 +205,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('busMainTainTable', {
-                url: '/busMainTain/queryBusMainTainByPage'
+                url: '${pageContext.request.contextPath}/admin/busMainTain/queryBusMainTainByPage'
                 ,where: {
                     cityId : cityId,
                     number : data.field.number

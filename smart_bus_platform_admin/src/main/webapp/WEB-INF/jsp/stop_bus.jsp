@@ -109,7 +109,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -123,7 +123,7 @@
                             //维修总记录表
                             table.render({
                                 elem: '#stopBusTable',
-                                url:'/stopBus/queryStopBusByPage',
+                                url:'${pageContext.request.contextPath}/admin/stopBus/queryStopBusByPage',
                                 where:{
                                     "cityId":cityId
                                 },
@@ -171,7 +171,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('stopBusTable', {
-                url: '/stopBus/queryStopBusByPage'
+                url: '${pageContext.request.contextPath}/admin/stopBus/queryStopBusByPage'
                 ,where: {
                     cityId : cityId,
                     siteName : data.field.siteName,
@@ -192,7 +192,7 @@
 
             layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/stopBus/deleteStopBus",
+                    url: "${pageContext.request.contextPath}/admin/stopBus/deleteStopBus",
                     method:'post',
                     dataType:'json',
                     data: "busId="+busId,

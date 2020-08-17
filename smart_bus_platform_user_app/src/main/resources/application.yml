@@ -18,6 +18,17 @@ spring:
       test-on-borrow: false
       test-on-return: false
       keep-alive: true
+  redis:
+    host: 120.25.211.135
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -44,8 +55,19 @@ feign:
   client:
     config:
       default:
-        connect-timeout: 10000
-        read-timeout: 20000
+        connect-timeout: 80000
+        read-timeout: 80000
+ftpclient:
+  host: 120.25.211.135
+  port: 21
+  username: ftpuser
+  password: ftpuser
+  basePath: /home/ftpuser/
+  filePath: /
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 50000
+
 
 
 

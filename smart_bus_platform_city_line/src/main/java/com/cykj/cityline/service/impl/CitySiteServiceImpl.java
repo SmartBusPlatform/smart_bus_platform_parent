@@ -78,7 +78,7 @@ public class CitySiteServiceImpl implements CitySiteService {
                 result.setMsg("当前站点已存在，请重新输入");
             }
         }
-        if(citySiteList.size()<2){
+        if(citySiteList.size()<=2){
             int num = citySiteMapper.updCitySiteByCityId(citySite);
 
             if(num==1){

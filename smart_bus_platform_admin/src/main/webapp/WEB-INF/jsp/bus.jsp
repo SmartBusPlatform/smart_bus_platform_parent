@@ -212,7 +212,7 @@
         //初始表格
         table.render({
             elem: '#busTable'
-            ,url: '/bus/queryBusByPage' //数据接口
+            ,url: '${pageContext.request.contextPath}/admin/bus/queryBusByPage' //数据接口
             ,page: true //开启分页
             ,limit: 5
             ,limits: [5,10,15,20]
@@ -245,7 +245,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('busTable', {
-                url: '/bus/queryBusByPage'
+                url: '${pageContext.request.contextPath}/admin/bus/queryBusByPage'
                 ,where: {
                     isFixedLine : data.field.isFixedLine,
                     stateId : data.field.stateId,
@@ -286,7 +286,7 @@
         form.on('submit(insert)', function(data){
             layer.confirm('是否新增？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/bus/insertBus",
+                    url: "${pageContext.request.contextPath}/admin/bus/insertBus",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -365,7 +365,7 @@
                         stateId = 5;
                     }
                     $.ajax({
-                        url: "/bus/changeBus",
+                        url: "${pageContext.request.contextPath}/admin/bus/changeBus",
                         method:'post',
                         dataType:'json',
                         contentType : 'application/json;charset=utf-8',
@@ -396,7 +396,7 @@
         form.on('submit(change)', function(data){
             layer.confirm('是否修改？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/bus/changeBus",
+                    url: "${pageContext.request.contextPath}/admin/bus/changeBus",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -447,7 +447,7 @@
 
         function getCity(parentId,cityId){
             $.ajax({
-                url:'/areas/getCityByProvince',
+                url:'${pageContext.request.contextPath}/admin/areas/getCityByProvince',
                 method:'post',
                 dataType:'json',
                 data:{"parentId":parentId,"type":2},
@@ -470,7 +470,7 @@
         function getProvince(parentId) {
             //获取省份
             $.ajax({
-                url:'/areas/getProvinceNameAll',
+                url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
                 method:'post',
                 dataType:'json',
                 data:{"type":1},
