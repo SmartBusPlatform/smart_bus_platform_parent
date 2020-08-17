@@ -20,9 +20,9 @@
     <select id="renderDriverWorkTable" parameterType="java.util.HashMap" resultMap="driverMap">
         select w.admin_id, a.name driver_name, date_format(w.work_date,'%Y-%m-%d') work_date, w.bus_id, b.number, w.is_work, w.id
         from tb_admin a
-        left join tb_driver_work w on a.id = w.admin_id
+        left join tb_driver_work w on a.id = w.admin_id and YEARWEEK(date_format(w.work_date,'%y-%m-%d')) = YEARWEEK(#{jsDate})
         left join tb_bus b on b.id = w.bus_id
-        where YEARWEEK(date_format(w.work_date,'%y-%m-%d')) = YEARWEEK(#{jsDate}) and a.areas_id = #{cityId}
+        where a.role_id = 4 and a.areas_id = #{cityId}
         order by w.work_date asc;
     </select>
 

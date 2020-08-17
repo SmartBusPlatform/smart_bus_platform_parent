@@ -22,6 +22,7 @@
 <%@ page import="com.alipay.demo.trade.model.result.AlipayF2FPrecreateResult" %>
 <%@ page import="org.apache.commons.logging.Log" %>
 <%@ page import="org.apache.commons.logging.LogFactory" %>
+<%@ page import="java.util.Date" %>
 
 <%
     Log log = LogFactory.getLog("trade_precreate");
@@ -90,7 +91,7 @@
                 .setStoreId(storeId)
                 .setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-//              .setNotifyUrl("http://www.test-notify-url.com")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+              .setNotifyUrl("http://ddmm.free.qydev.com/aliPayController/notifyUrl")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
@@ -104,7 +105,7 @@
                 String fileName = String.format("image%sqr-%s.png", File.separator, res.getOutTradeNo());
                 String filePath = new StringBuilder(basePath).append(fileName).toString();
 
-                out.println("<img src=\"" + fileName + "\" />");
+                out.println("<img src='/" + fileName + "' />");
                 out.println("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(res.getQrCode(), 256, filePath);
                 break;
@@ -269,7 +270,7 @@ ul,ol{
 }
 </style>
 </head>
-<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
+<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4 onload="alipayment.submit()">
 	<div id="main">
 		<div id="head">
             <dl class="alipay_link">
@@ -292,27 +293,27 @@ ul,ol{
 					<dt>商户订单号：</dt>
 					<dd>
 						<span class="null-star">*</span>
-						<input size="30" name="outTradeNo" />
+						<input size="30" name="outTradeNo" value="<%= new Date().getTime() %>"/>
 						<span>商户网站订单系统中唯一订单号，必填</span>
 					</dd>
 					<dt>订单名称：</dt>
 					<dd>
 						<span class="null-star">*</span>
-						<input size="30" name="subject" />
+						<input size="30" name="subject" value="乘坐公交"/>
 						<span>必填</span>
 					</dd>
 					
 					<dt>付款金额：</dt>
 					<dd>
 						<span class="null-star">*</span>
-						<input size="30" name="totalAmount" />
+						<input size="30" name="totalAmount" value="1"/>
                         <span>必填,整数，单位为分</span>
 					</dd>
 
                     <dt>不可打折金额：</dt>
                     <dd>
                         <span class="null-star">*</span>
-                        <input size="30" name="undiscountableAmount" />
+                        <input size="30" name="undiscountableAmount" value="0"/>
                         <span>可填,用于标识不可打折金额，单位为元，精确到小数点后2位</span>
                     </dd>
 
