@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.mapper.AdvertiserMapper;
 import com.cykj.admin.mapper.PartnerMapper;
 import com.cykj.admin.service.PartnerService;
 import com.cykj.pojo.*;
@@ -16,6 +17,8 @@ import java.util.List;
 public class PartnerServiceImpl implements PartnerService {
     @Autowired
     PartnerMapper partnerMapper;
+    @Autowired
+    AdvertiserMapper advertiserMapper;
 
     @Override
     public List<Parameter> queryPartnerType() {
@@ -74,6 +77,11 @@ public class PartnerServiceImpl implements PartnerService {
             Partner isPartner = partnerMapper.queryOnePartner(partner.getPartner(),partner.getId());
             if(isPartner==null){
                 isSuccess = partnerMapper.changePartner(partner);
+                if(partner.getStateId()==2){
+                    isSuccess = advertiserMapper.changeAdvertiserStateByPartnerId(2,partner.getId());
+                }else if(partner.getStateId()==3){
+                    isSuccess = advertiserMapper.changeAdvertiserStateByPartnerId(4,partner.getId());
+                }
             }else{
                 isSuccess = -9999;
             }

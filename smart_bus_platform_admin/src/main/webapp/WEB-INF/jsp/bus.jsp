@@ -375,7 +375,9 @@
                                 layer.msg('修改成功');
                                 obj.update({
                                     stateName : layEvent,
-                                    stateId : stateId
+                                    stateId : stateId,
+                                    lineName : '',
+                                    isFixedLine:'否',
                                 });
                             }else if(msg=="upDataError"){
                                 layer.msg('数据出错');

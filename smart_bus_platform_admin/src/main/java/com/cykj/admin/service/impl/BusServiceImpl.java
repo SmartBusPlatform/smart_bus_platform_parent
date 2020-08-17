@@ -1,6 +1,7 @@
 package com.cykj.admin.service.impl;
 
 import com.cykj.admin.mapper.BusMapper;
+import com.cykj.admin.mapper.BusWorkMapper;
 import com.cykj.admin.service.BusService;
 import com.cykj.pojo.*;
 import com.cykj.util.Result;
@@ -20,6 +21,8 @@ import java.util.List;
 public class BusServiceImpl implements BusService {
     @Autowired
     BusMapper busMapper;
+    @Autowired
+    BusWorkMapper busWorkMapper;
 
     @Override
     public Result queryBusByPage(HashMap<String, Object> condition, int startSize, int pageSize) {
@@ -75,11 +78,29 @@ public class BusServiceImpl implements BusService {
             Bus isBus = busMapper.queryOneBus(bus.getNumber(),bus.getId());
             if(isBus==null){
                 isSuccess = busMapper.changeBus(bus);
+                if(bus.getStateId()!=1){
+                    BusWork busWork = new BusWork();
+                    busWork.setBusId(bus.getId());
+                    busWorkMapper.deleteBusWork(busWork);
+                    Bus bus2 = new Bus();
+                    bus2.setId(bus.getId());
+                    bus2.setIsFixedLine("否");
+                    isSuccess = busMapper.changeBus(bus2);
+                }
             }else{
                 isSuccess = -9999;
             }
         }else{
             isSuccess = busMapper.changeBus(bus);
+            if(bus.getStateId()!=1){
+                BusWork busWork = new BusWork();
+                busWork.setBusId(bus.getId());
+                busWorkMapper.deleteBusWork(busWork);
+                Bus bus2 = new Bus();
+                bus2.setId(bus.getId());
+                bus2.setIsFixedLine("否");
+                isSuccess = busMapper.changeBus(bus2);
+            }
         }
 
         return isSuccess;

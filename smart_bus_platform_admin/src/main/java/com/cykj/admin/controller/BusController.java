@@ -5,9 +5,13 @@ import com.cykj.admin.service.BusService;
 import com.cykj.pojo.Bus;
 import com.cykj.pojo.Line;
 import com.cykj.util.Result;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,8 @@ import java.util.HashMap;
 public class BusController {
     @Autowired
     BusService busService;
+    @Autowired
+    private Scheduler scheduler;
 
     @RequestMapping(value = "queryBusByPage")
     //分页查询巴士，id为空就查全部
@@ -106,5 +112,17 @@ public class BusController {
     @RequestMapping("getBusByLineId")
     public String getBusByLineId( Line line) {
         return JSON.toJSONString(busService.findBusByLineId(line));
+    }
+
+
+    @RequestMapping("/start")
+    @ResponseBody
+    public String start() throws Exception {
+        System.out.println(scheduler);
+
+        JobKey key = new JobKey("job1");
+        scheduler.resumeJob(key);
+
+        return "start";
     }
 }
