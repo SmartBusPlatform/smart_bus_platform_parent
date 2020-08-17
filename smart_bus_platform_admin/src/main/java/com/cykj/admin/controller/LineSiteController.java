@@ -23,7 +23,6 @@ public class LineSiteController {
     }
 //
     @RequestMapping("updLineSiteByLineId")
-
     @ResponseBody
     public String updLineSiteByLineId(@RequestBody LineChild lineChild){
         System.out.println("lineChild"+lineChild);

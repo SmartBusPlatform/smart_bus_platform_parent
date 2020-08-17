@@ -39,10 +39,10 @@ public class LineSiteServiceImpl implements LineSiteService {
     public Result updLineSiteByLineId(LineChild lineChild) {
         List<CitySiteArr> start = lineSiteMapper.findLineSiteStartByLineId(lineChild);
         List<CitySiteArr> back = lineSiteMapper.findLineSiteBackByLineId(lineChild);
-        StringBuffer stringBuffer1 = new StringBuffer("调整线路，线路名称:"+lineChild.getName()+",始程新增站点:");
-        StringBuffer stringBuffer2 = new StringBuffer("调整线路，线路名称:"+lineChild.getName()+",返程新增站点:");
-        StringBuffer stringBuffer3 = new StringBuffer("调整线路，线路名称:"+lineChild.getName()+",始程删除站点:");
-        StringBuffer stringBuffer4 = new StringBuffer("调整线路，线路名称:"+lineChild.getName()+",返程删除站点:");
+        StringBuffer stringBuffer1 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",始程新增站点:");
+        StringBuffer stringBuffer2 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",返程新增站点:");
+        StringBuffer stringBuffer3 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",始程删除站点:");
+        StringBuffer stringBuffer4 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",返程删除站点:");
         boolean flag1=false;
         boolean flag2=false;
         boolean flag3=false;
@@ -140,17 +140,18 @@ public class LineSiteServiceImpl implements LineSiteService {
                 lineSite.setSiteId(lineChild.getResverArrs().get(k).getTitle());
                 num += lineSiteMapper.insLineSite(lineSite);
             }
+            System.out.println("lineChild.getCityId():aaa"+lineChild.getCityId());
             if(flag1){
-                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer1.toString(),1  ));
+                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer1.toString(),  lineChild.getCityId()));
             }
             if(flag2){
-                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer2.toString(),1  ));
+                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer2.toString(),lineChild.getCityId()  ));
             }
             if(flag3){
-                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer3.toString(),2  ));
+                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer3.toString(),lineChild.getCityId()  ));
             }
             if(flag4){
-                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer4.toString(),2  ));
+                addSiteRecordMapper.insAddSiteRecord(new AddSiteRecord(stringBuffer4.toString(),lineChild.getCityId()  ));
             }
 
 

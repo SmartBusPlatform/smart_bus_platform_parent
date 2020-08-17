@@ -4,6 +4,7 @@ package com.cykj.admin.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cykj.admin.bean.FTPParam;
 import com.cykj.admin.service.MenuConfigService;
 import com.cykj.pojo.Admin;
 import org.apache.ibatis.annotations.Param;

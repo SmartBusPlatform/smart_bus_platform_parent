@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.SiteRecordMapper">
+
+    <!-- 查询首页轮播的广告 -->
+    <select id="querySiteRecordByCityName" resultType="com.cykj.pojo.SiteRecord" parameterType="java.lang.String">
+        select asr.id,asr.time,asr.content
+        from tb_add_site_record asr
+           ,tb_areas a
+        where a.name = '安庆'
+          and a.id = asr.city_id
+    </select>
+
+</mapper>

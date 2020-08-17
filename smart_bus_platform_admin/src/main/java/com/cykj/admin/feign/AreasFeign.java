@@ -1,11 +1,13 @@
 package com.cykj.admin.feign;
 
+import com.alibaba.fastjson.JSON;
 import com.cykj.pojo.AreasChild;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @FeignClient(value = "CITY-LINE",fallback = AreasFallBack.class,contextId = "areasFeign")
 @Component
@@ -23,4 +25,5 @@ public interface AreasFeign {
     public  String getAreaTree();
     @RequestMapping("areas/getCityByProvince")
     public  String getCityByProvince(@RequestBody AreasChild areasChild);
+
 }

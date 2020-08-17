@@ -3,6 +3,7 @@ package com.cykj.admin.controller;
 import com.alibaba.fastjson.JSON;
 import com.cykj.admin.service.AdminService;
 import com.cykj.util.LayuiData;
+import com.cykj.util.Result;
 import com.cykj.util.ResultUtil;
 import com.cykj.pojo.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,26 @@ public class AdminControl {
         return JSON.toJSONString(map);
     }
 
+    //登录
+    @RequestMapping(value = "/applogin")
+    @ResponseBody
+    public Object applogin(String account,String password) {
+
+        Admin admin = new Admin();
+        admin.setAccount(account);
+        admin.setPassword(password);
+        admin = adminService.login(admin);
+        Result result = new Result();
+        if (admin != null && admin.getStateId() == 1) {
+            admin.setPassword(null);
+            result.setData(admin);
+            result.setStatus(200);
+        } else {
+           result.setStatus(201);
+           result.setData("账号或密码错误");
+        }
+        return JSON.toJSONString(result);
+    }
     //列表layui
     @RequestMapping(value = "/adminList")
     @ResponseBody

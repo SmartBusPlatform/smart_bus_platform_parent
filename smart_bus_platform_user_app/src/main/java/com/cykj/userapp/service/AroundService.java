@@ -1,6 +1,7 @@
 package com.cykj.userapp.service;
 
 import com.cykj.pojo.*;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,4 +13,6 @@ public interface AroundService {
     List<CitySiteInfo> queryAroundSiteLine(String cityName, double longitude, double latitude);
     //查询指定站点和线路
     List<LineChild> querySiteLineBySiteId(int siteId);
+    //查询指定站点和线路信息
+    HashMap<String,Object> queryLineSiteByLineId(LineChild lineChild);
 }

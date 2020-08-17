@@ -1,26 +1,11 @@
 package com.cykj.pojo;
 
-public class AddSiteRecord {
+public class SiteRecord {
+
     private int id;
     private String time;
     private String content;
-    private int stateId;
-    private int cityId;
-    public AddSiteRecord() {
-    }
-
-    public AddSiteRecord(String content, int cityId) {
-        this.content = content;
-        this.cityId = cityId;
-    }
-
-    public int getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
+    private int city_id;
 
     public int getId() {
         return id;
@@ -46,11 +31,11 @@ public class AddSiteRecord {
         this.content = content;
     }
 
-    public int getStateId() {
-        return stateId;
+    public int getCity_id() {
+        return city_id;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
 }

@@ -13,10 +13,10 @@
     </parent>
 
     <!--    <groupId>com.cykj</groupId>-->
-    <artifactId>smart_bus_platform_admin</artifactId>
+    <artifactId>smart_bus_platform_user_app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>smart_bus_platform_admin</name>
+    <name>smart_bus_platform_user_app</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

@@ -1,4 +1,4 @@
-package com.cykj.eurekaserver;
+package com.cykj.smart_bus_platform_eureka_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,4 +11,5 @@ public class SmartBusPlatformEurekaServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(SmartBusPlatformEurekaServerApplication.class, args);
     }
+
 }

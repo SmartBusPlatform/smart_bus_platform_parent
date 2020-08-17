@@ -23,11 +23,20 @@ public class LineChild extends  Line {
     private List<CitySiteArr> arrs;
     //返程线路站点数组
     private List<CitySiteArr> resverArrs;
-
+    //班次时间
+    private String shiftTime;
+    //站点集合
+        private List<CitySite> siteArr;
     private int allTime;    //一趟总耗时
 
     private String endSiteName;     //始程终点站
     private String startSiteName;     //始程起始站
+
+
+    private int propertyId; //始程或返程属性id
+    private String firstTime;   //第一班时间
+    private String lastTime;    //最后一班时间
+    private String nowTime;     //最近一班的发车时间
 
     public int getLineId() {
         return lineId;
@@ -113,6 +122,41 @@ public class LineChild extends  Line {
         this.resverArrs = resverArrs;
     }
 
+
+
+    public int getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(String firstTime) {
+        this.firstTime = firstTime;
+    }
+
+    public String getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public String getNowTime() {
+        return nowTime;
+    }
+
+    public void setNowTime(String nowTime) {
+        this.nowTime = nowTime;
+    }
+
+
     public int getAllTime() {
         return allTime;
     }
@@ -137,6 +181,24 @@ public class LineChild extends  Line {
         this.startSiteName = startSiteName;
     }
 
+
+    public String getShiftTime() {
+        return shiftTime;
+    }
+
+    public void setShiftTime(String shiftTime) {
+        this.shiftTime = shiftTime;
+    }
+
+    public List<CitySite> getSiteArr() {
+        return siteArr;
+    }
+
+    public void setSiteArr(List<CitySite> siteArr) {
+        this.siteArr = siteArr;
+    }
+
+
     @Override
     public String toString() {
         return "LineChild{" +
@@ -151,6 +213,11 @@ public class LineChild extends  Line {
                 ", arrs=" + arrs +
                 ", resverArrs=" + resverArrs +
                 ", allTime=" + allTime +
+                ", shiftTime='" + shiftTime + '\'' +
+                ", siteArr=" + siteArr +
+                ", allTime=" + allTime +
+                ", endSiteName='" + endSiteName + '\'' +
+                ", startSiteName='" + startSiteName + '\'' +
                 '}';
     }
 }

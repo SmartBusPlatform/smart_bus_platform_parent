@@ -181,7 +181,7 @@
                     </div>
                     <div class="el-step__main">
                         <div class="el-step__title is-finish" style="font-size: 10px">{{arr.name}}
-                            <span style="float: right" onclick="deleteStation(this,'right')">删除</span>
+                            <span style="float: right" :i="i" onclick="deleteStation(this,'right')">删除</span>
                             <span style="float: right; margin-right: 10px" :i="i" onclick="mapSelection(this,'right')">添加站点</span>
 
                         </div>
@@ -287,7 +287,7 @@
                         </div>
                         <div class="el-step__main">
                             <div class="el-step__title is-finish" style="font-size: 10px">{{arr.name}}
-                                <span style="float: right" onclick="deleteStation(this,'edit_right')">删除</span>
+                                <span style="float: right" :i="i" onclick="deleteStation(this,'edit_right')">删除</span>
                                 <span style="float: right; margin-right: 10px" :i="i" onclick="mapSelection(this,'edit_right')">添加站点</span>
 
                             </div>
@@ -626,7 +626,7 @@
                                         dataType:"json",
                                         traditional:true,
                                         contentType: "application/json;charset=UTF-8",
-                                        data:JSON.stringify({"name":item.name,"lineId":item.id,"arrs":vm2.arrs,"resverArrs":vm2.resverArrs}),
+                                        data:JSON.stringify({"cityId":cityId,"name":item.name,"lineId":item.id,"arrs":vm2.arrs,"resverArrs":vm2.resverArrs}),
                                         success:function (data) {
                                             if(data.status==200){
                                                 layer.msg(data.msg,{
@@ -1134,6 +1134,12 @@
             });
             AMap.event.addListener(ma, 'click', function(e) {
                 alert(direction)
+                for (let i=0;i<vm.arrs.length;i++){
+                    if(vm.arrs[i].name==e.target.Ce.label.content){
+                        layer.msg('已存在相同站点,请重新添加');
+                        return;
+                    }
+                }
               if(confirm("确认是否添加该站点到线路中")){
                   if(direction=='left'){
                       console.log(e)
@@ -1325,6 +1331,12 @@
                       }
                   }else if (direction=="right"){
                       console.log(e)
+                      for (let i=0;i<vm.resverArrs.length;i++){
+                          if(vm.resverArrs[i].name==e.target.Ce.label.content){
+                              layer.msg('已存在相同站点,请重新添加');
+                              return;
+                          }
+                      }
                       //首站
                       if($(select).attr('i')==-1){
                           document.getElementById('tip').innerHTML=e.target.Ce.label.content;
@@ -1504,13 +1516,19 @@
 
                       }
                   }else if(direction=="edit_left"){
+                      for (let i=0;i<vm2.arrs.length;i++){
+                          if(vm2.arrs[i].name==e.target.Ce.label.content){
+                              layer.msg('已存在相同站点,请重新添加');
+                              return;
+                          }
+                      }
                       //首站
                       if($(select).attr('i')==-1){
                           document.getElementById('tip').innerHTML=e.target.Ce.label.content;
                           $(select).prev().val(e.target.Ce.label.content);
                           $(select).prev().attr("title",e.target.Ce.label.title);
                           // let distance;
-                          if(vm.arrs.length>1){
+                          if(vm2.arrs.length>1){
                               // distance = Math.round(new AMap.LngLat(e.lnglat.lng, e.lnglat.lat).distance(new AMap.LngLat(vm.arrs[vm.arrs.length - 1].xPosition, vm.arrs[vm.arrs.length - 1].yPosition)));
                               //首站和下一站距离
                               $.ajax({
@@ -1681,13 +1699,19 @@
 
                       }
                   }else if(direction=="edit_right"){
+                      for (let i=0;i<vm2.resverArrs.length;i++){
+                          if(vm2.resverArrs[i].name==e.target.Ce.label.content){
+                              layer.msg('已存在相同站点,请重新添加');
+                              return;
+                          }
+                      }
                       //首站
                       if($(select).attr('i')==-1){
                           document.getElementById('tip').innerHTML=e.target.Ce.label.content;
                           $(select).prev().val(e.target.Ce.label.content);
                           $(select).prev().attr("title",e.target.Ce.label.title);
                           // let distance;
-                          if(vm.resverArrs.length>1){
+                          if(vm2.resverArrs.length>1){
                               // distance = Math.round(new AMap.LngLat(e.lnglat.lng, e.lnglat.lat).distance(new AMap.LngLat(vm.arrs[vm.arrs.length - 1].xPosition, vm.arrs[vm.arrs.length - 1].yPosition)));
                               //首站和下一站距离
                               $.ajax({
@@ -1746,7 +1770,6 @@
                       }else{
                           //点击第一个
                           if($(select).attr('i')==0){
-                              alert(1)
                               if(vm2.resverArrs.length>1){
                                   $.ajax({
                                       url:"https://restapi.amap.com/v3/direction/transit/integrated?key=c738d2680f189e057f7d5885f53e014c",

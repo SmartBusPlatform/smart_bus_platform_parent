@@ -1,10 +1,12 @@
 package com.cykj.userapp.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.pojo.LineChild;
 import com.cykj.userapp.service.AdvertiserService;
 import com.cykj.userapp.service.AroundService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +43,16 @@ public class AroundController {
     public Object querySiteLineBySiteId(@Param("siteId") int siteId){
         if (siteId!=0){
             return JSON.toJSONString(aroundService.querySiteLineBySiteId(siteId));
+        }else {
+            return JSON.toJSONString("dataError");
+        }
+    }
+
+    @RequestMapping(value = "queryLineSiteByLineId")
+    //根据线路id和往返属性查询该线路所有站点
+    public Object queryLineSiteByLineId(LineChild lineChild){
+        if (lineChild!=null&&(lineChild.getPropertyId()==1||lineChild.getPropertyId()==2)){
+            return JSON.toJSONString(aroundService.queryLineSiteByLineId(lineChild));
         }else {
             return JSON.toJSONString("dataError");
         }

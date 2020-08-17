@@ -1,6 +1,7 @@
 package com.cykj.userapp.service;
 
 import com.cykj.pojo.AdvertiserInfo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
