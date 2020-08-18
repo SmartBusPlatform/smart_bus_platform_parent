@@ -45,6 +45,6 @@ public class MultiThreadingService {
 
         int j = mapper.insertByPay(fee);
 
-        return count;
+        return 0;
     }
 }
