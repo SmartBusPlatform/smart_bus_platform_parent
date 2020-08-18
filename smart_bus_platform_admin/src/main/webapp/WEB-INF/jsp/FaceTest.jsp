@@ -52,7 +52,9 @@
     function error(error) {
         console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
     }
-
+    if(navigator.mediaDevices ===undefined){
+        navigator.mediaDevices={};
+    }
     if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
         //调用用户媒体设备, 访问摄像头
         getUserMedia({video : {width: 480, height: 320}}, success, error);
@@ -70,7 +72,7 @@
 
             $.ajax({
                 type: "post",
-                url:"${pageContext.request.contextPath}/faceController/faceDetect",
+                url:"${pageContext.request.contextPath}/admin/faceController/faceDetect",
                 data: {imgData : imgData},
                 dataType: 'json',
                 async: true,

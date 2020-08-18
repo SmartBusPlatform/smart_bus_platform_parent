@@ -29,6 +29,8 @@ spring:
         min-idle: 0
     lettuce:
       shutdown-timeout: 0
+
+    timeout: 5000ms
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -55,8 +57,8 @@ feign:
   client:
     config:
       default:
-        connect-timeout: 80000
-        read-timeout: 80000
+        connect-timeout: 240000
+        read-timeout: 240000
 ftpclient:
   host: 120.25.211.135
   port: 21

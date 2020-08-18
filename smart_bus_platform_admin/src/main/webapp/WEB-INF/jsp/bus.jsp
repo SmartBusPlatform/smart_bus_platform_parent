@@ -323,7 +323,7 @@
             if(layEvent == '排班'){
                 layer.open({
                     type: 2,
-                    content: ['/manager/bus_work'],
+                    content: ['${pageContext.request.contextPath}/admin/manager/bus_work'],
                     maxmin:true,
                     area:['1300px','650px'],
                     success:function (layero, index) {

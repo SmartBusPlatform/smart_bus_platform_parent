@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.1</title>
+    <title>城市线路配置</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -17,7 +17,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/xadmin.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css">
     <script src="${pageContext.request.contextPath}/static/js/vue.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=01c4bad1d55c4b802d04ee5e62657af1&plugin=AMap.StationSearch"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=01c4bad1d55c4b802d04ee5e62657af1&plugin=AMap.StationSearch&plugin=AMap.Driving"></script>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
     <script type="text/javascript" src="http://webapi.amap.com/demos/js/liteToolbar.js"></script>
@@ -141,22 +141,6 @@
                                        placeholder="" class="layui-input">
                             </div>
                         </div>
-                        <%--        <div class="layui-form-item">--%>
-
-                        <%--            <label class="layui-form-label">始程发车站:</label>--%>
-                        <%--            <div class="layui-input-block">--%>
-                        <%--                <input type="text" id="add_startStation" name="add_startStation"  autocomplete="off" placeholder="" class="layui-input">--%>
-                        <%--                <button class="layui-btn" i="-1" onclick="mapSelection(this,'left')" type="button">地图选择</button>--%>
-                        <%--            </div>--%>
-
-                        <%--        </div>--%>
-                        <%--        <div class="layui-form-item">--%>
-                        <%--            <label class="layui-form-label">返程发车站:</label>--%>
-                        <%--            <div class="layui-input-block">--%>
-                        <%--                <input type="text" id="add_reStation" name="add_reStation" autocomplete="off" placeholder="" class="layui-input">--%>
-                        <%--                <button class="layui-btn mapSelection" i="-2" onclick="mapSelection(this,'right')" type="button">地图选择</button>--%>
-                        <%--            </div>--%>
-                        <%--        </div>--%>
                         <div class="layui-form-item layui-col-sm6 layui-col-sm-offset2">
 
                             <label class="layui-form-label">单程费用:</label>
@@ -220,16 +204,13 @@
                                                       onclick="mapSelection(this,'left')">添加站点</span>
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{arr.distance}}
-                                            </div>
                                         </div>
                                     </div>
 
                                     <%--                    <span v-if="arrs.length>1">始程时间:{{comp()}}</span>--%>
                                 </div>
                                 <div class="layui-input-block" style="margin-left: 0px">
-                                    <button class="layui-btn" v-if="arrs.length==0" i="-1" type="button">线路预览</button>
+                                    <button class="layui-btn" v-if="arrs.length>2" onclick="routePre(vm.arrs)" type="button">线路预览</button>
                                 </div>
                             </div>
 
@@ -262,13 +243,13 @@
                                                       onclick="mapSelection(this,'right')">添加站点</span>
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{arr.distance}}
-                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
+                                <div class="layui-input-block" style="margin-left: 0px">
+                                <button class="layui-btn" v-if="arrs.length>0" onclick="routePre(vm.resverArrs)" type="button">线路预览</button>
+                            </div>
                             </div>
 
                         </div>
@@ -319,17 +300,38 @@
                             </div>
 
                         </div>
+                        <div class="layui-form-item">
+
+                            <label class="layui-form-label">始程时间:</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="edit_startTime" name="edit_startTime" lay-verify="required"
+                                       autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+
+                            <label class="layui-form-label">返程时间:</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="edit_endTime" name="edit_endTime" lay-verify="required"
+                                       autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+
+                        </div>
 
                     </form>
                 </div>
 
                 <div class="site-text layui-row" hidden id="editLineSite">
+                  >
                     <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px" method="post"
                           lay-filter="example">
+
 
                         <div id="app2" style="width: 100%">
                             <div class="layui-col-sm4"
                                  style="height: 400px; min-height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: auto">
+                                <h2>修改始程站点</h2>
                                 <div class="layui-input-block">
                                     <button class="layui-btn" v-if="arrs.length==0" i="-1"
                                             onclick="mapSelection(this,'edit_left')" type="button">新增始程站点
@@ -354,18 +356,18 @@
                                                       onclick="mapSelection(this,'edit_left')">添加站点</span>
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{calDistance(i)}}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="layui-input-block" style="margin-left: 0px">
+                                <button class="layui-btn" v-if="arrs.length>0" onclick="routePre(vm2.arrs)" type="button">线路预览</button>
                             </div>
 
-                            <%--            <button type="button" onclick="productionResvese()" class="el-button el-button--default" style="margin: 220px 20px;float: left;"><span>生成反向>></span>--%>
-                            <%--            </button>--%>
-                            <div class="layui-col-sm4"
+                            </div>
+
+                            <div class="layui-col-sm4 layui-col-sm-offset1"
                                  style=" max-height: 400px;height: 400px;   float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
+                                <h2>修改返程站点</h2>
                                 <div class="el-steps el-steps--vertical">
                                     <div class="layui-input-block">
                                         <button class="layui-btn" v-if="resverArrs.length==0" i="-1"
@@ -391,12 +393,12 @@
                                                       onclick="mapSelection(this,'edit_right')">添加站点</span>
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{calDistanceResver(i)}}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="layui-input-block" style="margin-left: 0px">
+                                <button class="layui-btn" v-if="arrs.length>0" onclick="routePre(vm2.resverArrs)" type="button">线路预览</button>
+                            </div>
                             </div>
 
                         </div>
@@ -423,17 +425,14 @@
                                             <div class="el-step__title is-finish" style="font-size: 10px">{{arr.name}}
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{calDistance(i)}}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="layui-input-block" style="margin-left: 0px">
+                                    <button class="layui-btn" v-if="arrs.length>0" onclick="routePre(vm3.arrs)" type="button">线路预览</button>
+                                </div>
                             </div>
 
-                            <button type="button" onclick="productionResvese()" class="el-button el-button--default"
-                                    style="margin: 220px 20px;float: left;"><span>生成反向>></span>
-                            </button>
                             <div style="height:450px; max-height: 450px; width: 40%;  float: left; border: solid 1px #ccc ;padding: 5px;overflow-x: hidden">
                                 <div class="el-steps el-steps--vertical">
                                     <div v-for="(arr,i) in resverArrs" class="el-step is-vertical"
@@ -451,12 +450,12 @@
                                             <div class="el-step__title is-finish" style="font-size: 10px">{{arr.name}}
 
                                             </div>
-                                            <div class="el-step__description is-finish">
-                                                {{calDistanceResver(i)}}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="layui-input-block" style="margin-left: 0px">
+                                <button class="layui-btn" v-if="arrs.length>0" onclick="routePre(vm3.resverArrs)" type="button">线路预览</button>
                             </div>
                         </div>
 
@@ -639,6 +638,8 @@
                                         $("#edit_oneMoney").val(item.oneMoney);
                                         $("#edit_travelMoney").val(item.travelMoney);
                                         $("#edit_lineName").val(item.name)
+                                        $("#edit_startTime").val(item.startTime);
+                                        $("#edit_endTime").val(item.returnTime);
                                     }
                                     , yes: function (num, layero) {
                                         layer.confirm('确认是否修改信息?', {icon: 3, title: '提示'}, function (index) {
@@ -647,6 +648,8 @@
                                                     if ($("#edit_lineName").val().trim().length > 0) {
                                                         if (isRealNum($("#edit_oneMoney").val().trim())) {
                                                             if (isRealNum($("#edit_travelMoney").val().trim())) {
+                                                                if ($("#edit_startTime").val().length > 0 && isRealNum($("#edit_startTime").val().trim())) {
+                                                                    if ($("#edit_endTime").val().length > 0 && isRealNum($("#edit_endTime").val().trim())) {
                                                                 $.ajax({
                                                                     type: "post",
                                                                     url: "${pageContext.request.contextPath}/admin/line/updLineByLineId",
@@ -655,7 +658,9 @@
                                                                         "name": $("#edit_lineName").val(),
                                                                         "oneMoney": $("#edit_oneMoney").val().trim(),
                                                                         "travelMoney": $("#edit_travelMoney").val().trim(),
-                                                                        "id": item.id
+                                                                        "id": item.id,
+                                                                        "startTime":$("#edit_startTime").val().trim(),
+                                                                        "returnTime":$("#edit_endTime").val().trim()
                                                                     },
                                                                     dataType: "json",
                                                                     success: function (data) {
@@ -671,6 +676,16 @@
                                                                         }
                                                                     }
                                                                 });
+                                                                    }else {
+                                                                            layer.msg('请正确输入返程时间', {
+                                                                                btn: ['明白了',]
+                                                                            });
+                                                                        }
+                                                                    } else {
+                                                                        layer.msg('请正确输入始程时间', {
+                                                                            btn: ['明白了',]
+                                                                        });
+                                                                    }
                                                             } else {
                                                                 layer.msg('请输入正确的司机费用值', {
                                                                     btn: ['明白了',]
@@ -736,7 +751,7 @@
                                 layer.open({
                                     title: '修改配置线路信息',
                                     type: 1,
-                                    area: ['80%', '90%'],
+                                    area: ['90%', '95%'],
                                     offset: 'auto',
                                     maxmin: true,
                                     shadeClose: false,
@@ -1106,6 +1121,7 @@
                         });
 
                     })
+
                     //校验经度是否符合规范
                     //校验经度x
                     function checkLong(longitude) {
@@ -1153,7 +1169,82 @@
                             }
                         }
                     }
+                    //线路预览
+                    function routePre(data) {
+                        var markers=[]
+                        layer.open({
+                            title: '线路预览',
+                            type: 1,
+                            area: ['80%', '80%'],
+                            offset: 'auto',
+                            maxmin: true,
+                            shadeClose: false,
+                            content: $('#findMap'),
+                            btn: ['返回', ],
+                            shade: [0.8, '#393D49'],
+                            success: function (layero, index) {
+                                let map = new AMap.Map("container", {
+                                    // center: [116.397428, 39.90923],//地图中心点
+                                    zoom: 13 //地图显示的缩放级别
+                                });
+                                //定义导航
+                                var driving = new AMap.Driving({
+                                    map: map,
+                                    hideMarkers : true
+                                });
+                                //循环获取站点数组
+                                $.each(data,function (index,item) {
+                                    markers.push([item.xPosition,item.yPosition,item.name]);
+                                });
+                                var path = new Array();
+                                for (var i=0; i<markers.length;i++){
+                                    if(i!=0&&i!=markers.length-1){
+                                        path.push(new AMap.LngLat(markers[i][0],markers[i][1]));
+                                    }
+                                }
+                                driving.search(new AMap.LngLat(markers[0][0],markers[0][1]),new AMap.LngLat(markers[markers.length-1][0],markers[markers.length-1][1]),
+                                    {waypoints:path}
+                                    ,function(status, result) {
+                                        //成功就把所有站点显示出来
+                                        if (status === 'complete') {
+                                            //设置maker图标
+                                            var icon = new AMap.Icon({
+                                                image: '/static/images/map_bus.png',  // Icon的图像
+                                            });
+                                            $.each(markers,function (index,item) {
+                                                var marker = new AMap.Marker({
+                                                    position: [item[0],item[1]], // 基点位置
+                                                    icon : icon,
+                                                });
+                                                map.add(marker);
+                                                if(index==0){
+                                                    marker.setLabel({
+                                                        content:item[2]+"(始发站)",
+                                                        direction: 'right'
+                                                    })
+                                                }else if(index==markers.length-1){
+                                                    marker.setLabel({
+                                                        content:item[2]+"(终点站)",
+                                                        direction: 'right'
+                                                    })
+                                                }else{
+                                                    marker.setLabel({
+                                                        content:item[2],
+                                                        direction: 'right'
+                                                    })
+                                                }
+                                            });
 
+                                        } else {
+                                            layer.msg('获取数据失败')
+                                        }
+                                    }
+                                );
+                            }}
+                            )
+
+
+                    }
                     //地图选择
                     function mapSelection(node, direction) {
 
@@ -1165,7 +1256,6 @@
                             data: {"cityId": cityId},
                             dataType: "json",
                             success: function (data) {
-                                console.log(data)
                                 map = new AMap.Map("container", {
                                     resizeEnable: true,
                                     // mapStyle:'amap://styles/f0c43041630ebe2835503272216aa80d',

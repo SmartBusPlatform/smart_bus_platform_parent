@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.AdminMapper;
 import com.cykj.admin.service.AdminService;
 import com.cykj.util.LayuiData;
@@ -15,6 +16,7 @@ public class AdminServiceImp implements AdminService {
     @Autowired
     public AdminMapper adminMapper;
 
+    @Log(operationType="登录",operationName = "管理员登录")
     @Override
     public Admin login(Admin admin) {
         Admin adminLogin = null;
@@ -22,7 +24,7 @@ public class AdminServiceImp implements AdminService {
         adminLogin = adminMapper.login(admin);
         return adminLogin;
     }
-
+    @Log(operationType="查询操作",operationName = "管理员列表查询")
     @Override
     public LayuiData selectList(Admin admin, int page, int pageSize) {
         int start = (page - 1) * pageSize;//计算出起始查询位置

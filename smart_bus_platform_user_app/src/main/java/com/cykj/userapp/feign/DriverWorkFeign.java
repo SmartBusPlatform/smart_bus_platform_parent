@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @FeignClient(value = "admin",contextId = "driverWork")
 @Component
@@ -19,4 +20,6 @@ public interface DriverWorkFeign {
     public String endMaintenance(@RequestBody DriverWork driverWork);
     @RequestMapping("driverWorkController/vehicleScrapping")
     public String vehicleScrapping(@RequestBody DriverWork driverWork);
+    @RequestMapping("driverWorkController/selectWorkload")
+    public String selectWorkload(@RequestParam("driverId") int driverId, @RequestParam("timestamp")long timestamp);
 }

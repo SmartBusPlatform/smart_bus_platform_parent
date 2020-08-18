@@ -1,6 +1,7 @@
 package com.cykj.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cykj.admin.bean.CookieUtils;
 import com.cykj.admin.service.AdminService;
 import com.cykj.redis.util.RedisUtil;
 import com.cykj.util.LayuiData;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.UUID;
 
 @SuppressWarnings("all")
 @Controller
@@ -28,24 +31,41 @@ public class AdminControl {
     //登录
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Object login(HttpServletRequest request, HttpServletResponse response) {
+    public String login(HttpServletRequest request, HttpServletResponse response) {
         String account = request.getParameter("account");
         String password = request.getParameter("password");
         Admin admin = new Admin();
         admin.setAccount(account);
         admin.setPassword(password);
         admin = adminService.login(admin);
+        Result result = new Result();
         Map<String, Object> map = null;
-        if (admin != null || admin.getStateId() == 1) {
-            System.out.println(admin);
-            map = ResultUtil.success();
-            request.getSession().setAttribute("admin", admin);
-
-        } else {
-            System.out.println("登录失败");
-            map = ResultUtil.fail("登录失败");
+        if(admin!=null){
+            if(admin.getStateId()==2){
+                result.setStatus(200);
+                result.setMsg("登录成功");
+                String token= UUID.randomUUID().toString();
+                admin.setPassword(null);
+                redisUtil.set(token,JSON.toJSONString(admin));
+                CookieUtils.setCookie(request, response, "admin_token", token);
+            }else{
+                result.setStatus(201);
+                result.setMsg("该账号已被禁用");
+            }
+        }else{
+            result.setStatus(201);
+            result.setMsg("账号或密码错误");
         }
-        return JSON.toJSONString(map);
+//        if (admin != null || admin.getStateId() == 1) {
+//            System.out.println(admin);
+//            map = ResultUtil.success();
+//            request.getSession().setAttribute("admin", admin);
+//
+//        } else {
+//            System.out.println("登录失败");
+//            map = ResultUtil.fail("登录失败");
+//        }
+        return JSON.toJSONString(result);
     }
 
     //登录

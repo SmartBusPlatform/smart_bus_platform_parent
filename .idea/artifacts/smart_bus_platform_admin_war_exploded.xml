@@ -170,7 +170,6 @@
           <element id="library" level="project" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
           <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:2.2.1" />
           <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1.1" />
-          <element id="library" level="project" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
           <element id="archive" name="smart_bus_platform_redis-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="smart_bus_platform_redis" />
           </element>

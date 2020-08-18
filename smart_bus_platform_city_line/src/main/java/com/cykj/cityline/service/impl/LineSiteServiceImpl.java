@@ -38,6 +38,7 @@ public class LineSiteServiceImpl implements LineSiteService {
     @Transactional
     public Result updLineSiteByLineId(LineChild lineChild) {
         List<CitySiteArr> start = lineSiteMapper.findLineSiteStartByLineId(lineChild);
+        System.out.println(start);
         List<CitySiteArr> back = lineSiteMapper.findLineSiteBackByLineId(lineChild);
         StringBuffer stringBuffer1 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",始程新增站点:");
         StringBuffer stringBuffer2 = new StringBuffer("调整线路,线路名称:"+lineChild.getName()+",返程新增站点:");
@@ -64,7 +65,7 @@ public class LineSiteServiceImpl implements LineSiteService {
                 }
             }
         }
-        if(startNum==(start.size()+back.size())){
+        if(startNum==(start.size()+back.size())&&startNum!=0){
             Result result = new Result();
             result.setMsg("您提交的站点跟之前的站点无变化");
             result.setStatus(203);

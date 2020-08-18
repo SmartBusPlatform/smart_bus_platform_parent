@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.1</title>
+    <title>城市配置</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -29,6 +29,9 @@
             width: 90%;
             height: 80%;
             margin-top: 7%;
+        }
+        .layui-form-label{
+            width: 85px;
         }
     </style>
 </head>
@@ -127,9 +130,9 @@
 <div class="site-text layui-row" hidden id="addForm"  >
     <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">
         <div class="layui-form-item">
-            <label class="layui-form-label">城市名称:</label>
+            <label class="layui-form-label ">城市名称:</label>
             <div class="layui-input-block">
-                <input type="text" id="add_cityName" name="cityName" lay-verify="cityName" autocomplete="off" placeholder="请输入会员名称" class="layui-input">
+                <input type="text" id="add_cityName" name="cityName" lay-verify="cityName" autocomplete="off" placeholder="请输入城市名称" class="layui-input">
 
             </div>
         </div>

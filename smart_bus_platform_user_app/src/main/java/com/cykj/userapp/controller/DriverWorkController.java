@@ -2,6 +2,7 @@ package com.cykj.userapp.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cykj.pojo.DriverWork;
+import com.cykj.pojo.LayuiData;
 import com.cykj.pojo.LineChild;
 import com.cykj.userapp.feign.DriverWorkFeign;
 import com.cykj.userapp.service.DriverWorkService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -45,4 +47,14 @@ public class DriverWorkController {
     public String vehicleScrapping( DriverWork driverWork) {
         return driverWorkFeign.vehicleScrapping(driverWork);
     }
+    //查询单个司机工作量
+    @RequestMapping("selectWorkload")
+    @ResponseBody
+    public String selectWorkload(int driverId, long timestamp) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("driverId", driverId);
+        map.put("timestamp", timestamp);
+        return driverWorkFeign.selectWorkload(driverId,timestamp);
+    }
+
 }

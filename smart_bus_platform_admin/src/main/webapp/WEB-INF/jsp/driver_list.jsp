@@ -176,7 +176,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success: function (data) {
                 //渲染

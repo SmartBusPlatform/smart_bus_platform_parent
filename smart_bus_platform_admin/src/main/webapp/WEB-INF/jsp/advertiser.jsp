@@ -351,15 +351,28 @@
 
             //查看
             if(layEvent == '查看'){
-                $("#lookImage").removeAttr('src')
-                $("#lookImage").attr('src', "${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime());
-                layer.open({
-                    type: 1,
-                    title: '查看广告',
-                    content: $('#lookAdvertiser'),
-                    offset: '150px',
-                    area: ['500px', '300px'],
-                });
+                <%--$("#lookImage").removeAttr('src')--%>
+                <%--$("#lookImage").attr('src', "${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime());--%>
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/advertiser/queryAdvertiserImage?id="+data.id+"&time="+new Date().getTime(),
+                    method:'post',
+                    dataType:'json',
+                    success:function (res) {
+                        if(res.status==200){
+                            layer.open({
+                                type: 2,
+                                title: '查看广告',
+                                content: res.data,
+                                // content: $('#lookAdvertiser'),
+                                offset: '150px',
+                                area: ['500px', '300px'],
+                            });
+                        }else{
+                            alert(res.msg)
+                        }
+                    }
+                })
+
             //修改广告数据
             }else if (layEvent == '修改'){
                 layer.open({

@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.BusMaintainMapper;
 import com.cykj.admin.service.BusMainTainService;
 import com.cykj.pojo.BusMaintain;
@@ -18,7 +19,7 @@ import java.util.List;
 public class BusMainTainServiceImpl implements BusMainTainService {
     @Autowired
     BusMaintainMapper busMaintainMapper;
-
+    @Log(operationType="查询操作",operationName = "维修巴士列表查询")
     @Override
     public Result queryBusMainTainByPage(HashMap<String, Object> condition, int startSize, int pageSize) {
         PageHelper.startPage(startSize, pageSize);
@@ -38,7 +39,6 @@ public class BusMainTainServiceImpl implements BusMainTainService {
         }
         return result;
     }
-
     @Override
     public Result queryBusMainTainByRepairId(HashMap<String, Object> condition) {
         List<BusMaintainInfo> busMainTainList = busMaintainMapper.queryBusMainTain(condition);
@@ -52,7 +52,6 @@ public class BusMainTainServiceImpl implements BusMainTainService {
         }
         return result;
     }
-
     @Override
     public int insBusMainTain(BusMaintain busMaintain) {
 

@@ -59,11 +59,16 @@
                         "password": data.field.password
                     },
                     success:function (msg) {
-                        if (msg.code == '00') {
+                        if (msg.status == '200') {
                             location.href = '${pageContext.request.contextPath}/admin/adminController/selectRoleMenus';
                         } else {
-                            layer.msg(msg.message);
+                            layer.msg(msg.msg);
                         }
+                        <%--if (msg.code == '00') {--%>
+                        <%--    location.href = '${pageContext.request.contextPath}/admin/adminController/selectRoleMenus';--%>
+                        <%--} else {--%>
+                        <%--    layer.msg(msg.message);--%>
+                        <%--}--%>
                     }
 
                 })

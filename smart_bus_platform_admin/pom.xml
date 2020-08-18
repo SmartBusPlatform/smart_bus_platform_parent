@@ -247,7 +247,7 @@
     <build>
         <resources>
             <resource>
-                <directory>${project.basedir}/libs</directory>
+                <directory>${project.basedir}/lib</directory>
                 <targetPath>BOOT-INF/lib/</targetPath>
                 <includes>
                     <include>**/*.jar</include>
@@ -263,13 +263,13 @@
                     <include>**/**</include>
                 </includes>
             </resource>
-<!--            <resource>-->
-<!--                <directory>src/main/resources</directory>-->
-<!--                <filtering>false</filtering>-->
-<!--                <includes>-->
-<!--                    <include>**/**</include>-->
-<!--                </includes>-->
-<!--            </resource>-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>

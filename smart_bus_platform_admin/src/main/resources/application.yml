@@ -28,8 +28,7 @@ spring:
         max-wait: -1
         max-idle: 500
         min-idle: 0
-    lettuce:
-      shutdown-timeout: 0
+    timeout: 30s
   mvc:
     view:
       prefix: /WEB-INF/jsp/
