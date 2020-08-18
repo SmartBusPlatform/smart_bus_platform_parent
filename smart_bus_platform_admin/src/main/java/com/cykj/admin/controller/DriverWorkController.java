@@ -3,9 +3,12 @@ package com.cykj.admin.controller;
 import com.alibaba.fastjson.JSON;
 import com.cykj.admin.service.DriverWorkService;
 import com.cykj.pojo.AdminInfo;
+import com.cykj.pojo.DriverWork;
 import com.cykj.pojo.LayuiData;
+import com.cykj.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -49,6 +52,12 @@ public class DriverWorkController {
         String str = driverWorkService.updateDriver(adminInfo);
         return str;
     }
+    //根据时间和司机id查询当前排班车辆
+    @RequestMapping("failureStop")
+    @ResponseBody
+    public String failureStop(@RequestBody DriverWork driverWork){
+        return JSON.toJSONString(driverWorkService.failureStop(driverWork));
+    }
 
     //查询单个司机工作量
     @RequestMapping("selectWorkload")
@@ -61,4 +70,19 @@ public class DriverWorkController {
         return JSON.toJSONString(layuiData);
     }
 
+    @RequestMapping("vehicleMaintenace")
+    @ResponseBody
+    public String vehicleMaintenace(@RequestBody DriverWork driverWork){
+        return JSON.toJSONString(driverWorkService.vehicleMaintenace(driverWork));
+    }
+    @RequestMapping("endMaintenance")
+    @ResponseBody
+    public String endMaintenance(@RequestBody DriverWork driverWork) {
+        return JSON.toJSONString(driverWorkService.endMaintenance(driverWork));
+    }
+    @RequestMapping("vehicleScrapping")
+    @ResponseBody
+    public String vehicleScrapping(@RequestBody DriverWork driverWork) {
+        return JSON.toJSONString(driverWorkService.vehicleScrapping(driverWork));
+    }
 }

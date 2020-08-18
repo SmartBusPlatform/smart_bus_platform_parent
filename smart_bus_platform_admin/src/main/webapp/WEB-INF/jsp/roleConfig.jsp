@@ -72,7 +72,7 @@
                 <div class="layui-card-body ">
                     <%--                    <table id="demo" lay-filter="test"></table>--%>
                     <table class="layui-table"
-                           lay-data="{url:'${pageContext.request.contextPath}/roleConfigController/selectRole',page:true,toolbar: '#toolbarDemo',id:'test'}"
+                           lay-data="{url:'${pageContext.request.contextPath}/admin/roleConfigController/selectRole',page:true,toolbar: '#toolbarDemo',id:'test'}"
                            lay-filter="test">
                         <thead>
                         <tr>
@@ -205,7 +205,7 @@
                                     } else {
                                         layer.confirm('确认提交新角色？', {icon: 3, title: '提示'}, function () {
                                             $.ajax({
-                                                url: '${pageContext.request.contextPath}/roleConfigController/addRole',
+                                                url: '${pageContext.request.contextPath}/admin/roleConfigController/addRole',
                                                 async: 'true',
                                                 type: 'post',
                                                 data: 'roleName=' + addRole,
@@ -258,7 +258,7 @@
                             } else {
                                 layer.confirm('确认修改角色？', {icon: 3, title: '提示'}, function () {
                                     $.ajax({
-                                        url: '${pageContext.request.contextPath}/roleConfigController/updateRole',
+                                        url: '${pageContext.request.contextPath}/admin/roleConfigController/updateRole',
                                         async: 'true',
                                         type: 'post',
                                         data: {
@@ -288,7 +288,7 @@
                         // layer.close(index);
                         //向服务端发送删除指令
                         $.ajax({
-                            url: '${pageContext.request.contextPath}/roleConfigController/deleteRole',
+                            url: '${pageContext.request.contextPath}/admin/roleConfigController/deleteRole',
                             async: 'true',
                             type: 'post',
                             data: 'id=' + data.id,

@@ -15,9 +15,20 @@ spring:
       validation-query: select 1
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-      test-on-borrow: false
-      test-on-return: false
+      test-on-borrow: true
+      test-on-return: true
+
       keep-alive: true
+  redis:
+    host: 120.25.211.135
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    timeout: 30s
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -40,8 +51,8 @@ feign:
   client:
     config:
       default:
-        connect-timeout: 10000
-        read-timeout: 20000
+        connect-timeout: 80000
+        read-timeout: 80000
 ftpclient:
   host: 120.25.211.135
   port: 21
@@ -52,4 +63,6 @@ ftpclient:
 
 
 
-
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

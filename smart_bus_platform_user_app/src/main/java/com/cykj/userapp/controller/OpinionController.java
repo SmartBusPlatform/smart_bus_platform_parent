@@ -3,7 +3,9 @@ package com.cykj.userapp.controller;
 import com.alibaba.fastjson.JSON;
 import com.cykj.pojo.Opinion;
 import com.cykj.pojo.User;
+import com.cykj.userapp.bean.FTPParam;
 import com.cykj.userapp.service.OpinionService;
+import com.cykj.util.FtpUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;

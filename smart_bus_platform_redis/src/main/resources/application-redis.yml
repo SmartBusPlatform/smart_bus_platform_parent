@@ -11,3 +11,4 @@ spring:
     lettuce:
       shutdown-timeout: 0
 
+

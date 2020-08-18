@@ -19,5 +19,6 @@ public interface AdminMapper {
     public int update(Admin admin);
 
     public int delete(String[] ids);
-
+    //重置密码
+    public int resetPwd(Admin admin);
 }

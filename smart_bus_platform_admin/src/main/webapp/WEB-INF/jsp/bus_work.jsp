@@ -151,7 +151,7 @@
     function queryBusWork() {
         var busId = $("#busId").val();
         $.ajax({
-            url: '/busWork/queryBusWork',
+            url: '${pageContext.request.contextPath}/admin/busWork/queryBusWork',
             data: "id="+busId,
             method:'post',
             dataType:'json',
@@ -202,7 +202,7 @@
     function queryLine() {
         var cityId = $("#cityId").val();
         $.ajax({
-            url: '/line/getLineByCityId',
+            url: '${pageContext.request.contextPath}/admin/line/getLineByCityId',
             data: "cityId="+cityId,
             method:'post',
             dataType:'json',
@@ -242,7 +242,7 @@
             //初始始程表格
             table.render({
                 elem: '#startTimeTable'
-                ,url: '/time/queryTime?beginOrReturn=1&lineId='+line //数据接口
+                ,url: '${pageContext.request.contextPath}/admin/time/queryTime?beginOrReturn=1&lineId='+line //数据接口
                 ,height:300
                 ,cols: [[ //表头
                     {field: 'id', title : 'ID' , hide:"true"}
@@ -267,7 +267,7 @@
             //初始返程表格
             table.render({
                 elem: '#returnTimeTable'
-                ,url: '/time/queryTime?beginOrReturn=2&lineId='+line //数据接口
+                ,url: '${pageContext.request.contextPath}/admin/time/queryTime?beginOrReturn=2&lineId='+line //数据接口
                 ,height:300
                 ,cols: [[ //表头
                     {field: 'id', title : 'ID' , hide:"true"}
@@ -305,7 +305,7 @@
                 if(layEvent == '排班'){ //排班
                     layer.confirm('是否排班？',{icon: 3, title:'提示'},function (index) {
                         $.ajax({
-                            url: "/busWork/insertBusWork",
+                            url: "${pageContext.request.contextPath}/admin/busWork/insertBusWork",
                             method:'post',
                             dataType:'json',
                             contentType : 'application/json;charset=utf-8',
@@ -333,7 +333,7 @@
                     if(busId != nowBusId){
                         layer.confirm('是否排班替换？',{icon: 3, title:'提示'},function (index) {
                             $.ajax({
-                                url: "/busWork/changeBusWork",
+                                url: "${pageContext.request.contextPath}/admin/busWork/changeBusWork",
                                 method:'post',
                                 dataType:'json',
                                 contentType : 'application/json;charset=utf-8',
@@ -367,7 +367,7 @@
                     if(busId != nowBusId){
                         layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                             $.ajax({
-                                url: "/busWork/insertBusWork",
+                                url: "${pageContext.request.contextPath}/admin/busWork/insertBusWork",
                                 method:'post',
                                 dataType:'json',
                                 contentType : 'application/json;charset=utf-8',
@@ -397,7 +397,7 @@
                 }else{  //删除加开
                     layer.confirm('是否'+layEvent+'班次?',{icon: 3, title:'提示'},function (index) {
                         $.ajax({
-                            url: "/busWork/deleteBusWork",
+                            url: "${pageContext.request.contextPath}/admin/busWork/deleteBusWork",
                             method:'post',
                             dataType:'json',
                             contentType : 'application/json;charset=utf-8',
@@ -438,7 +438,7 @@
                 if(layEvent == '排班'){ //排班
                     layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                         $.ajax({
-                            url: "/busWork/insertBusWork",
+                            url: "${pageContext.request.contextPath}/admin/busWork/insertBusWork",
                             method:'post',
                             dataType:'json',
                             contentType : 'application/json;charset=utf-8',
@@ -466,7 +466,7 @@
                     if(busId != nowBusId){
                         layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                             $.ajax({
-                                url: "/busWork/changeBusWork",
+                                url: "${pageContext.request.contextPath}/admin/busWork/changeBusWork",
                                 method:'post',
                                 dataType:'json',
                                 contentType : 'application/json;charset=utf-8',
@@ -500,7 +500,7 @@
                     if(busId != nowBusId){
                         layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                             $.ajax({
-                                url: "/busWork/insertBusWork",
+                                url: "${pageContext.request.contextPath}/admin/busWork/insertBusWork",
                                 method:'post',
                                 dataType:'json',
                                 contentType : 'application/json;charset=utf-8',
@@ -530,7 +530,7 @@
                 }else{
                     layer.confirm('是否'+layEvent+'?',{icon: 3, title:'提示'},function (index) {
                         $.ajax({
-                            url: "/busWork/deleteBusWork",
+                            url: "${pageContext.request.contextPath}/admin/busWork/deleteBusWork",
                             method:'post',
                             dataType:'json',
                             contentType : 'application/json;charset=utf-8',

@@ -1,3 +1,4 @@
+
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="smart_bus_platform_admin:war exploded">
     <output-path>$PROJECT_DIR$/smart_bus_platform_admin/target/smart_bus_platform_admin-0.0.1-SNAPSHOT</output-path>

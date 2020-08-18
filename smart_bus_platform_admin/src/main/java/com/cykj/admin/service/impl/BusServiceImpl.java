@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.BusMapper;
 import com.cykj.admin.mapper.BusWorkMapper;
 import com.cykj.admin.service.BusService;
@@ -24,6 +25,7 @@ public class BusServiceImpl implements BusService {
     @Autowired
     BusWorkMapper busWorkMapper;
 
+    @Log(operationType="查询操作",operationName = "查询巴士列表")
     @Override
     public Result queryBusByPage(HashMap<String, Object> condition, int startSize, int pageSize) {
         PageHelper.startPage(startSize, pageSize);
@@ -105,7 +107,7 @@ public class BusServiceImpl implements BusService {
 
         return isSuccess;
     }
-
+    @Log(operationType="新增操作",operationName = "新增巴士")
     @Override
     public int insertBus(Bus bus) {
         int isSuccess = 0;
@@ -124,7 +126,7 @@ public class BusServiceImpl implements BusService {
 
         return isSuccess;
     }
-
+    @Log(operationType="查询操作",operationName = "查询线路的巴士信息")
     @Override
     public Result findBusByLineId(Line line) {
         Result result = new Result();

@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.AdvertiserMapper;
 import com.cykj.admin.service.AdvertiserService;
 import com.cykj.pojo.Advertiser;
@@ -23,7 +24,7 @@ import java.util.List;
 public class AdvertiserServiceImpl implements AdvertiserService {
     @Autowired
     AdvertiserMapper advertiserMapper;
-
+    @Log(operationType="查询操作",operationName = "广告列表查询")
     @Override
     public Result queryAdvertiserByPage(HashMap<String,Object> condition, int startSize, int pageSize) {
         PageHelper.startPage(startSize, pageSize);
@@ -69,14 +70,14 @@ public class AdvertiserServiceImpl implements AdvertiserService {
         }
         return result;
     }
-
+    @Log(operationType="查询操作",operationName = "广告查询")
     @Override
     public List<AdvertiserInfo> queryAdvertiser(HashMap<String, Object> condition) {
         List<AdvertiserInfo> advertiserList = advertiserMapper.queryAdvertiser(condition);
 
         return advertiserList;
     }
-
+    @Log(operationType="新增操作",operationName = "广告新增")
     @Override
     public int insertAdvertiser(Advertiser advertiser) {
         advertiser.setReleaseTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -84,7 +85,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
         return isSuccess;
     }
-
+    @Log(operationType="更新操作",operationName = "广告更新")
     @Override
     public int changeAdvertiser(Advertiser advertiser) {
         int isSuccess = advertiserMapper.changeAdvertiser(advertiser);

@@ -1,5 +1,6 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.BusMapper;
 import com.cykj.admin.mapper.BusWorkMapper;
 import com.cykj.admin.service.BusService;
@@ -22,7 +23,7 @@ public class BusWorkServiceImpl implements BusWorkService {
     BusWorkMapper busWorkMapper;
     @Autowired
     BusMapper busMapper;
-
+    @Log(operationType="查询操作",operationName = "查询巴士排班列表")
     @Override
     public List<BusWorkInfo> queryBusWork(int id) {
         List<BusWorkInfo> list = busWorkMapper.queryBusWork(id);
@@ -60,7 +61,7 @@ public class BusWorkServiceImpl implements BusWorkService {
 
         return list;
     }
-
+    @Log(operationType="查询操作",operationName = "新增巴士排班")
     @Override
     public int insertBusWork(BusWorkInfo busWork) {
         boolean isRunning = busIsRunning(busWork);
@@ -81,8 +82,10 @@ public class BusWorkServiceImpl implements BusWorkService {
         return isSuccess;
     }
 
+    @Log(operationType="查询操作",operationName = "新增巴士排班")
     @Override
     public int changeBusWork(BusWorkInfo busWork) {
+//        }
         boolean isRunning = busIsRunning(busWork);
         int isSuccess = 0;
 
@@ -99,14 +102,14 @@ public class BusWorkServiceImpl implements BusWorkService {
         return isSuccess;
 
     }
-
+    @Log(operationType="查询操作",operationName = "删除巴士排班")
     @Override
     public int deleteBusWork(BusWork busWork) {
         int isSuccess = busWorkMapper.deleteBusWork(busWork);
 
         return isSuccess;
     }
-
+    @Log(operationType="查询操作",operationName = "查询排班")
     @Override
     public Result findBusWorkByLineId(BusWork busWork) {
         Map<String,Object> maps = new HashMap<>();
@@ -207,7 +210,6 @@ public class BusWorkServiceImpl implements BusWorkService {
                             break;
                         }
                     }
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

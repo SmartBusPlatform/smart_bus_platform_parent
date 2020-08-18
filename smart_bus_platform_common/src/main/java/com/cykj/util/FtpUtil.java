@@ -74,6 +74,7 @@ public static boolean uploadFile(String host, int port, String username, String 
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
+
 				}
 			}
 		}

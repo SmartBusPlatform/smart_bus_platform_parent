@@ -93,7 +93,7 @@
                     <ul class="sub-menu">
                         <c:forEach var="j" items="${i.menuList}">
                             <li>
-                                <a onclick="xadmin.add_tab('${j.menuName}','${pageContext.request.contextPath}/${j.menuUrl}')">
+                                <a onclick="xadmin.add_tab('${j.menuName}','${pageContext.request.contextPath}/admin/${j.menuUrl}')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>${j.menuName}</cite></a>
                             </li>

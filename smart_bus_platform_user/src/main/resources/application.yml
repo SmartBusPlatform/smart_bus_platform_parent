@@ -21,7 +21,7 @@ spring:
   application:
     name: user
   redis:
-    host: 192.168.43.152
+    host: 120.25.211.135
     port: 6379
     jedis:
       pool:

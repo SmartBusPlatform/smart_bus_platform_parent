@@ -58,7 +58,7 @@
         var $ = layui.jquery;
         var tableinf = table.render({
             elem: '#test'
-            , url: '${pageContext.request.contextPath}/adminControl/adminList'
+            , url: '${pageContext.request.contextPath}/admin/adminControl/adminList'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'

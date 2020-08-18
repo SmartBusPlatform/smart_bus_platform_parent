@@ -15,7 +15,7 @@
 <!--    <groupId>com.cykj</groupId>-->
     <artifactId>smart_bus_platform_admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>smart_bus_platform_admin</name>
     <description>Demo project for Spring Boot</description>
 
@@ -93,17 +93,17 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pageHelper.starter.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.junit.vintage</groupId>-->
+<!--                    <artifactId>junit-vintage-engine</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
         <!--common、pojo-->
         <dependency>
             <groupId>com.cykj</groupId>
@@ -140,6 +140,12 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+        <!--redis-->
+        <dependency>
+            <groupId>com.cykj</groupId>
+            <artifactId>smart_bus_platform_redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--    定时器 -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -151,6 +157,78 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!--引入支付宝依赖-->
+        <dependency>
+            <groupId>com.alipay.api</groupId>
+            <artifactId>alipay.sdk.java</artifactId>
+            <version>3.3.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.api</groupId>
+            <artifactId>alipay.sdk.source</artifactId>
+            <version>3.3.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-sdk-java-3.3.0-source.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.api</groupId>
+            <artifactId>alipay.trade.sdk</artifactId>
+            <version>20161215</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.api</groupId>
+            <artifactId>alipay.trade.source</artifactId>
+            <version>20161215</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/alipay-trade-sdk-20161215-source.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons.codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-codec-1.10.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons.configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.10</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-configuration-1.10.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons.lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-lang-2.6.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons.logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-logging-1.1.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/core-2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest.core</artifactId>
+            <version>1.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/hamcrest-core-1.3.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -167,10 +245,47 @@
     </dependencyManagement>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>
+            <resource>
+                <!-- 打包时将jsp文件拷贝到META-INF目录下-->
+                <!-- 指定resources插件处理哪个目录下的资源文件 -->
+                <directory>src/main/webapp</directory>
+                <!--注意此次必须要放在此目录下才能被访问到-->
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.4.2.RELEASE</version>
+                <configuration>
+                <mainClass>com.cykj.admin.SmartBusPlatformAdminApplication</mainClass>
+            </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

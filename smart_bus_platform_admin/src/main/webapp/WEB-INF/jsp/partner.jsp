@@ -116,7 +116,7 @@
 
         //获取城市下拉框
         $.ajax({
-            url:'/areas/getProvinceNameAll',
+            url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
             method:'post',
             dataType:'json',
             data:{"type":2},
@@ -141,7 +141,7 @@
         //初始表格
         table.render({
             elem: '#advertiserTable'
-            ,url: '/partner/queryPartnerByPage' //数据接口
+            ,url: '${pageContext.request.contextPath}/admin/partner/queryPartnerByPage' //数据接口
             ,page: true //开启分页
             ,limit: 5
             ,limits: [5,10,15,20]
@@ -167,7 +167,7 @@
 
         //广告商类型
         $.ajax({
-            url: "/partner/queryPartnerType",
+            url: "${pageContext.request.contextPath}/admin/partner/queryPartnerType",
             method:'post',
             dataType:'json',
             success:function(msg){
@@ -186,7 +186,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('advertiserTable', {
-                url: '/partner/queryPartnerByPage'
+                url: '${pageContext.request.contextPath}/admin/partner/queryPartnerByPage'
                 ,where: {
                     partner : data.field.partner,
                     cityId : data.field.cityId,
@@ -220,7 +220,7 @@
         form.on('submit(insert)', function(data){
             layer.confirm('是否新增？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/partner/insertPartner",
+                    url: "${pageContext.request.contextPath}/admin/partner/insertPartner",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -265,7 +265,7 @@
                         stateId = 1;
                     }
                     $.ajax({
-                        url: "/partner/changePartner",
+                        url: "${pageContext.request.contextPath}/admin/partner/changePartner",
                         method:'post',
                         dataType:'json',
                         contentType : 'application/json;charset=utf-8',
@@ -318,7 +318,7 @@
         form.on('submit(change)', function(data){
             layer.confirm('是否修改？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/partner/changePartner",
+                    url: "${pageContext.request.contextPath}/admin/partner/changePartner",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
