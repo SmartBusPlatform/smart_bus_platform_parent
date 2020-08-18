@@ -112,7 +112,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success:function (data) {
                 //渲染
@@ -148,7 +148,7 @@
         function queryLine(cityId){
             $.ajax({
                 type: "post",
-                url: "/line/getLineByCityId",
+                url: "${pageContext.request.contextPath}/admin/line/getLineByCityId",
                 dataType: "json",
                 data : {"cityId":cityId},
                 success:function (data) {
@@ -180,7 +180,7 @@
         form.on('submit(query)', function(data){
             $.ajax({
                 type: "post",
-                url: "/lineSite/getLineSiteByLineId",
+                url: "${pageContext.request.contextPath}/admin/lineSite/getLineSiteByLineId",
                 dataType: "json",
                 data : {"lineId":data.field.lineId},
                 success:function (data) {

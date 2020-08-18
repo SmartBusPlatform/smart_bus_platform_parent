@@ -57,4 +57,16 @@
         and date_format(t.time,'%Y-%m-%d') = #{strDate}
         and w.work_date = #{strDate};
     </select>
+
+    <select id="findDriverWorkByDateAndAdId" resultType="driverWorkInfo" parameterType="driverWork">
+        SELECT
+            dw.bus_id busId,
+            b.number busNumber
+        FROM
+            tb_driver_work dw
+        INNER JOIN tb_bus b ON dw.bus_id = b.id
+        WHERE
+            dw.work_date = #{driverWork.workDate}
+        AND dw.admin_id = #{driverWork.adminId} and b.state_id=#{stateId}
+    </select>
 </mapper>

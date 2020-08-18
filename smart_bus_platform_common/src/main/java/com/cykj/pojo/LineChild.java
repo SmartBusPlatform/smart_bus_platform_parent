@@ -3,7 +3,7 @@ package com.cykj.pojo;
 
 import java.util.List;
 
-public class LineChild extends  Line {
+public class LineChild extends Line {
     private int lineId;
     //线路经过站点数
     private int siteNum;
@@ -26,7 +26,7 @@ public class LineChild extends  Line {
     //班次时间
     private String shiftTime;
     //站点集合
-        private List<CitySite> siteArr;
+    private List<CitySite> siteArr;
     private int allTime;    //一趟总耗时
 
     private String endSiteName;     //始程终点站

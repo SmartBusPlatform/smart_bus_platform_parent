@@ -71,7 +71,7 @@
             , $ = layui.$
             , table = layui.table
         $.ajax({
-            url: "${pageContext.request.contextPath}/roleConfigController/selectRole",
+            url: "${pageContext.request.contextPath}/admin/roleConfigController/selectRole",
             type: "post",
             dataType: "json",
             success: function (data) {
@@ -88,7 +88,7 @@
         form.on('select(chooseType)', function (id) {
             if (id.value != 0) {
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/menuConfigController/selectMenuConfig",
+                    url: "${pageContext.request.contextPath}/admin/menuConfigController/selectMenuConfig",
                     type: "post",
                     dataType: "json",
                     data: {
@@ -128,7 +128,7 @@
                         console.log(beforeId);
                     if (afterId.toString() != beforeId.toString()) {   //数组没办法直接比较，要转字符串
                         $.ajax({
-                             url: "${pageContext.request.contextPath}/menuConfigController/changeRoleMenuTable"
+                             url: "${pageContext.request.contextPath}/admin/menuConfigController/changeRoleMenuTable"
                             ,type: "post"
                             ,data: {
                                 'roleId': roleId

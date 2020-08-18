@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.userapp.mapper.OpinionMapper">
+
+    <!-- 查询指定用户的意见建议 -->
+    <select id="queryOpinionByUserId" resultType="com.cykj.pojo.Opinion" parameterType="java.lang.Integer">
+        select user_opinion,opinion_time,replay,replay_time,state_id from tb_opinion where user_id = #{id};
+    </select>
+
+    <!-- 新增意见建议 -->
+    <insert id="insertOpinion" parameterType="com.cykj.pojo.Opinion"  keyProperty="id" useGeneratedKeys="true">
+        insert into tb_opinion
+            (user_id,user_opinion,opinion_time,state_id)
+        values
+            (#{userId},#{userOpinion},#{opinionTime},0)
+    </insert>
+</mapper>

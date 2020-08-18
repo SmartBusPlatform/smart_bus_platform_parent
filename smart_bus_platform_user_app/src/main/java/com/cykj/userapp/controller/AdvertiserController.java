@@ -26,7 +26,7 @@ public class AdvertiserController {
     AdvertiserService advertiserService;
 
     @RequestMapping(value = "queryCarouselAdvertiser")
-    //分页查询广告，id为空就查全部
+    //查询周围广告
     public Object queryCarouselAdvertiser(){
         return JSON.toJSONString(advertiserService.queryCarouselAdvertiser());
     }

@@ -2,6 +2,9 @@ package com.cykj.pojo;
 
 public class Distance
 {
+    public Distance() {
+    }
+
     public Distance(double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;

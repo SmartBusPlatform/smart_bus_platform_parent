@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cykj.admin.mapper.LogMapper">
+    <select id="findAll" resultType="logInfo" >
+        select id id , time time ,operation operation,operator operator,type type
+         from tb_log
+    </select>
+
+    <insert id="insert" parameterType="logInfo">
+        insert into tb_log(operation,operator,type) values(#{operation},#{operator},#{type})
+    </insert>
+
+</mapper>

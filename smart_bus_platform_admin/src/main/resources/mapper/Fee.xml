@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.admin.mapper.FeeMapper">
+
+    <select id="findLineCashier"  resultType="echartData">
+        SELECT
+        l.name lineName,sum(l.one_money) lineFee
+        FROM
+        tb_fee f
+        INNER JOIN tb_line l ON f.line_id = l.id
+        INNER JOIN tb_areas a ON l.city_id = a.id
+        where a.id=#{cityId}
+        <if test="startDate!=null and startDate!=''">
+            and f.fee_time&gt;#{startDate}
+       </if>
+        <if test="endDate!=null and endDate!=''">
+            and f.fee_time&lt;#{endDate}
+        </if>
+        group by l.id
+    </select>
+
+    <select id="findLineCashierByName" resultType="echartData">
+         SELECT
+        DATE_FORMAT(f.fee_time,'%Y-%m-%d') feeTime,SUM(l.one_money) dayFee
+        FROM
+        tb_fee f
+        INNER JOIN tb_line l ON f.line_id = l.id
+        INNER JOIN tb_areas a ON l.city_id = a.id
+        where a.id=#{cityId}  and l.name=#{lineName}  and f.fee_time&gt;#{startDate} and f.fee_time&lt;#{endDate}
+        GROUP BY DATE_FORMAT(f.fee_time,'%m-%d-%Y')
+
+
+    </select>
+    
+    <select id="findLineCashierByNameAndTime" resultType="echartData">
+            SELECT
+        CONCAT(
+            DATE_FORMAT(fee_time, '%H'),
+            ':00-',
+            DATE_FORMAT(fee_time, '%H'),
+            ':59'
+        )  time,
+        SUM(l.one_money) timeFee
+    FROM
+        tb_fee f
+    INNER JOIN tb_line l ON f.line_id = l.id
+    INNER JOIN tb_areas a ON l.city_id = a.id
+    WHERE
+        a.id = #{cityId}
+    AND l. NAME = #{lineName}
+    AND DATE_FORMAT(f.fee_time, '%Y-%m-%d') = #{time}
+    GROUP BY
+        DATE_FORMAT(fee_time, '%H')
+    </select>
+    <select id="findSiteFlowByPage" resultType="citySiteChild">
+         SELECT
+            cs.id id,
+            cs. NAME NAME,
+            cs.x_position xPosition,
+            y_position yPosition,
+            GROUP_CONCAT(DISTINCT l. NAME) throughLine,
+			count(f.site_id) flowNum
+        FROM
+            tb_areas a
+        INNER JOIN tb_city_site cs ON a.id = cs.city_id and a.state_id=1
+        LEFT JOIN tb_line_site ls ON ls.site_id=cs.id
+        LEFT JOIN tb_line l ON a.id = l.city_id and ls.line_id=l.id
+        left join tb_fee f on f.site_id=cs.id
+        <where>
+            <if test="cityId!=null">
+                and a.id = #{cityId}
+            </if>
+            <if test="name!=null and name!=''">
+                and cs.name like concat('%',#{name},'%')
+            </if>
+
+        </where>
+        GROUP BY
+            cs.id
+        <if test="flowNum!=null and flowNum!=''">
+            HAVING count(f.site_id)>#{flowNum}
+        </if>
+    </select>
+    <select id="findSiteFlowByCityIdAndSiteId" resultType="echartData">
+              SELECT
+        CONCAT(
+            DATE_FORMAT(fee_time, '%H'),
+            ':00-',
+            DATE_FORMAT(fee_time, '%H'),
+            ':59'
+        )  time,
+        count(f.id) flowNum
+    FROM
+        tb_fee f
+    INNER JOIN tb_city_site cs ON f.site_id = cs.id
+    INNER JOIN tb_areas a ON cs.city_id = a.id
+    WHERE
+        a.id = #{cityId}
+    AND cs.id = #{siteId}
+    GROUP BY
+        DATE_FORMAT(fee_time, '%H')
+    </select>
+</mapper>

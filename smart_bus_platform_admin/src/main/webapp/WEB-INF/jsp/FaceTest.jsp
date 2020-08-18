@@ -73,7 +73,7 @@
 
             $.ajax({
                 type: "post",
-                url:"${pageContext.request.contextPath}/faceController/faceDetect",
+                url:"${pageContext.request.contextPath}/admin/faceController/faceDetect",
                 data: {imgData : imgData},
                 dataType: 'json',
                 async: true,

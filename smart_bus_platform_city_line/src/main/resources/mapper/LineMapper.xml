@@ -74,9 +74,9 @@
         VALUES(#{name},#{cityId},#{oneMoney},#{startTime},#{travelMoney},#{returnTime})
     </insert>
     <delete id="delLineById">
-        delete from tb_line where id=#{id}
+        delete from tb_line where id=#{lineId}
     </delete>
-    <select id="findLineByCityId" resultType="line" parameterType="line">
+    <select id="findLineByCityId" resultType="LineChild" parameterType="line">
 		SELECT
             id id,
             NAME NAME

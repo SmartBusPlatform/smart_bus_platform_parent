@@ -9,6 +9,7 @@ public class LineSite {
     private int startIndex;
     private int propertyId;
     private int backIndex;
+    private String name;
 
     public LineSite() {
 
@@ -60,6 +61,14 @@ public class LineSite {
 
     public void setBackIndex(int backIndex) {
         this.backIndex = backIndex;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

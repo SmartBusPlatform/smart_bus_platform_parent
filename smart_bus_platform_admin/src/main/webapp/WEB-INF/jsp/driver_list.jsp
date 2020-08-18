@@ -82,7 +82,7 @@
                     </div>
                     <div class="layui-input-inline">
                         <h3 class="layui-inline">站点：</h3>
-                        <input type="text" id="site" placeholder="请输入查找站点" autocomplete="off" class="layui-input">
+                        <input type="text" id="site"  placeholder="请输入查找站点" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-inline layui-show-xs-block">
                         <button class="layui-btn" lay-filter="search" id="search" type="button">
@@ -106,6 +106,51 @@
             </div>
         </div>
     </div>
+</div>
+<div class="site-text layui-row" hidden id="addForm"  >
+<%--    <form class="layui-form layui-col-sm-offset1 layui-col-sm9" style="margin-top: 100px"  method="post" lay-filter="example">--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <label class="layui-form-label">省:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_provinceName" name="cityName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+
+<%--            <label class="layui-form-label">城市名称:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_cityName" name="add_cityName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+
+<%--            <label class="layui-form-label">站点名称:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_siteName" name="add_siteName" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+
+<%--            <label class="layui-form-label">x坐标:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_xPosition" name="add_xPosition" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+
+<%--            <label class="layui-form-label">y坐标:</label>--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <input type="text" id="add_yPosition" name="add_yPosition" lay-verify="cityName" autocomplete="off" placeholder="" class="layui-input">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="layui-form-item">--%>
+<%--            <div class="layui-input-block">--%>
+<%--                <button class="layui-btn" type="button">地图选点</button>--%>
+<%--            </div>--%>
+
+<%--        </div>--%>
+
+<%--    </form>--%>
 </div>
 <%--自增--%>
 <script id="index" type="text/html">
@@ -131,7 +176,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success: function (data) {
                 //渲染
@@ -147,9 +192,9 @@
                             cityId = obj.data.id;
                             table.render({
                                 elem: '#table',
-                                url: '${pageContext.request.contextPath}/driverWorkController/selectDriverList',
-                                where: {
-                                    "cityId": obj.data.id
+                                url:'${pageContext.request.contextPath}/admin/driverWorkController/selectDriverList',
+                                where:{
+                                    "cityId":obj.data.id
                                 },
                                 cols: [[
                                     // {type:'checkbox'},
@@ -190,9 +235,32 @@
                 $($("#citySite_tree").find(".layui-tree-entry")[0]).find('.layui-tree-txt').click();
                 //默认第一次点击第一个父节点下的第一个子节点
                 $($($("#citySite_tree").find(".layui-tree-entry")[0]).next().find(".layui-tree-set")[0]).find(".layui-tree-txt").click();
+                // $(".layui-tree-set").click(function (event) {
+                //     alert(3);
+                //     event.stopPropagation();
+                // })
             }
         });
 
+        // //渲染
+        // var inst1 = tree.render({
+        //     elem: '#demo'  //绑定元素
+        //     ,data: [{
+        //         title: '江西' //一级菜单
+        //         ,children: [{
+        //             title: '南昌' //二级菜单
+        //             ,children: [{
+        //                 title: '高新区' //三级菜单
+        //                 //…… //以此类推，可无限层级
+        //             }]
+        //         }]
+        //     },{
+        //         title: '陕西' //一级菜单
+        //         ,children: [{
+        //             title: '西安' //二级菜单
+        //         }]
+        //     }]
+        // });
         //根据条件查找
         $("#search").click(function () {
             var cityId = cityId;
@@ -200,10 +268,10 @@
             var phone = $("#phone").val();
             var site = $("#site").val();
 
-            if (name != null && name != null && site != null) {
-                table.reload('table', {
-                    url: '${pageContext.request.contextPath}/driverWorkController/selectDriverList',
-                    page: {
+            if (name != null && name != null && site != null){
+                table.reload('table',{
+                    url: '${pageContext.request.contextPath}/admin/driverWorkController/selectDriverList',
+                    page:{
                         curr: 1
                     },
                     where: {
@@ -242,11 +310,11 @@
                         } else if (phone == data.phone && name == data.name) {
                             layer.msg("您还未做出修改");
                         } else {
-                            layer.confirm('确认提交？', {icon: 3, title: '提示'}, function () {
+                            layer.confirm('确认提交？',{icon:3,title:'提示'},function () {
                                 $.ajax({
-                                    url: '${pageContext.request.contextPath}/driverWorkController/updateDriver'
-                                    , type: 'post'
-                                    , data: {
+                                    url:'${pageContext.request.contextPath}/admin/driverWorkController/updateDriver'
+                                    ,type: 'post'
+                                    ,data :{
                                         'name': name,
                                         'phone': phone,
                                         'id': data.id
@@ -272,7 +340,7 @@
                 $("#chooseDate").val("")
                 var workerload = table.render({
                     elem: '#workload'
-                    , url: '${pageContext.request.contextPath}/driverWorkController/selectWorkload'
+                    , url: '${pageContext.request.contextPath}/admin/driverWorkController/selectWorkload'
                     ,method: 'post'
                     , where: {
                         'timestamp': new Date().getTime()
@@ -335,4 +403,7 @@
         })
 
 </script>
+
+</body>
+
 </html>

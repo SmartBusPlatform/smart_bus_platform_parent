@@ -139,18 +139,18 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label for="insertEndTime" class="layui-form-label">车辆报废时间：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="insertEndTime"  lay-verify="required" autocomplete="off" class="layui-input" placeholder="车辆报废时间">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label for="insertRepairmanId" class="layui-form-label">维护人：</label>
             <div class="layui-input-inline">
                 <select name="repairmanId" id="insertRepairmanId" lay-verify="required">
                     <option value="">请先选择维护人</option>
                     <option value="2">吴师傅</option>
                 </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="insertEndTime" class="layui-form-label">车辆报废时间：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="endTime" id="insertEndTime"  lay-verify="required" autocomplete="off" class="layui-input" placeholder="车辆报废时间">
             </div>
         </div>
         <div class="layui-form-item" style="text-align: center;margin-top: 30px">
@@ -212,7 +212,7 @@
         //初始表格
         table.render({
             elem: '#busTable'
-            ,url: '/bus/queryBusByPage' //数据接口
+            ,url: '${pageContext.request.contextPath}/admin/bus/queryBusByPage' //数据接口
             ,page: true //开启分页
             ,limit: 5
             ,limits: [5,10,15,20]
@@ -245,7 +245,7 @@
         //查询按钮
         form.on('submit(query)', function(data){
             table.reload('busTable', {
-                url: '/bus/queryBusByPage'
+                url: '${pageContext.request.contextPath}/admin/bus/queryBusByPage'
                 ,where: {
                     isFixedLine : data.field.isFixedLine,
                     stateId : data.field.stateId,
@@ -286,7 +286,7 @@
         form.on('submit(insert)', function(data){
             layer.confirm('是否新增？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/bus/insertBus",
+                    url: "${pageContext.request.contextPath}/admin/bus/insertBus",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -299,7 +299,7 @@
                         }else if(msg=="upDataError"){
                             layer.msg('数据出错');
                         }else if(msg=="repeat"){
-                            layer.msg('广告商重复');
+                            layer.msg("车牌重复");
                         }else{
                             layer.msg('新增失败');
                         }
@@ -323,7 +323,7 @@
             if(layEvent == '排班'){
                 layer.open({
                     type: 2,
-                    content: ['/manager/bus_work'],
+                    content: ['${pageContext.request.contextPath}/admin/manager/bus_work'],
                     maxmin:true,
                     area:['1300px','650px'],
                     success:function (layero, index) {
@@ -365,7 +365,7 @@
                         stateId = 5;
                     }
                     $.ajax({
-                        url: "/bus/changeBus",
+                        url: "${pageContext.request.contextPath}/admin/bus/changeBus",
                         method:'post',
                         dataType:'json',
                         contentType : 'application/json;charset=utf-8',
@@ -375,7 +375,9 @@
                                 layer.msg('修改成功');
                                 obj.update({
                                     stateName : layEvent,
-                                    stateId : stateId
+                                    stateId : stateId,
+                                    lineName : '',
+                                    isFixedLine:'否',
                                 });
                             }else if(msg=="upDataError"){
                                 layer.msg('数据出错');
@@ -396,7 +398,7 @@
         form.on('submit(change)', function(data){
             layer.confirm('是否修改？',{icon: 3, title:'提示'},function (index) {
                 $.ajax({
-                    url: "/bus/changeBus",
+                    url: "${pageContext.request.contextPath}/admin/bus/changeBus",
                     method:'post',
                     dataType:'json',
                     contentType : 'application/json;charset=utf-8',
@@ -447,7 +449,7 @@
 
         function getCity(parentId,cityId){
             $.ajax({
-                url:'/areas/getCityByProvince',
+                url:'${pageContext.request.contextPath}/admin/areas/getCityByProvince',
                 method:'post',
                 dataType:'json',
                 data:{"parentId":parentId,"type":2},
@@ -470,7 +472,7 @@
         function getProvince(parentId) {
             //获取省份
             $.ajax({
-                url:'/areas/getProvinceNameAll',
+                url:'${pageContext.request.contextPath}/admin/areas/getProvinceNameAll',
                 method:'post',
                 dataType:'json',
                 data:{"type":1},

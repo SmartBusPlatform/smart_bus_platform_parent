@@ -1,6 +1,8 @@
 package com.cykj.admin.service.impl;
 
+import com.cykj.admin.aop.Log;
 import com.cykj.admin.mapper.BusMapper;
+import com.cykj.admin.mapper.BusWorkMapper;
 import com.cykj.admin.service.BusService;
 import com.cykj.pojo.*;
 import com.cykj.util.Result;
@@ -20,7 +22,10 @@ import java.util.List;
 public class BusServiceImpl implements BusService {
     @Autowired
     BusMapper busMapper;
+    @Autowired
+    BusWorkMapper busWorkMapper;
 
+    @Log(operationType="查询操作",operationName = "查询巴士列表")
     @Override
     public Result queryBusByPage(HashMap<String, Object> condition, int startSize, int pageSize) {
         PageHelper.startPage(startSize, pageSize);
@@ -73,19 +78,36 @@ public class BusServiceImpl implements BusService {
         int isSuccess = 0;
         if (bus.getNumber()!=null&&!"".equals(bus.getNumber())){
             Bus isBus = busMapper.queryOneBus(bus.getNumber(),bus.getId());
-
             if(isBus==null){
                 isSuccess = busMapper.changeBus(bus);
+                if(bus.getStateId()!=1){
+                    BusWork busWork = new BusWork();
+                    busWork.setBusId(bus.getId());
+                    busWorkMapper.deleteBusWork(busWork);
+                    Bus bus2 = new Bus();
+                    bus2.setId(bus.getId());
+                    bus2.setIsFixedLine("否");
+                    isSuccess = busMapper.changeBus(bus2);
+                }
             }else{
                 isSuccess = -9999;
             }
         }else{
-            isSuccess = -9998;
+            isSuccess = busMapper.changeBus(bus);
+            if(bus.getStateId()!=1){
+                BusWork busWork = new BusWork();
+                busWork.setBusId(bus.getId());
+                busWorkMapper.deleteBusWork(busWork);
+                Bus bus2 = new Bus();
+                bus2.setId(bus.getId());
+                bus2.setIsFixedLine("否");
+                isSuccess = busMapper.changeBus(bus2);
+            }
         }
 
         return isSuccess;
     }
-
+    @Log(operationType="新增操作",operationName = "新增巴士")
     @Override
     public int insertBus(Bus bus) {
         int isSuccess = 0;
@@ -104,7 +126,7 @@ public class BusServiceImpl implements BusService {
 
         return isSuccess;
     }
-
+    @Log(operationType="查询操作",operationName = "查询线路的巴士信息")
     @Override
     public Result findBusByLineId(Line line) {
         Result result = new Result();

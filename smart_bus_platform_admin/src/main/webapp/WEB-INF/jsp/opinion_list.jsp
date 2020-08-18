@@ -66,7 +66,7 @@
                 </div>
                 <div class="layui-card-body">
                     <table class="layui-table"
-                           lay-data="{url:'${pageContext.request.contextPath}/opinionController/selectOpinionList',page:true,toolbar: '#toolbarDemo',id:'test'}"
+                           lay-data="{url:'${pageContext.request.contextPath}/admin/opinionController/selectOpinionList',page:true,toolbar: '#toolbarDemo',id:'test'}"
                            lay-filter="test">
                         <thead>
                         <tr>
@@ -156,7 +156,7 @@
             var state = $("#chooseState").val()
 
             table.reload('test', {
-                url: '${pageContext.request.contextPath}/opinionController/selectOpinionList',
+                url: '${pageContext.request.contextPath}/admin/opinionController/selectOpinionList',
                 page: {
                     curr: 1
                 },
@@ -196,7 +196,7 @@
                         } else {
                             layer.confirm('是否确认提交？',{icon:3,title:'提示'},function () {
                                 $.ajax({
-                                    url: '${pageContext.request.contextPath}/opinionController/insertReplyContent',
+                                    url: '${pageContext.request.contextPath}/admin/opinionController/insertReplyContent',
                                     type: 'post',
                                     data: {
                                         'id': data.id,
@@ -240,7 +240,7 @@
                         } else {
                             layer.confirm('是否确认提交？',{icon:3,title:'提示'},function () {
                                 $.ajax({
-                                    url: '${pageContext.request.contextPath}/opinionController/insertResultContent',
+                                    url: '${pageContext.request.contextPath}/admin/opinionController/insertResultContent',
                                     type: 'post',
                                     data:{
                                         'id': data.id,

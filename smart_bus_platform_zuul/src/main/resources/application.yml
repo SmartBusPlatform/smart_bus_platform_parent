@@ -3,6 +3,18 @@ server:
 spring:
   application:
     name: service-zuul
+
+  redis:
+    host: 120.25.211.135
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+
+    timeout: 30s
 eureka:
   client:
     register-with-eureka: true #是否从eureka服务器获取各个为服务地址
@@ -15,4 +27,24 @@ zuul:
     user: /user/**
     admin: /admin/**
     city_line: /city_line/**
+    userapp: /userapp/**
+    visit-static:
+      path: /static/**
+      url: http://localhost:8081/static/
+  host:
+    connect-timeout-millis: 120000
+    socket-timeout-millis: 120000
+  sensitive-headers:
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 50000
 
+
+feign:
+  hystrix:
+    enabled: false #开启feign熔断，默认为false
+  client:
+    config:
+      default:
+        connect-timeout: 240000
+        read-timeout: 240000

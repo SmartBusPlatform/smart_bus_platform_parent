@@ -8,8 +8,18 @@
     <select id="login" parameterType="com.cykj.pojo.Admin" resultType="com.cykj.pojo.Admin">
         select *
         from tb_admin
-        where
-        account = #{account} and password=#{password}
+        <where>
+            <if test="account!=null and account!=''">
+                and account = #{account}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone=#{phone}
+            </if>
+        </where>
+
     </select>
     <!--查询总数-->
     <select id="selectListCount" parameterType="com.cykj.pojo.Admin" resultType="int">
@@ -61,4 +71,9 @@
             #{item}
         </foreach>
     </delete>
+
+    <!--重置密码-->
+    <update id="resetPwd" parameterType="admin">
+        update tb_admin set password=#{password} where phone =#{phone}
+    </update>
 </mapper>

@@ -63,4 +63,7 @@
         where id = #{id}
     </update>
 
+    <update id="changeAdvertiserStateByPartnerId" parameterType="java.lang.Integer">
+        update tb_advertiser set state_id = #{stateId} where partner_id = #{partnerId}
+    </update>
 </mapper>

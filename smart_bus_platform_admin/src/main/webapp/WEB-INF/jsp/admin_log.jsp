@@ -51,7 +51,7 @@
                 console.log(data);
                 // alert(888)
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/adminControl/login',
+                    url: '${pageContext.request.contextPath}/admin/adminControl/login',
                     type: 'post',
                     dataType: 'json',
                     data: {
@@ -59,11 +59,16 @@
                         "password": data.field.password
                     },
                     success:function (msg) {
-                        if (msg.code == '00') {
-                            location.href = '${pageContext.request.contextPath}/adminController/selectRoleMenus';
+                        if (msg.status == '200') {
+                            location.href = '${pageContext.request.contextPath}/admin/adminController/selectRoleMenus';
                         } else {
-                            layer.msg(msg.message);
+                            layer.msg(msg.msg);
                         }
+                        <%--if (msg.code == '00') {--%>
+                        <%--    location.href = '${pageContext.request.contextPath}/admin/adminController/selectRoleMenus';--%>
+                        <%--} else {--%>
+                        <%--    layer.msg(msg.message);--%>
+                        <%--}--%>
                     }
 
                 })

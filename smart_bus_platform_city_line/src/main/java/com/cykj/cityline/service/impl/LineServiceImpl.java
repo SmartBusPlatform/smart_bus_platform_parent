@@ -122,9 +122,9 @@ public class LineServiceImpl implements LineService {
     }
 
     public Result updLineByLineId(Line line) {
-                LineChild lineByCityId = lineMapper.findLineByCityId(line);
+        LineChild lineByCityId = lineMapper.findLineByCityId(line);
         Result result = new Result();
-        if(lineByCityId==null){
+        if(lineByCityId.getId()==line.getId()){
             int num = lineMapper.updLineByLineId(line);
 
             if(num==1){

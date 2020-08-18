@@ -7,8 +7,22 @@ public class CitySite {
     private int cityId;
     private double xPosition;
     private double yPosition;
-
+    private int stateId;
     public CitySite() {
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
+    }
+
+    public CitySite(String name, double xPosition, double yPosition) {
+        this.name = name;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
     public int getId() {

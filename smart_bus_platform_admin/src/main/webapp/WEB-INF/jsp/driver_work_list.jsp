@@ -178,7 +178,7 @@
         //查询省份和省份下的城市
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/areas/getAreaTree",
+            url: "${pageContext.request.contextPath}/admin/areas/getAreaTree",
             dataType: "json",
             success: function (data) {
                 //渲染
@@ -193,7 +193,7 @@
                             city = obj.data.title;
                             cityId = obj.data.id;
                             $.ajax({
-                                url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate',
+                                url: '${pageContext.request.contextPath}/admin/driverWorkListController/getWeekDate',
                                 method: 'post',
                                 dataType: 'json',
                                 data: {
@@ -206,8 +206,8 @@
                                     // }
                                     table.render({
                                         elem: '#table',
-                                        url: '${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
-                                        where: {
+                                        url:'${pageContext.request.contextPath}/admin/driverWorkListController/renderDriverWorkTable',
+                                        where:{
                                             "cityId": cityId,
                                             "timestamp": new Date().getTime()
                                         },
@@ -299,21 +299,21 @@
 
             if (val != null && val != "") {
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/driverWorkListController/getWeekDate'
-                    , method: 'post'
-                    , dataType: 'json'
-                    , data: {
+                    url: '${pageContext.request.contextPath}/admin/driverWorkListController/getWeekDate'
+                    ,method: 'post'
+                    ,dataType: 'json'
+                    ,data:{
                         'timestamp': timestamp
                     }
-                    , success: function (msg) {
+                    ,success:function (msg) {
                         weekList = msg;
                         console.log(weekList)
 
                         // tableRender(window.weekList);
                         table.render({
                             elem: '#table',
-                            url: '${pageContext.request.contextPath}/driverWorkListController/renderDriverWorkTable',
-                            where: {
+                            url:'${pageContext.request.contextPath}/admin/driverWorkListController/renderDriverWorkTable',
+                            where:{
                                 "cityId": cityId,
                                 "timestamp": timestamp
                             },
@@ -390,10 +390,10 @@
                 , btnAlign: 'c'
                 , yes: function (index) {
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/driverWorkListController/selectCityBus'
-                        , method: 'post'
-                        , dataType: 'json'
-                        , data: {
+                        url: '${pageContext.request.contextPath}/admin/driverWorkListController/selectCityBus'
+                        ,method: 'post'
+                        ,dataType: 'json'
+                        ,data: {
                             'cityId': cityId
                             , 'date': date
                         }
@@ -447,13 +447,13 @@
                 , btn2: function () {
                     layer.confirm('是否确认休假', {icon: 3, title: '提示'}, function (index) {
                         $.ajax({
-                            url: '${pageContext.request.contextPath}/driverWorkListController/setVacation'
-                            , type: 'post'
-                            , data: {
-                                'driverId': data.driverId
-                                , 'date': date
+                            url: '${pageContext.request.contextPath}/admin/driverWorkListController/setVacation'
+                            ,type: 'post'
+                            ,data:{
+                                'driverId':data.driverId
+                                ,'date': date
                             }
-                            , success: function (msg) {
+                            ,success:function (msg) {
                                 if (msg == 'success') {
                                     layer.close(index);
                                     layer.msg('设置成功', {time: 1500}, function () {

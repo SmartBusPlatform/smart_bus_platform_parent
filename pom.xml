@@ -14,6 +14,17 @@
     <name>smart_bus_platform_parent</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
+    <modules>
+        <module>smart_bus_platform_city_line</module>
+        <module>smart_bus_platform_admin</module>
+        <module>smart_bus_platform_common</module>
+        <module>smart_bus_platform_eureka_server</module>
+        <module>smart_bus_platform_pojo</module>
+        <module>smart_bus_platform_redis</module>
+        <module>smart_bus_platform_user</module>
+        <module>smart_bus_platform_user_app</module>
+        <module>smart_bus_platform_zuul</module>
+    </modules>
     <properties>
         <java.version>1.8</java.version>
         <druid.version>1.1.10</druid.version>

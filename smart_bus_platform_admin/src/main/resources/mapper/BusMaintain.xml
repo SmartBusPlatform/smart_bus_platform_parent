@@ -12,17 +12,25 @@
             left join tb_bus b on bm.bus_id = b.id
             left join tb_admin a on b.repairman_id = a.id
         <where>
-            b.city_id = #{cityId}
+
             <if test="id !=null and id !='' ">
                 and bm.id = #{id}
             </if>
             <if test="number !=null and number !='' ">
-                and b.id like concat('%',#{number},'%')
+                and b.number like concat('%',#{number},'%')
             </if>
             <if test="cityId !=null and cityId !='' ">
                 and b.city_id = #{cityId}
             </if>
+            <if test="repairmanId !=null and repairmanId !='' ">
+                and b.repairman_id = #{repairmanId}
+            </if>
         </where>
     </select>
-
+    <insert id="insBusMainTain" parameterType="busMainTain">
+        insert into tb_bus_maintain(bus_id,state_id) value(#{busId},#{stateId})
+    </insert>
+    <update id="updBusMainTainByByBusId" parameterType="busMainTain">
+        update tb_bus_maintain set  state_id=#{stateId} where bus_id=#{busId}
+    </update>
 </mapper>

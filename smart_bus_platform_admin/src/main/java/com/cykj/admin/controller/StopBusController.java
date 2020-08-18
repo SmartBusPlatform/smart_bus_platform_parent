@@ -57,7 +57,7 @@ public class StopBusController {
     }
 
     @RequestMapping(value = "deleteStopBus")
-    //查询停站巴士，城市id为空就提示错误
+    //删除停站bus
     public Object deleteStopBus(@Param("busId") int busId){
         if(busId!=0){
             int isSuccess = stopBusService.deleteStopBus(busId);
