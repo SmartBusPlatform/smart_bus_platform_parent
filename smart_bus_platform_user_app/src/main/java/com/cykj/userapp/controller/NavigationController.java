@@ -17,9 +17,9 @@ public class NavigationController {
 
     @RequestMapping(value = "myLocationSite")
     //我的位置到指定站点的路线规划
-    public Object myLocationSite(@Param("cityName") String cityName, @Param("longitude") double longitude, @Param("latitude") double latitude,@Param("startSiteId") int startSiteId ,@Param("endSiteId") int endSiteId,@Param("type") int type){
-        if (cityName!=null&&!"".equals(cityName)){
-            return JSON.toJSONString(navigationService.myLocationSite(cityName,longitude,latitude,startSiteId,endSiteId,type));
+    public Object myLocationSite(Navigation navigation){
+        if (navigation!=null){
+            return JSON.toJSONString(navigationService.myLocationSite(navigation));
         }else {
             return JSON.toJSONString("dataError");
         }
@@ -30,6 +30,36 @@ public class NavigationController {
     public Object q(Navigation navigation){
         if (navigation!=null&&navigation.getCityName()!=null&&!"".equals(navigation.getCityName())){
             return JSON.toJSONString(navigationService.q(navigation));
+        }else {
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "querySiteBySiteName")
+    //根据线路id和往返属性查询该线路所有站点
+    public Object querySiteBySiteName(@Param("name") String name){
+        if (name!=null&&!name.equals("")){
+            return JSON.toJSONString(navigationService.querySiteBySiteName(name));
+        }else {
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "queryLineByLineName")
+    //根据线路id和往返属性查询该线路所有站点
+    public Object queryLineByLineName(@Param("name") String name){
+        if (name!=null&&!name.equals("")){
+            return JSON.toJSONString(navigationService.findLineByLineName(name));
+        }else {
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "queryLineSiteByLineId")
+    //根据线路id和往返属性查询该线路所有站点
+    public Object queryLineSiteByLineId(@Param("id") int id){
+        if (id!=0){
+            return JSON.toJSONString(navigationService.queryLineSiteByLineId(id));
         }else {
             return null;
         }

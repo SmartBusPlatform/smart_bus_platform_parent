@@ -18,4 +18,6 @@ public interface CityLineMapper {
     List<UserToSiteRoute> findEndLineBySiteId(@Param("startSiteId") int startSiteId,@Param("endSiteId") int endSiteId);
     //根据站点id查询线路（基础的信息）
     List<LineSite> findOneLineBySiteId(int siteId);
+    //线路名查询线路
+    List<LineSite> findLineByLineName(String name);
 }

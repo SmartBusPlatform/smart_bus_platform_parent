@@ -64,6 +64,9 @@ public class TimeServiceImpl implements TimeService {
                 }else{
                     arr[1] = branch-120+"";
                 }
+            }else if(branch==120){
+                arr[0] = Integer.valueOf(arr[0])+2+"";
+                arr[1] = "00";
             }else{
                 arr[0] = Integer.valueOf(arr[0])+1+"";
                 if (branch-60<10){

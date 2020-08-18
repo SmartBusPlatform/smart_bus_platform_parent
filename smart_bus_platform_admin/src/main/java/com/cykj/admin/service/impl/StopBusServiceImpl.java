@@ -73,8 +73,9 @@ public class StopBusServiceImpl implements StopBusService {
     }
 
     public static String formatDuring(long mss) {
+        long day = mss / (1000 * 60 * 60 * 24);
         long hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
         long minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
-        return hours + " 小时 " + minutes + " 分 ";
+        return day+ "天"+ hours + " 小时 " + minutes + " 分 ";
     }
 }

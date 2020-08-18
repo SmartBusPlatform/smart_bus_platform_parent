@@ -38,6 +38,9 @@ public class BusWorkServiceImpl implements BusWorkService {
                     }else{
                         arr[1] = branch-120+"";
                     }
+                }else if(branch==120){
+                    arr[0] = Integer.valueOf(arr[0])+2+"";
+                    arr[1] = "00";
                 }else{
                     arr[0] = Integer.valueOf(arr[0])+1+"";
                     if (branch-60<10){
@@ -80,38 +83,6 @@ public class BusWorkServiceImpl implements BusWorkService {
 
     @Override
     public int changeBusWork(BusWorkInfo busWork) {
-//        List<BusWorkInfo> list = busWorkMapper.queryBusWork(busWork.getBusId());
-//
-//        int isSuccess = 0;
-//        TimeServiceImpl timeService = new TimeServiceImpl();
-//        boolean isRunning = false;
-//
-//        if(list!=null){
-//            try {
-//                //循环判断当前时间段车辆是否在运行中
-//                for (int i=0; i<list.size(); i++){
-//                    //判断整点是否在运行时间内
-//                    if(busWork.getStartTime().equals(list.get(i).getDepartureTime())&&timeService.endTime(busWork.getStartTime(),busWork.getAllTime()).equals(timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
-//                        isRunning = true;
-//                        break;
-//                    }
-//                    //判断开始时间是否在车辆运行的时间中
-//                    if(timeService.belongCalendar(busWork.getStartTime()+":00",list.get(i).getDepartureTime(),
-//                            timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
-//                        isRunning = true;
-//                        break;
-//                    }
-//                    //判断返程到站时间是否在车辆运行的时间中
-//                    if(timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())
-//                            ,list.get(i).getDepartureTime(), timeService.endTime(list.get(i).getDepartureTime(),list.get(i).getAllTime()))){
-//                        isRunning = true;
-//                        break;
-//                    }
-//                }
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
         boolean isRunning = busIsRunning(busWork);
         int isSuccess = 0;
 
@@ -193,7 +164,7 @@ public class BusWorkServiceImpl implements BusWorkService {
             }else{
                 String startTime = list.get(0).getDepartureTime();
                 if(startTime.equals("6:00")){
-                    BusRest busRest = new BusRest("6:00","21:40");
+                    BusRest busRest = new BusRest(timeService.endTime(startTime,list.get(0).getAllTime()),"21:40");
                     busRestList.add(busRest);
                 }else{
                     BusRest busRest = new BusRest("6:00",startTime);
@@ -201,6 +172,10 @@ public class BusWorkServiceImpl implements BusWorkService {
                     busRestList.add(busRest);
                     busRestList.add(busRest2);
                 }
+            }
+
+            for (int i=0; i<busRestList.size(); i++){
+                System.out.println(busRestList.get(i).getStartTime()+":"+busRestList.get(i).getEndTime());
             }
         }else{
             isRunning = false;
@@ -216,12 +191,23 @@ public class BusWorkServiceImpl implements BusWorkService {
                     System.out.println("当前开始时间："+busRestList.get(i).getStartTime()+":00");
                     System.out.println("当前结束时间："+busRestList.get(i).getEndTime()+":00");
 
-                    if(timeService.belongCalendar(busWork.getStartTime()+":00",busRestList.get(i).getStartTime()+":00"
-                            ,busRestList.get(i).getEndTime()+":00")&&timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())+":00"
-                            ,busRestList.get(i).getStartTime()+":00",busRestList.get(i).getEndTime()+":00")){
-                        isRunning = false;
-                        break;
+                    Date time2 = new SimpleDateFormat("yyyy-hh-mm HH:dd").parse("2020-8-16 "+busRestList.get(i).getEndTime());
+                    Date time = new SimpleDateFormat("yyyy-hh-mm HH:dd").parse("2020-8-16 "+"21:40");
+                    if(time2.getTime()>time.getTime()){
+                        if(timeService.belongCalendar(busWork.getStartTime()+":00",busRestList.get(i).getStartTime()+":00"
+                                ,busRestList.get(i).getEndTime()+":00")){
+                            isRunning = false;
+                            break;
+                        }
+                    }else{
+                        if(timeService.belongCalendar(busWork.getStartTime()+":00",busRestList.get(i).getStartTime()+":00"
+                                ,busRestList.get(i).getEndTime()+":00")&&timeService.belongCalendar(timeService.endTime(busWork.getStartTime(),busWork.getAllTime())+":00"
+                                ,busRestList.get(i).getStartTime()+":00",busRestList.get(i).getEndTime()+":00")){
+                            isRunning = false;
+                            break;
+                        }
                     }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

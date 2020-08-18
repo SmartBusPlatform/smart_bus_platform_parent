@@ -299,7 +299,7 @@
                         }else if(msg=="upDataError"){
                             layer.msg('数据出错');
                         }else if(msg=="repeat"){
-                            layer.msg('广告商重复');
+                            layer.msg("车牌重复");
                         }else{
                             layer.msg('新增失败');
                         }
