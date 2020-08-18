@@ -33,12 +33,6 @@
 
 <body>
 <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
-                <a>
-                    <cite>导航元素</cite></a>
-            </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
@@ -49,35 +43,11 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <form class="layui-form layui-col-space5">
-                        <%--                        <div class="layui-inline layui-show-xs-block">--%>
-                        <%--                            <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"></div>--%>
-                        <%--                        <div class="layui-inline layui-show-xs-block">--%>
-                        <%--                            <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>--%>
-<%--                        <div class="layui-inline layui-show-xs-block">--%>
-<%--                            <input type="text" name="fileName" placeholder="请输入文件名" autocomplete="off"--%>
-<%--                                   class="layui-input">--%>
-<%--                        </div>--%>
-<%--                        <div class="layui-input-block layui-inline layui-show-xs-block">--%>
-<%--                            <select id="chooseType" lay-search>--%>
-<%--                                <option value="">请选择文件类型</option>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
-<%--                        <div class="layui-inline layui-show-xs-block">--%>
-<%--                            <button class="layui-btn" lay-filter="sreach" id="sreach" type="button">--%>
-<%--                                <i class="layui-icon">&#xe615;</i></button>--%>
-<%--                        </div>--%>
-                    </form>
-                </div>
-                <div class="layui-card-body ">
-                    <%--                    <table id="demo" lay-filter="test"></table>--%>
                     <table class="layui-table"
                            lay-data="{url:'${pageContext.request.contextPath}/admin/roleConfigController/selectRole',page:true,toolbar: '#toolbarDemo',id:'test'}"
                            lay-filter="test">
                         <thead>
                         <tr>
-<%--                            <th lay-data="{type:'checkbox'}">ID</th>--%>
-                            <%--                 实现layui的行序号自增           --%>
                             <th lay-data="{ width:80, sort: true,templet:'#indexTable'}">序号</th>
                             <th lay-data="{field:'name', width:120}">角色名称</th>
                             <th lay-data="{fixed: 'right', width:200, align:'left', toolbar: '#barDemo'}"></th>
@@ -97,16 +67,10 @@
 </script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-<%--        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>--%>
         <button class="layui-btn layui-btn-sm " lay-event="addRole">新增角色</button>
-        <%--        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button >--%>
-        <%--        <button class = "layui-btn layui-btn-sm" lay-event = "isAll" > 验证是否全选</button>--%>
     </div>
 </script>
-<%--<script type="text/html" id="switchTpl">--%>
-<%--    <!-- 这里的checked的状态只是演示 -->--%>
-<%--    <input type = "checkbox" name = "sex" value = "{{d.id}}" lay-skin = "switch"lay-text = "女|男" lay-filter = "sexDemo" {{ d.id == 10003 ? 'checked': ''}} >--%>
-<%--</script>--%>
+
 <script>
 
     layui.use('layer',
@@ -161,33 +125,11 @@
                 })
             });
 
-            //监听单元格编辑
-            // table.on('edit(test)',
-            //     function(obj) {
-            //         var value = obj.value //得到修改后的值
-            //             ,
-            //             data = obj.data //得到所在行所有键值
-            //             ,
-            //             field = obj.field; //得到字段
-            //         layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-            //     });
-
             //头工具栏事件
             table.on('toolbar(test)',
                 function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
-                        case 'getCheckData':
-                            var data = checkStatus.data;
-                            layer.alert(JSON.stringify(data));
-                            break;
-                        case 'getCheckLength':
-                            var data = checkStatus.data;
-                            layer.msg('选中了：' + data.length + ' 个');
-                            break;
-                        case 'isAll':
-                            layer.msg(checkStatus.isAll ? '全选' : '未全选');
-                            break;
                         case 'addRole':
                             layer.open({
                                 type: 1
@@ -281,7 +223,6 @@
                             }
                         }
                     });
-                    //do somehing
                 } else if (layEvent === 'del') { //删除
                     layer.confirm('确定删除该角色？', function (index) {
                         // obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -306,59 +247,18 @@
                         })
                         layer.close(index);
                     });
-                } else if (layEvent === 'edit') { //编辑
-                    //do something
-
-                    //同步更新缓存对应的值
-                    obj.update({
-                        username: '123'
-                        , title: 'xxx'
-                    });
-                } else if (layEvent === 'check') {
-
-                } else if (layEvent === 'LAYTABLE_TIPS') {
-                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
                 }
             });
-            // $('#sreach').on('click', function(){
-            //     var type = $(this).data('type');
-            //     active[type] ? active[type].call(this) : '';
-            // });
+
         });
 </script>
 <script type="text/html" id="barDemo">
     {{#  if(d.id != '1'){ }}
 
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
-    <%--    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>--%>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     {{#  } }}
 
-
-    <!-- 这里同样支持 laytpl 语法，如： -->
-<%--        {{#  if(d.fileState == '2'){ }}--%>
-<%--        <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>--%>
-<%--        {{#  } }}--%>
 </script>
-<%--<script>--%>
-<%--    layui.use('form', function () {--%>
-<%--        var form = layui.form;--%>
-<%--        var $ = layui.$;--%>
-<%--        $.ajax({--%>
-<%--            url: "${pageContext.request.contextPath}/fileServlet?methodName=getFileType",--%>
-<%--            type: "post",--%>
-<%--            dataType: "json",--%>
-<%--            success: function (data) {--%>
-<%--                $.each(data, function (index, item) {--%>
-<%--                    var typeId = data[index].typeId;--%>
-<%--                    var typeName = data[index].typeName;--%>
-<%--                    $("#chooseType").append("<option value='" + typeId + "'>" + typeName + "</option>");--%>
-<%--                    //form.render()渲染将option添加进去--%>
-<%--                    form.render();--%>
-<%--                })--%>
-<%--            }--%>
-<%--        })--%>
-<%--    })--%>
-<%--</script>--%>
 
 </html>

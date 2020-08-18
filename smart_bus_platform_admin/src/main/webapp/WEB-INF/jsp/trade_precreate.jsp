@@ -52,13 +52,13 @@
         String sellerId = "";
 
         // 订单描述，可以对交易或商品进行一个详细地描述，比如填写"购买商品2件共15.00元"
-        String body = "购买商品2件共15.00元";
+        String body = "";
 
         // 商户操作员编号，添加此参数可以为商户操作员做销售统计
-        String operatorId = "test_operator_id";
+        String operatorId = "14";
 
         // (必填) 商户门店编号，通过门店号和商家后台可以配置精准到门店的折扣信息，详询支付宝技术支持
-        String storeId = "test_store_id";
+        String storeId = "皖H112121";
 
         // 业务扩展参数，目前可添加由支付宝分配的系统商编号(通过setSysServiceProviderId方法)，详情请咨询支付宝技术支持
         ExtendParams extendParams = new ExtendParams();
@@ -70,13 +70,13 @@
         // 商品明细列表，需填写购买商品详细信息，
         List<GoodsDetail> goodsDetailList = new ArrayList<GoodsDetail>();
         // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
-        GoodsDetail goods1 = GoodsDetail.newInstance("goods_id001", "全麦小面包", 1500, 1);
+        GoodsDetail goods1 = GoodsDetail.newInstance("14", "皖H112121", 100, 1);
         // 创建好一个商品后添加至商品明细列表
         goodsDetailList.add(goods1);
 
         // 继续创建并添加第一条商品信息，用户购买的产品为“黑人牙刷”，单价为5.05元，购买了两件
-        GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "黑人牙刷", 505, 2);
-        goodsDetailList.add(goods2);
+//        GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "黑人牙刷", 505, 2);
+//        goodsDetailList.add(goods2);
 
        // AlipayTradePrecreateContentBuilder builder = new AlipayTradePrecreateContentBuilder()
         		
@@ -270,7 +270,7 @@ ul,ol{
 }
 </style>
 </head>
-<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4 onload="alipayment.submit()">
+<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4 onload="">
 	<div id="main">
 		<div id="head">
             <dl class="alipay_link">
@@ -336,4 +336,34 @@ ul,ol{
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var webSocket = null;
+        //判断当前浏览器是否支持
+        if ('WebSocket' in window) {
+            webSocket = new WebSocket("ws://localhost:8081/webSocket/1");
+        } else {
+            alert("不支持");
+        }
+        webSocket.onopen = function (ev) {
+            alert("连接打开")
+        }
+        webSocket.onclose = function (ev) {
+            alert("连接关闭")
+        }
+//    将信息放到页面的div--接收信息
+        webSocket.onmessage = function (ev) {
+            console.log(ev.data)
+            if (ev.data == "reload") {
+                window.location.reload();
+                // window.location.href = "http://localhost:8081/manager/trade_precreate";
+                // window.open('http://localhost:8081/manager/trade_precreate','_blank')
+            }
+        };
+
+        alipayment.submit();
+    }
+
+</script>
 </html>

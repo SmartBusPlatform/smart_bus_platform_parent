@@ -27,12 +27,6 @@
 
 
 <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
-                <a>
-                    <cite>导航元素</cite></a>
-            </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
@@ -56,8 +50,6 @@
                 <div class="layui-card-body ">
                     <div class="layui-btn-container">
                         <button id="save" type="button" class="layui-btn layui-btn-sm" lay-demo="getChecked">保存</button>
-<%--                        <button type="button" class="layui-btn layui-btn-sm" lay-demo="setChecked">勾选指定节点</button>--%>
-<%--                        <button id="reload" type="button" class="layui-btn layui-btn-sm">重载实例</button>--%>
                     </div>
                     <div id="test12" class="demo-tree-more"></div>
 
@@ -66,65 +58,6 @@
         </div>
     </div>
 </div>
-
-<script>
-
-    <%--$(function () {--%>
-    <%--    $.ajax({--%>
-    <%--        url: "${pageContext.request.contextPath}/menuConfigController/selectMenuConfig"--%>
-    <%--        async: true,--%>
-    <%--        data:['roleID',],--%>
-    <%--        dataType: "json",--%>
-    <%--    })--%>
-    <%--});--%>
-
-
-    // layui.use(['tree', 'util', 'table'], function () {
-    //     var tree = layui.tree
-    //         , layer = layui.layer
-    //         , util = layui.util
-    //         , $ = layui.$
-    //         , table = layui.table
-
-    //     tree.render({
-    //         elem: '#test12'
-    //         , data: data
-    //         , showCheckbox: true  //是否显示复选框
-    //         , id: 'demoId1'
-    //         , isJump: true //是否允许点击节点时弹出新窗口跳转
-    //         , click: function (obj) {
-    //             var data = obj.data;  //获取当前点击的节点数据
-    //             layer.msg('状态：' + obj.state + '<br>节点数据：' + JSON.stringify(data));
-    //         }
-    //     });
-    //     //按钮事件
-    //     // util.event('lay-demo', {
-    //     //     getChecked: function (othis) {
-    //     //         var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
-    //     //
-    //     //         layer.alert(JSON.stringify(checkedData), {shade: 0});
-    //     //         console.log(checkedData);
-    //     //     }
-    //     //     , setChecked: function () {
-    //     //         tree.setChecked('demoId1', [12, 16]); //勾选指定节点
-    //     //     }
-    //     //     , reload: function () {
-    //     //         //重载实例
-    //     //         tree.reload('demoId1', {});
-    //     //
-    //     //     }
-    //     // });
-    //
-    //     $("#111").click(function () {
-    //         var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
-    //         layer.alert(JSON.stringify(checkedData), {shade: 0});
-    //         console.log(checkedData);
-    //     })
-    //
-    // })
-
-
-</script>
 
 </body>
 <script>
@@ -183,7 +116,7 @@
         //保存选中的
         $("#save").click(function () {
             var roleId = $("#chooseType").select().val();
-            if (roleId != 0) {  //判断是否选择了角色
+            if (roleId != 0 && roleId != 1) {  //判断是否选择了角色
                 layer.confirm('确认提交菜单修改？', function () {
                         var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
                         var id = getCheckedId(checkedData);       //调用方法计算出所有选中的节点id
@@ -201,8 +134,6 @@
                                 'roleId': roleId
                                 ,'beforeId':JSON.stringify(beforeId)
                                 ,'afterId':JSON.stringify(afterId)
-                                // 'beforeId':beforeId
-                                // ,'afterId':afterId
                             }
                             // ,contentType: 'application/json;charset=utf-8'
                             // ,traditional:true  //用传统方式序列化数据
@@ -221,7 +152,7 @@
                     }
                 });
             } else {
-                layer.msg("请先选择角色",{time:1000});
+                layer.msg("请先选择角色（禁止修改管理员权限）",{time:1000});
             }
         })
 

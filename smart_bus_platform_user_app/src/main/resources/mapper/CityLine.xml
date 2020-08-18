@@ -87,4 +87,11 @@
         select * from tb_line_site ls
         where ls.site_id = #{siteId}
     </select>
+
+    <!--  线路名查询线路-->
+    <select id="findLineByLineName" resultType="com.cykj.pojo.LineSite" parameterType="java.lang.String">
+        select * from tb_line
+        where city_id = 36
+            and name like concat('%',#{name},'%')
+    </select>
 </mapper>

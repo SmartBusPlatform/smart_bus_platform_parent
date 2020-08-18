@@ -40,7 +40,7 @@
             )
     </insert>
 
-    <!--  新增巴士-->
+    <!--  删除巴士-->
     <delete id="deleteStopBus" parameterType="java.lang.Integer">
         delete from tb_stop_bus where bus_id = #{id}
     </delete>

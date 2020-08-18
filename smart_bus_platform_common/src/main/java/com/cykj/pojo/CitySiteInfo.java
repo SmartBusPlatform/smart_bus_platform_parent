@@ -8,6 +8,7 @@ public class CitySiteInfo extends CitySite{
     private int distance;
     private int startIndex;
     private int backIndex;
+    private int lineId;
 
     public List<LineChild> getLineList() {
         return lineList;
@@ -47,5 +48,13 @@ public class CitySiteInfo extends CitySite{
 
     public void setBackIndex(int backIndex) {
         this.backIndex = backIndex;
+    }
+
+    public int getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
     }
 }

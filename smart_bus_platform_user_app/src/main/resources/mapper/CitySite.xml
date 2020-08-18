@@ -60,15 +60,32 @@
 
     <!--  查询线路id和始程或返程来查询所有站点-->
     <select id="queryAllSiteByLineIdProId" resultType="com.cykj.pojo.CitySiteInfo" parameterType="com.cykj.pojo.LineSite">
-        select cs.id,cs.name,cs.x_position,cs.y_position,ls.start_index,ls.back_index
+        select cs.id,cs.name,cs.x_position,cs.y_position,ls.start_index,ls.back_index,ls.line_id
         from tb_line_site ls
             left join tb_city_site cs on ls.site_id = cs.id
         where ls.line_id = #{lineId}
             and ls.property_id = #{propertyId}
+        order by start_index asc,back_index asc
     </select>
 
     <!--  查询站点id查站点-->
     <select id="querySiteBySiteId" resultType="com.cykj.pojo.CitySite" parameterType="java.lang.Integer">
         select * from tb_city_site where id = #{siteId}
+    </select>
+
+    <!--  模糊查询站点 -->
+    <select id="querySiteBySiteName" resultType="com.cykj.pojo.CitySite" parameterType="java.lang.String">
+        select * from tb_city_site
+        where city_id = 36
+            and name like concat('%',#{name},'%')
+    </select>
+
+    <!--  查询线路id和始程或返程来查询所有站点-->
+    <select id="queryLineSiteByLineIdProId" resultType="com.cykj.pojo.CitySiteArr" parameterType="java.lang.Object">
+        select cs.id,cs.name,cs.x_position,cs.y_position,ls.start_index,ls.back_index,ls.line_id
+        from tb_line_site ls
+            left join tb_city_site cs on ls.site_id = cs.id
+        where ls.line_id = #{lineId}
+            and ls.property_id = #{propertyId}
     </select>
 </mapper>

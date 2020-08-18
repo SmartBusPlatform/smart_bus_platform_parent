@@ -3,15 +3,17 @@ package com.cykj.admin.controller;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.demo.trade.config.Configs;
+import com.cykj.admin.Alipay.MultiThreadingService;
+import com.cykj.admin.webSocket.WebSocket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,10 +22,15 @@ import java.util.Map;
 @RequestMapping("aliPayController")
 public class AliPayController {
 
+    @Autowired
+    private WebSocket webSocket;
+
+    @Autowired
+    private MultiThreadingService multiThreadingService;
 
     //用户支付成功后的异步回调（通知商家的）
     @RequestMapping(value = "notifyUrl", method = {RequestMethod.POST})
-    public String notifyUrl(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
+    public void notifyUrl(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
 
         Configs.init("zfbinfo.properties");
         Map<String, String> params = new HashMap<String, String>();
@@ -42,19 +49,24 @@ public class AliPayController {
         System.out.println(requestParams);
         boolean signVerified = AlipaySignature.rsaCheckV1(params, Configs.getAlipayPublicKey(), "UTF-8", "RSA2");  //调用SDK验证签名
         if (signVerified) {
-
+            //异步线程执行数据写入
+            multiThreadingService.executeAysncTask(params);
             // TODO 验签成功则继续业务操作，最后在response中返回success
-
-            response.sendRedirect("/manager/trade_precreate.jsp");
-            String str = "success";
-            return str;
+            webSocket.onMessage("reload");
+            String resStr = "success";
+            BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+            out.write(resStr.getBytes());
+            out.flush();
+            out.close();
         } else {
             // TODO 验签失败则记录异常日志，并在response中返回failure.
-            String str = "failure";
-            return str;
+            String resStr = "failure";
+            BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+            out.write(resStr.getBytes());
+            out.flush();
+            out.close();
         }
     }
-
 
 }
 

@@ -10,7 +10,7 @@ public class User {
     private String company;
     private String imgUrl;
     private double money;
-    private String phone;
+    private long phone;
     private int stateId;
     private String identityNum;
     private double homeX;
@@ -93,11 +93,11 @@ public class User {
         this.money = money;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 
