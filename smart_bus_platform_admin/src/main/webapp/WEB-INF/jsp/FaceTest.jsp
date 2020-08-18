@@ -52,6 +52,9 @@
     function error(error) {
         console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
     }
+    if(navigator.mediaDevices===undefined){
+        navigator.mediaDevices={}
+    }
 
     if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
         //调用用户媒体设备, 访问摄像头
@@ -82,26 +85,7 @@
 
             });
         },10000)
-    // }
-    <%--document.getElementById('capture').addEventListener('click', function () {--%>
-    <%--    context.drawImage(video, 0, 0, 480, 320);--%>
 
-    <%--    var dataURL = document.getElementById("canvas").toDataURL("image/png");--%>
-    <%--    var imgData = dataURL.substring(22);--%>
-
-    <%--    $.ajax({--%>
-    <%--        type: "post",--%>
-    <%--        url:"${pageContext.request.contextPath}/faceController/faceDetect",--%>
-    <%--        data: {imgData : imgData},--%>
-    <%--        async: true,--%>
-    <%--        success: function (htmlVal) {--%>
-    <%--            alert("另存图片成功！");--%>
-    <%--        },--%>
-    <%--        error: function(data) {--%>
-    <%--            alert(e.responseText); //alert错误信息--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--})--%>
 </script>
 </body>
 </html>

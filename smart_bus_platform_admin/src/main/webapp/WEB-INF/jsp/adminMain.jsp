@@ -14,8 +14,9 @@
     <title>管理员首页</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/xadminR.css">
     <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
@@ -34,30 +35,30 @@
 <!-- 顶部开始 -->
 <div class="container">
     <div class="logo">
-        <a href="./index.html">X-admin v2.2</a></div>
+        <a href="./index.html">智慧公交系统</a></div>
     <div class="left_open">
         <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
     </div>
     <ul class="layui-nav left fast-add" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;">+新增</a>
+            <a href="javascript:;">模拟数据</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">
-                        <i class="iconfont">&#xe6a2;</i>弹出最大化</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">
-                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">
-                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开','member-list.html')">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>
-                <dd>
-                    <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">
-                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>
+                    <a onclick="addUser()">
+                        <i class="iconfont">&#xe6a2;</i>高峰客流</a></dd>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">--%>
+<%--                        <i class="iconfont">&#xe6a8;</i>弹出自动宽高</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">--%>
+<%--                        <i class="iconfont">&#xe6a8;</i>弹出指定宽高</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.add_tab('在tab打开','member-list.html')">--%>
+<%--                        <i class="iconfont">&#xe6b8;</i>在tab打开</a></dd>--%>
+<%--                <dd>--%>
+<%--                    <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">--%>
+<%--                        <i class="iconfont">&#xe6b8;</i>在tab打开刷新</a></dd>--%>
             </dl>
         </li>
     </ul>
@@ -74,8 +75,6 @@
                     <a href="./login.html">退出</a></dd>
             </dl>
         </li>
-        <li class="layui-nav-item to-index">
-            <a href="/">前台首页</a></li>
     </ul>
 </div>
 <!-- 顶部结束 -->
@@ -111,12 +110,15 @@
     <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
         <ul class="layui-tab-title">
             <li class="home">
-                <i class="layui-icon">&#xe68e;</i>我的桌面</li></ul>
+                <i class="layui-icon">&#xe68e;</i>我的桌面
+            </li>
+        </ul>
         <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
             <dl>
                 <dd data-type="this">关闭当前</dd>
                 <dd data-type="other">关闭其它</dd>
-                <dd data-type="all">关闭全部</dd></dl>
+                <dd data-type="all">关闭全部</dd>
+            </dl>
         </div>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -128,15 +130,50 @@
 </div>
 <div class="page-content-bg"></div>
 <style id="theme_style"></style>
-<!-- 右侧主体结束 -->
-<!-- 中部结束 -->
-<script>//百度统计可去掉
-var _hmt = _hmt || []; (function() {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-})();</script>
+
+<div  id="addUser" hidden>
+    <div class="layui-btn-container">
+        <input id="number" type="text">
+    </div>
+</div>
+<script>
+    function addUser() {
+        layui.use('layer',
+        function () {
+            var layer = layui.layer;
+            var $ = layui.$;
+            layer.open({
+                type: 1
+                , title: false
+                , content: '<div style="padding: 20px 100px; font-size: 20px"> 乘客数量 </div>' +
+                    '<div style="padding: 15px 40px;font-size: 15px">' +
+                    '<input type="text" id="addNumber"></div>'
+                , btn: ['确定', '取消']
+                , btnAlign: 'c'
+                , shade: 0
+                ,yes:function () {
+                    var number = $("#addNumber").val();
+                    if (number == "") {
+                        layer.msg('数量不能为空', {time: 1000});
+                    } else {
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/simulationController/simulationAdd',
+                            dataType: 'json',
+                            type: 'post',
+                            data:{
+                                'number':number
+                            },
+                            success:function (msg) {
+
+                            }
+                        })
+                    }
+
+                }
+            });
+        })
+    }
+</script>
 </body>
 
 </html>

@@ -52,13 +52,13 @@
         String sellerId = "";
 
         // 订单描述，可以对交易或商品进行一个详细地描述，比如填写"购买商品2件共15.00元"
-        String body = "购买商品2件共15.00元";
+        String body = "";
 
         // 商户操作员编号，添加此参数可以为商户操作员做销售统计
-        String operatorId = "test_operator_id";
+        String operatorId = "14";
 
         // (必填) 商户门店编号，通过门店号和商家后台可以配置精准到门店的折扣信息，详询支付宝技术支持
-        String storeId = "test_store_id";
+        String storeId = "皖H112121";
 
         // 业务扩展参数，目前可添加由支付宝分配的系统商编号(通过setSysServiceProviderId方法)，详情请咨询支付宝技术支持
         ExtendParams extendParams = new ExtendParams();
@@ -70,13 +70,13 @@
         // 商品明细列表，需填写购买商品详细信息，
         List<GoodsDetail> goodsDetailList = new ArrayList<GoodsDetail>();
         // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
-        GoodsDetail goods1 = GoodsDetail.newInstance("goods_id001", "全麦小面包", 1500, 1);
+        GoodsDetail goods1 = GoodsDetail.newInstance("14", "皖H112121", 100, 1);
         // 创建好一个商品后添加至商品明细列表
         goodsDetailList.add(goods1);
 
         // 继续创建并添加第一条商品信息，用户购买的产品为“黑人牙刷”，单价为5.05元，购买了两件
-        GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "黑人牙刷", 505, 2);
-        goodsDetailList.add(goods2);
+//        GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "黑人牙刷", 505, 2);
+//        goodsDetailList.add(goods2);
 
        // AlipayTradePrecreateContentBuilder builder = new AlipayTradePrecreateContentBuilder()
         		
@@ -287,7 +287,7 @@ ul,ol{
 				<li class="last">3、确认完成</li>
             </ol>
         </div>
-        <form name=alipayment action="" method=post target="_parent">
+        <form name=alipayment action="" method=post target="_blank">
             <div id="body" style="clear:left">
                 <dl class="content">
 					<dt>商户订单号：</dt>
@@ -357,6 +357,8 @@ ul,ol{
             console.log(ev.data)
             if (ev.data == "reload") {
                 window.location.reload();
+                // window.location.href = "http://localhost:8081/manager/trade_precreate";
+                // window.open('http://localhost:8081/manager/trade_precreate','_blank')
             }
         };
 

@@ -21,20 +21,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/xadmin.css">
     <script src="${pageContext.request.contextPath}/static/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/xadmin.js"></script>
-    <%--    <!--[if lt IE 9]>--%>
-    <%--    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>--%>
-    <%--    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>--%>
-    <%--    <![endif]-->--%>
 </head>
 
 <body>
 <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
-                <a>
-                    <cite>导航元素</cite></a>
-            </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
@@ -152,43 +142,6 @@
                 }
             });
         });
-</script>
-<script>
-    // layui.use('table',
-    //     function () {
-    //         var table = layui.table;
-    //
-    //         //监听单元格编辑
-    //         table.on('edit(test)',
-    //             function (obj) {
-    //                 var value = obj.value //得到修改后的值
-    //                     ,
-    //                     data = obj.data //得到所在行所有键值
-    //                     ,
-    //                     field = obj.field; //得到字段
-    //                 layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-    //             });
-    //
-    //         //头工具栏事件
-    //         table.on('toolbar(test)',
-    //             function (obj) {
-    //                 var checkStatus = table.checkStatus(obj.config.id);
-    //                 switch (obj.event) {
-    //                     case 'getCheckData':
-    //                         var data = checkStatus.data;
-    //                         layer.alert(JSON.stringify(data));
-    //                         break;
-    //                     case 'getCheckLength':
-    //                         var data = checkStatus.data;
-    //                         layer.msg('选中了：' + data.length + ' 个');
-    //                         break;
-    //                     case 'isAll':
-    //                         layer.msg(checkStatus.isAll ? '全选' : '未全选');
-    //                         break;
-    //                 }
-    //                 ;
-    //             });
-    //     });
 </script>
 <script>
     layui.use('table', function () {
