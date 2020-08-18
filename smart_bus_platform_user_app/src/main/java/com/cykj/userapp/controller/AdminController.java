@@ -29,9 +29,9 @@ public class AdminController {
     private RedisUtil redisUtil;
     @RequestMapping("applogin")
     @ResponseBody
-    public String applogin( String account,  String password,String code){
+    public String applogin(Admin admin,String code,String loginState){
 
-        return adminFeign.applogin(account,password,code);
+        return adminFeign.applogin(admin,code,loginState);
     }
 
     @RequestMapping("resetPwd")
