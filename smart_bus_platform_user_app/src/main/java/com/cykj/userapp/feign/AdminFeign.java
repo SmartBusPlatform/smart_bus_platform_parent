@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Component
 public interface AdminFeign {
     @RequestMapping("adminControl/applogin")
-    public String applogin(@RequestParam("account") String account, @RequestParam("password") String password,@RequestParam("code") String code);
+    public String applogin(@RequestBody Admin admin,@RequestParam("code") String code,@RequestParam("loginState") String loginState);
 
     @RequestMapping("adminControl/resetPwd")
     public String resetPwd(@RequestBody Admin admin,@RequestParam("code") String code);

@@ -71,17 +71,14 @@ public class AdminControl {
     //登录
     @RequestMapping(value = "/applogin")
     @ResponseBody
-    public String applogin(String account,String password,String code) {
+    public String applogin(@RequestBody Admin admin,String code ,String loginState) {
         Result result = new Result();
-        String  redisCode = (String) redisUtil.get("code");
-//        if(redisCode!=null&&!"".equals(redisCode)){
-//            if(redisCode.equals(code)){
-                Admin admin = new Admin();
-                admin.setPhone(account);
-                admin.setPassword(password);
-                admin = adminService.login(admin);
-                System.out.println(admin);
-
+        if("sms".equals(loginState)){
+            String  redisCode = (String) redisUtil.get("code");
+            if(redisCode!=null&&!"".equals(redisCode)){
+                if(redisCode.equals(code)){
+                    admin = adminService.login(admin);
+                    System.out.println(admin);
                     if (admin != null) {
                         if(admin.getStateId() == 2){
                             admin.setPassword(null);
@@ -98,16 +95,42 @@ public class AdminControl {
                     }
 
 
-//            }else{
-//                result.setMsg("验证码错误");
-//                result.setStatus(201);
-//            }
-//        }else{
-//            result.setMsg("验证码失效");
-//            result.setStatus(201);
-//        }
+                }else{
+                    result.setMsg("验证码错误");
+                    result.setStatus(201);
+                }
+            }else{
+                result.setMsg("验证码失效");
+                result.setStatus(201);
+            }
 
-        return JSON.toJSONString(result);
+            return JSON.toJSONString(result);
+        }else if("account".equals(loginState)){
+                    admin = adminService.login(admin);
+                    System.out.println(admin);
+                    if (admin != null) {
+                        if(admin.getStateId() == 2){
+                            admin.setPassword(null);
+                            result.setData(admin);
+                            result.setStatus(200);
+                        }else {
+                            result.setStatus(201);
+                            result.setMsg("该用户被禁止登录");
+                        }
+
+                    } else {
+                        result.setStatus(201);
+                        result.setMsg("账号或密码错误");
+                    }
+            return JSON.toJSONString(result);
+        }else{
+
+            result.setStatus(201);
+            result.setMsg("网络出错请重试");
+            return JSON.toJSONString(result);
+
+        }
+
     }
     //列表layui
     @RequestMapping(value = "/adminList")
@@ -135,17 +158,22 @@ public class AdminControl {
     @ResponseBody
     public String resetPwd(@RequestBody Admin admin,String code){
         String  redisCode = (String) redisUtil.get("code");
-//        if(redisCode!=null&&!"".equals(redisCode)){
-//            if(redisCode.equals(code)){
-//            }else{
-////                result.setMsg("验证码错误");
-////                result.setStatus(201);
-////            }
-////        }else{
-////            result.setMsg("验证码失效");
-////            result.setStatus(201);
-////        }
-        return JSON.toJSONString(adminService.resetPwd(admin));
+        Result result = new Result();
+        if(redisCode!=null&&!"".equals(redisCode)){
+            if(redisCode.equals(code)){
+                redisUtil.del("code");
+                return JSON.toJSONString(adminService.resetPwd(admin));
+            }else{
+                result.setMsg("验证码错误");
+                result.setStatus(201);
+                return  JSON.toJSONString(result);
+            }
+        }else{
+            result.setMsg("验证码失效");
+            result.setStatus(201);
+            return  JSON.toJSONString(result);
+        }
+
     }
 
 }
