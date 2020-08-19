@@ -82,13 +82,13 @@
             <div class="maginTop">
                 <h1>城市线路</h1>
                 <div>
+                    <div>
                     <div class="maginTop">
                         <form class="layui-form layui-col-space5">
                             <div class="layui-inline">
-                                <h3 class="layui-inline">站点名称:</h3>
+                                <h3 class="layui-inline">线路名称:</h3>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="siteName" placeholder="请输入站点名称" autocomplete="off"
-                                           class="layui-input">
+                                    <input type="text" name="lineName" placeholder="请输入线路名称" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-inline layui-col-lg-offset1">
@@ -98,23 +98,21 @@
                             </div>
                         </form>
                     </div>
-<%--                    <div class="layui-row">--%>
-<%--                        <form class="layui-form layui-col-md12 x-so" method="post">--%>
+                        <div class="layui-fluid">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-body ">
+                                            <table id="line_table" lay-filter="line-filter"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<%--                            &lt;%&ndash;                站点名称:<input type="text" name="siteName"  placeholder="请输入站点名称" autocomplete="off" class="layui-input">&ndash;%&gt;--%>
-<%--                            线路名称:<input type="text" name="lineName" placeholder="请输入线路名称" autocomplete="off"--%>
-<%--                                        class="layui-input">--%>
-
-<%--                            <button class="layui-btn" type="button" lay-submit="" lay-filter="search"><i--%>
-<%--                                    class="layui-icon">&#xe615;</i></button>--%>
-<%--                            <a class="layui-btn layui-btn-normal layui-btn-xs" id="add">新增</a>--%>
-
-<%--                        </form>--%>
-
-                        <%--        </div>--%>
-                        <table id="line_table" lay-filter="line-filter"></table>
                     </div>
                 </div>
+
                 <div class="site-text layui-row" hidden id="addForm">
                     <form class="layui-form layui-col-sm-offset2 layui-col-sm10" style="margin-top: 100px" method="post"
                           lay-filter="example">
@@ -1183,6 +1181,7 @@
                             btn: ['返回', ],
                             shade: [0.8, '#393D49'],
                             success: function (layero, index) {
+
                                 let map = new AMap.Map("container", {
                                     // center: [116.397428, 39.90923],//地图中心点
                                     zoom: 13 //地图显示的缩放级别

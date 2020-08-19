@@ -38,14 +38,14 @@
 
 <body class="">
 <div class="x-nav">
-      <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
-        <a>
-          <cite>导航元素</cite></a>
-      </span>
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
-        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+<%--      <span class="layui-breadcrumb">--%>
+<%--        <a href="">首页</a>--%>
+<%--        <a href="">演示</a>--%>
+<%--        <a>--%>
+<%--          <cite>导航元素</cite></a>--%>
+<%--      </span>--%>
+<%--    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">--%>
+<%--        <i class="layui-icon" style="line-height:30px">ဂ</i></a>--%>
 </div>
 <script id="index" type="text/html">
     {{d.LAY_TABLE_INDEX+1}}
@@ -74,22 +74,43 @@
         <div class="map" id="container"  ></div>
 
     </div>
-    <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-
-            省: <div class="layui-inline">
-            <select name="provinceName" id="provinceName">
-                <option value="">请选择</option>
-            </select>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5" method="post" action="">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">省：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="provinceName" id="provinceName">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">市：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="cityName"  placeholder="请输入城市名称" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-btn-container" style="margin-left: 60px">
+                                        <button class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                                        <a class="layui-btn layui-btn-normal layui-btn-xs" id="add">新增</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-card-body ">
+                            <table id="areas_table"  lay-filter="areas-filter"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-            市:<input type="text" name="cityName"  placeholder="请输入城市名称" autocomplete="off" class="layui-input">
-            <button class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
-            <a class="layui-btn layui-btn-normal layui-btn-xs" id="add">新增</a>
-        </form>
 
-    </div>
 
-    <table id="areas_table"  lay-filter="areas-filter"></table>
 
 
 </div>
@@ -375,12 +396,18 @@ var markers = [];
 
                     findSite(obj.data.cityId,obj.data.cityName)
                 }else if("lineNum"===event){
+
                     $(".queryDiv").css("display","block");
                     let map = new AMap.Map("container", {
                         // center: [116.397428, 39.90923],//地图中心点
                         zoom: 13 //地图显示的缩放级别
                     });
+                    if(myMap!=undefined){
+                        myMap.clear();
+                    }
+
                     myMap=map;
+
                     layer.open({
                         title: '查看线路',
                         type: 1,
@@ -396,18 +423,18 @@ var markers = [];
                             queryLine(obj.data.cityId);
 
                         },yes:function(num,layero){
-                            map.destroy();
-                            myMap.destroy();
+                            map.clearMap();
+                            myMap.clearMap();
                             markers=[];
                             layer.close(num);
                         },btn2: function(index, layero){
-                            map.destroy();
-                            myMap.destroy();
+                            map.clearMap();
+                            myMap.clearMap();
                             markers=[];
                         }
                         ,cancel:function () {
-                            map.destroy();
-                            myMap.destroy();
+                            map.clearMap();
+                            myMap.clearMap();
                             markers=[];
                         }
                     });
@@ -449,6 +476,7 @@ var markers = [];
             //查询按钮
             form.on('submit(query)', function(data){
                 markers=[];
+                myMap.clearMap();
                 $.ajax({
                     type: "post",
                     url: "${pageContext.request.contextPath}/admin/lineSite/getLineSiteByLineId",

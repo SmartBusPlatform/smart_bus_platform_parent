@@ -184,7 +184,10 @@
                 dataType: "json",
                 data : {"lineId":data.field.lineId},
                 success:function (data) {
+                    map.clearMap();
+                    markers=[];
                    if(data.start.length>2){
+
                        //定义导航
                        var driving = new AMap.Driving({
                            map: map,
