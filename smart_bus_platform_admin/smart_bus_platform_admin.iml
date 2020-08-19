@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration />
@@ -12,11 +12,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/java" />
-          <root url="file://$MODULE_DIR$/src/main/resources" />
-        </sourceRoots>
-        <webroots />
       </configuration>
     </facet>
   </component>
@@ -28,12 +23,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/webapp" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/lib" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/lib" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-redis:2.0.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.quartz-scheduler:quartz:2.2.1" level="project" />
+    <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.3.2.RELEASE" level="project" />
@@ -191,18 +188,13 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:2.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-oxm:5.2.8.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.lettuce:lettuce-core:5.3.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.51.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.51.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.51.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.51.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.51.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.51.Final" level="project" />
+    <orderEntry type="library" name="Maven: redis.clients:jedis:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.quartz-scheduler:quartz:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: c3p0:c3p0:0.9.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.3.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.8.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.6" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.3.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.2.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.2.8.RELEASE" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.alipay.api:alipay.sdk.java:3.3.0">
         <CLASSES>
@@ -293,9 +285,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.3.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.2.8.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.2.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.3.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.3" level="project" />
