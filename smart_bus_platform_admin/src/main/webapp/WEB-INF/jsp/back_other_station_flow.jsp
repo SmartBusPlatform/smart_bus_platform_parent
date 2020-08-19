@@ -82,7 +82,7 @@
     </div>
 </body>
 <div id="site" hidden>
-    <div class="layui-inline layui-col-lg-offset8" style="margin-top: 30px">
+    <div class="layui-inline layui-col-sm-offset8" style="margin-top: 30px">
         <h2 id="title"></h2>
     </div>
     <div id="echars" style="height: 400px;margin:50px 50px"></div>

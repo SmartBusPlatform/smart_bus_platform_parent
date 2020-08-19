@@ -71,23 +71,26 @@
                     </div>
                 </form>
             </div>
-            <div class="layui-inline layui-col-lg-offset8" style="margin-top: 30px">
-                <h2 id="title"></h2>
+            <div class="layui-row">
+                <div class="layui-inline  layui-col-sm-offset8" style="margin-top: 30px">
+                    <h2 id="title"></h2>
+                </div>
             </div>
+
             <div id="echars" style="height: 400px;margin:50px 50px"></div>
 
         </div>
 
 </div>
 <div id="line" hidden>
-    <div class="layui-inline layui-col-lg-offset8" style="margin-top: 30px">
+    <div class="layui-inline layui-col-sm-offset8" style="margin-top: 30px">
         <h2 id="title2"></h2>
     </div>
     <div id="echars2" style="height: 400px;margin:50px 50px"></div>
 
 </div>
 <div id="time" hidden>
-    <div class="layui-inline layui-col-lg-offset8" style="margin-top: 30px">
+    <div class="layui-inline layui-col-sm-offset8" style="margin-top: 30px">
         <h2 id="title3"></h2>
     </div>
     <div id="echars3" style="height: 400px;margin:50px 50px"></div>
