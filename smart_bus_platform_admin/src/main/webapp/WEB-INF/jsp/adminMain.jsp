@@ -158,7 +158,7 @@
                     } else {
                         for (var i = 1; i <= number; i++) {
                             $.ajax({
-                                url: '${pageContext.request.contextPath}/simulationController/simulationAdd',
+                                url: '${pageContext.request.contextPath}/admin/simulationController/simulationAdd',
                                 dataType: 'json',
                                 type: 'post',
                                 data: {
