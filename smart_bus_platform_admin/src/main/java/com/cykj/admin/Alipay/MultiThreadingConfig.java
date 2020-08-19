@@ -10,7 +10,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 @Configuration
-@ComponentScan("com.cykj.admin.controller")
+@ComponentScan("com.cykj.admin.Alipay")
 @EnableAsync  //开启异步任务支持
 public class MultiThreadingConfig implements AsyncConfigurer {
 
