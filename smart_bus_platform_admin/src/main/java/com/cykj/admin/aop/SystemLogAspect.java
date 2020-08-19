@@ -39,7 +39,11 @@ public class SystemLogAspect {
 
     @After("serviceAspect()||feignAspect()")
     public  void after(JoinPoint joinPoint) throws Throwable{
+        if(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())==null){
+            return;
+        }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
         String token = CookieUtils.getCookieValue(request, "admin_token");
         if(token!=null){
             String adminJson = (String) redisUtil.get(token);

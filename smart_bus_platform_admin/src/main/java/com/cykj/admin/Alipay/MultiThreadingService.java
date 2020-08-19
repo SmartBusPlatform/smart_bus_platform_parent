@@ -1,29 +1,33 @@
 package com.cykj.admin.Alipay;
 
+import com.alibaba.fastjson.JSON;
 import com.cykj.admin.mapper.AliPayMapper;
 import com.cykj.pojo.Fee;
 import com.cykj.pojo.LineSite;
+import com.cykj.redis.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 
 
 @Service
 public class MultiThreadingService {
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     private Logger logger = LoggerFactory.getLogger(MultiThreadingService.class);
-    private static List<String> redisKeyList = new ArrayList<>();
 
     @Autowired
     private AliPayMapper mapper;
-
 
     @Async
     public void executeAysncTask(Map<String, String> map) {
@@ -39,12 +43,15 @@ public class MultiThreadingService {
 
     }
 
+    //插入大量数据进redis
     @Async
-    public int simulationData(Fee fee) {
+    public void simulationData(Fee fee, int i) {
+        String key = String.valueOf(new Date().getTime()+Math.random()*1000);
+        redisUtil.set(key, JSON.toJSONString(fee));
+        NewThread.redisKeyList.add(key);
+        System.out.println("当前线程为="+i);
 
-
-        int j = mapper.insertByPay(fee);
-
-        return 0;
     }
+
+
 }

@@ -156,19 +156,20 @@
                     if (number == "") {
                         layer.msg('数量不能为空', {time: 1000});
                     } else {
-                        $.ajax({
-                            url: '${pageContext.request.contextPath}/simulationController/simulationAdd',
-                            dataType: 'json',
-                            type: 'post',
-                            data:{
-                                'number':number
-                            },
-                            success:function (msg) {
-
-                            }
-                        })
+                        for (var i = 1; i <= number; i++) {
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/simulationController/simulationAdd',
+                                dataType: 'json',
+                                type: 'post',
+                                data: {
+                                    'number': i
+                                },
+                                success: function (msg) {
+                                    console.log(msg);
+                                }
+                            });
+                        }
                     }
-
                 }
             });
         })
