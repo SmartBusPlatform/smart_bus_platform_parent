@@ -37,7 +37,7 @@
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
         <fastjson.version>1.2.31</fastjson.version>
         <feign.version>2.2.3.RELEASE</feign.version>
-        <jackson.version>2.10.3</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <pageHelper.autoconfigure.version>1.2.3</pageHelper.autoconfigure.version>
         <pageHelper.version>5.1.10</pageHelper.version>
     </properties>
